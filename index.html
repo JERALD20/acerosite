@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RADIO - Online Radio Player</title>
+    <style>
+        :root {
+            --primary: #8a7cff;
+            --secondary: #6a5acd;
+            --dark: #121212;
+            --darker: #0a0a0a;
+            --light: #e0e0e0;
+            --lighter: #f5f5f5;
+            --success: #00d1b2;
+            --error: #ff3860;
+            --warning: #ffdd57;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--darker);
+            margin: 0;
+            padding: 20px;
+            color: var(--light);
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            height: calc(100vh - 40px);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            flex-shrink: 0;
+        }
+        
+        h1 {
+            color: var(--primary);
+            font-size: 2.2rem;
+            margin-bottom: 5px;
+        }
+        
+        .tagline {
+            color: var(--light);
+            opacity: 0.8;
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+        
+        .player-container {
+            background: var(--dark);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+            flex-shrink: 0;
+        }
+        
+        .station-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .station-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-right: 15px;
+        }
+        
+        .status {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .status.playing {
+            background-color: var(--success);
+            color: var(--darker);
+        }
+        
+        .status.error {
+            background-color: var(--error);
+            color: white;
+        }
+        
+        .status.buffering {
+            background-color: var(--warning);
+            color: var(--darker);
+        }
+        
+        audio {
+            width: 100%;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            filter: invert(0.9);
+        }
+        
+        .stations-container {
+            background: var(--dark);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+        
+        h2 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        
+        .station-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 12px;
+        }
+        
+        .station-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .station-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .station-card h3 {
+            margin: 0;
+            color: var(--lighter);
+            font-size: 1rem;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            color: var(--light);
+            opacity: 0.6;
+            font-size: 0.8rem;
+            flex-shrink: 1;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+                height: calc(100vh - 30px);
+            }
+            
+            .station-list {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>RADIO</h1>
+            <p class="tagline">Your favorite stations in one place</p>
+        </header>
+        
+        <div class="player-container">
+            <div class="station-info">
+                <div class="station-name" id="current-station">Select a station</div>
+                <div class="status" id="status">IDLE</div>
+            </div>
+            <audio controls id="audio-player">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+        
+        <div class="stations-container">
+            <h2>Available Stations</h2>
+            <div class="station-list" id="station-list">
+                <!-- Stations will be loaded from JSON -->
+            </div>
+        </div>
+        
+        <footer>
+            RADIO Player &copy; 2023 | Stream your favorite stations
+        </footer>
+    </div>
+
+    <script>
+        // Radio stations data
+        const stations = [
+{
+"name": "Love Radio",
+"url": "https://playerservices.streamtheworld.com/api/livestream-redirect/LOVERADIO_MNL_SC"
+},
+{
+"name": "Win Radio",
+"url": "https://stream.zeno.fm/2ss1hgnu6hhvv"
+},
+{
+"name": "Barangay LS",
+"url": "https://stream.zeno.fm/dphe9050afhvv"
+},
+{
+"name": "DZRH News Radio",
+"url": "https://a3.asurahosting.com:6910/stream/1/"
+},
+{
+"name": "Bombo Radio Davao City",
+"url": "https://stream.zeno.fm/n6uph8kyd0quv"
+},
+{
+"name": "iFM Cebu City",
+"url": "https://magic.radioca.st/stream/1/"
+},
+{
+"name": "Eazy Rock Radio Baguio",
+"url": "https://easyrockbaguio.radioca.st/;"
+},
+{
+"name": "Yes! FM",
+"url": "https://yesfmzamboanga.radioca.st/;"
+},
+{
+"name": "Eagle FM",
+"url": "https://stream.radiojar.com/yus0r2bghd3vv"
+},
+{
+"name": "Republ1ka FM1",
+"url": "https://cast.tunzilla.com/http://122.53.138.32:8000/dxfo.mp3"
+},
+{
+"name": "Magic 89.9",
+"url": "https://stream-36.zeno.fm/sh37pvfd938uv"
+},
+{
+"name": "MOR 101.9 FM",
+"url": "https://stream-149.zeno.fm/0ha8ftewqp8uv?zt=eyJhbGciOiJIUzI1NiJ9.eyJzdHJlYW0iOiIwaGE4ZnRld3FwOHV2IiwiaG9zdCI6InN0cmVhbS0xNDkuemVuby5mbSIsInJ0dGwiOjUsImp0aSI6IndEdzlGZ29qUmx5VTQzSHlxMkpvNVEiLCJpYXQiOjE3NDc3MzYwMjUsImV4cCI6MTc0NzczNjA4NX0.tO0kUP1Ryq4Sk2xM1lco3FMGwBY2fM0AX5JBryMBFKU"
+},
+{
+"name": "STAR FM",
+"url": "https://stream.zeno.fm/536cwdq78heuv"
+},
+{
+"name": "MONSTER RADIO",
+"url": "https://in-icecast.eradioportal.com:8443/monsterrrx"
+}
+
+];
+
+        // DOM elements
+        const audioPlayer = document.getElementById('audio-player');
+        const statusElement = document.getElementById('status');
+        const currentStationElement = document.getElementById('current-station');
+        const stationListElement = document.getElementById('station-list');
+        
+        // Load stations into the list
+        function loadStations() {
+            stationListElement.innerHTML = '';
+            
+            stations.forEach(station => {
+                const stationCard = document.createElement('div');
+                stationCard.className = 'station-card';
+                stationCard.innerHTML = `<h3>${station.name}</h3>`;
+                
+                stationCard.addEventListener('click', () => {
+                    playStation(station);
+                });
+                
+                stationListElement.appendChild(stationCard);
+            });
+        }
+        
+        // Play selected station
+        function playStation(station) {
+            currentStationElement.textContent = station.name;
+            statusElement.textContent = 'LOADING';
+            statusElement.className = 'status buffering';
+            
+            audioPlayer.src = station.url;
+            audioPlayer.load();
+            audioPlayer.play().catch(e => {
+                statusElement.textContent = 'ERROR';
+                statusElement.className = 'status error';
+                console.error('Playback failed:', e);
+            });
+        }
+        
+        // Event listeners for audio player
+        audioPlayer.addEventListener('playing', () => {
+            statusElement.textContent = 'PLAYING';
+            statusElement.className = 'status playing';
+        });
+        
+        audioPlayer.addEventListener('error', () => {
+            statusElement.textContent = 'ERROR';
+            statusElement.className = 'status error';
+        });
+        
+        audioPlayer.addEventListener('waiting', () => {
+            statusElement.textContent = 'BUFFERING';
+            statusElement.className = 'status buffering';
+        });
+        
+        // Initialize the app
+        loadStations();
+    </script>
+        <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Listen for clicks anywhere on the body
+            document.body.addEventListener('click', requestFullscreen);
+            
+            function requestFullscreen() {
+                // Check if fullscreen is available
+                if (document.documentElement.requestFullscreen) {
+                    document.documentElement.requestFullscreen();
+                } 
+                // Safari
+                else if (document.documentElement.webkitRequestFullscreen) {
+                    document.documentElement.webkitRequestFullscreen();
+                } 
+                // IE/Edge
+                else if (document.documentElement.msRequestFullscreen) {
+                    document.documentElement.msRequestFullscreen();
+                }
+                
+                // Remove the click listener after entering fullscreen
+                document.body.removeEventListener('click', requestFullscreen);
+            }
+        });
+    </script>
+</body>
+</html>
