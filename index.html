@@ -126,6 +126,31 @@
             padding: 15px;
             border-radius: 8px;
             margin: 20px 0;
+            position: relative;
+        }
+        
+        .hidden-details {
+            filter: blur(5px);
+            user-select: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .hidden-details:hover {
+            filter: blur(3px);
+        }
+        
+        .reveal-btn {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
         }
         
         .payment-details strong {
@@ -163,11 +188,28 @@
             font-weight: bold;
             margin-top: 10px;
             transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
         }
         
         .btn:hover {
             background: var(--secondary);
             transform: translateY(-2px);
+        }
+        
+        .btn-success {
+            background: var(--success);
+        }
+        
+        .btn-warning {
+            background: var(--warning);
+            color: var(--darker);
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
         }
         
         footer {
@@ -177,6 +219,62 @@
             background: var(--dark);
             border-radius: 10px;
             opacity: 0.8;
+        }
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+        }
+        
+        .modal-content {
+            background-color: var(--dark);
+            margin: 10% auto;
+            padding: 25px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.5);
+            position: relative;
+        }
+        
+        .close {
+            color: var(--light);
+            position: absolute;
+            right: 20px;
+            top: 10px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: var(--secondary);
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--secondary);
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.1);
+            color: var(--light);
         }
         
         /* Music Player Styles */
@@ -278,6 +376,10 @@
             .station-list {
                 grid-template-columns: 1fr;
             }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
@@ -327,6 +429,11 @@
                     </tr>
                 </tbody>
             </table>
+            
+            <div class="action-buttons">
+                <button class="btn btn-success" id="deposit-btn">Deposit Funds</button>
+                <button class="btn btn-warning" id="withdraw-btn">Withdraw Earnings</button>
+            </div>
         </div>
         
         <!-- Music Player Section -->
@@ -381,8 +488,11 @@
                 <div class="step">
                     <h3>Deposit via GCash</h3>
                     <div class="payment-details">
-                        <strong>Account Name:</strong> Jerald Acero<br>
-                        <strong>GCash Number:</strong> 0997 801 4222
+                        <div class="hidden-details" id="gcash-details">
+                            <strong>Account Name:</strong> [Hidden - Click Reveal]<br>
+                            <strong>GCash Number:</strong> [Hidden - Click Reveal]
+                        </div>
+                        <button class="reveal-btn" id="reveal-btn">Reveal Details</button>
                     </div>
                     <p>Send your investment amount (₱50-₱1,000) to the GCash details above.</p>
                 </div>
@@ -399,8 +509,6 @@
                     <p>Enjoy your passive income!</p>
                 </div>
             </div>
-            
-            <a href="#" class="btn">Start Investing Now</a>
         </div>
         
         <div class="card">
@@ -418,8 +526,74 @@
         
         <footer>
             <p>MusicEarn &copy; 2023 | Earn While You Listen</p>
-            <p>Contact us via GCash for any questions</p>
+            <p>Contact us via our support channels for any questions</p>
         </footer>
+    </div>
+
+    <!-- Deposit Modal -->
+    <div id="deposit-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Deposit Funds</h2>
+            <form id="deposit-form">
+                <div class="form-group">
+                    <label for="deposit-amount">Amount (₱50-₱1,000)</label>
+                    <input type="number" id="deposit-amount" min="50" max="1000" required>
+                </div>
+                <div class="form-group">
+                    <label for="deposit-method">Payment Method</label>
+                    <select id="deposit-method" required>
+                        <option value="">Select method</option>
+                        <option value="gcash">GCash</option>
+                        <option value="paymaya">PayMaya</option>
+                    </select>
+                </div>
+                <div class="form-group" id="gcash-instructions" style="display:none;">
+                    <p>Send your payment to:</p>
+                    <div class="payment-details">
+                        <strong>Account Name:</strong> Jerald Acero<br>
+                        <strong>GCash Number:</strong> 0997 801 4222
+                    </div>
+                    <p>After payment, upload screenshot proof below:</p>
+                    <input type="file" id="payment-proof" accept="image/*">
+                </div>
+                <div class="form-group" id="paymaya-instructions" style="display:none;">
+                    <p>Coming soon - PayMaya integration</p>
+                </div>
+                <button type="submit" class="btn btn-success">Submit Deposit</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Withdrawal Modal -->
+    <div id="withdraw-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Withdraw Earnings</h2>
+            <form id="withdraw-form">
+                <div class="form-group">
+                    <label for="withdraw-amount">Amount (Minimum ₱50)</label>
+                    <input type="number" id="withdraw-amount" min="50" required>
+                </div>
+                <div class="form-group">
+                    <label for="withdraw-method">Withdrawal Method</label>
+                    <select id="withdraw-method" required>
+                        <option value="">Select method</option>
+                        <option value="gcash">GCash</option>
+                        <option value="paymaya">PayMaya</option>
+                    </select>
+                </div>
+                <div class="form-group" id="gcash-withdraw-details" style="display:none;">
+                    <label for="gcash-number">GCash Number</label>
+                    <input type="text" id="gcash-number" placeholder="09XXXXXXXXX">
+                </div>
+                <div class="form-group" id="paymaya-withdraw-details" style="display:none;">
+                    <label for="paymaya-number">PayMaya Number</label>
+                    <input type="text" id="paymaya-number" placeholder="09XXXXXXXXX">
+                </div>
+                <button type="submit" class="btn btn-warning">Request Withdrawal</button>
+            </form>
+        </div>
     </div>
 
     <script>
@@ -481,6 +655,15 @@
         let earningInterval;
         let currentEarningRate = 3; // Default ₱3 per song for minimum investment
         const earningTimePerSong = 5 * 60; // 5 minutes in seconds
+        
+        // Modal elements
+        const depositModal = document.getElementById('deposit-modal');
+        const withdrawModal = document.getElementById('withdraw-modal');
+        const depositBtn = document.getElementById('deposit-btn');
+        const withdrawBtn = document.getElementById('withdraw-btn');
+        const closeBtns = document.querySelectorAll('.close');
+        const revealBtn = document.getElementById('reveal-btn');
+        const gcashDetails = document.getElementById('gcash-details');
         
         // Load stations into the list
         function loadStations() {
@@ -578,6 +761,105 @@
             statusElement.textContent = 'ERROR';
             statusElement.className = 'status error';
             clearInterval(earningInterval);
+        });
+        
+        // Modal functionality
+        depositBtn.addEventListener('click', () => {
+            depositModal.style.display = 'block';
+        });
+        
+        withdrawBtn.addEventListener('click', () => {
+            withdrawModal.style.display = 'block';
+        });
+        
+        closeBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                depositModal.style.display = 'none';
+                withdrawModal.style.display = 'none';
+            });
+        });
+        
+        window.addEventListener('click', (e) => {
+            if (e.target === depositModal) {
+                depositModal.style.display = 'none';
+            }
+            if (e.target === withdrawModal) {
+                withdrawModal.style.display = 'none';
+            }
+        });
+        
+        // Reveal GCash details
+        let detailsRevealed = false;
+        revealBtn.addEventListener('click', () => {
+            if (!detailsRevealed) {
+                gcashDetails.innerHTML = `
+                    <strong>Account Name:</strong> Jerald Acero<br>
+                    <strong>GCash Number:</strong> 0997 801 4222
+                `;
+                gcashDetails.style.filter = 'none';
+                revealBtn.textContent = 'Hide Details';
+                detailsRevealed = true;
+            } else {
+                gcashDetails.innerHTML = `
+                    <strong>Account Name:</strong> [Hidden - Click Reveal]<br>
+                    <strong>GCash Number:</strong> [Hidden - Click Reveal]
+                `;
+                gcashDetails.style.filter = 'blur(5px)';
+                revealBtn.textContent = 'Reveal Details';
+                detailsRevealed = false;
+            }
+        });
+        
+        // Payment method selection
+        document.getElementById('deposit-method').addEventListener('change', function() {
+            document.getElementById('gcash-instructions').style.display = 'none';
+            document.getElementById('paymaya-instructions').style.display = 'none';
+            
+            if (this.value === 'gcash') {
+                document.getElementById('gcash-instructions').style.display = 'block';
+            } else if (this.value === 'paymaya') {
+                document.getElementById('paymaya-instructions').style.display = 'block';
+            }
+        });
+        
+        // Withdrawal method selection
+        document.getElementById('withdraw-method').addEventListener('change', function() {
+            document.getElementById('gcash-withdraw-details').style.display = 'none';
+            document.getElementById('paymaya-withdraw-details').style.display = 'none';
+            
+            if (this.value === 'gcash') {
+                document.getElementById('gcash-withdraw-details').style.display = 'block';
+            } else if (this.value === 'paymaya') {
+                document.getElementById('paymaya-withdraw-details').style.display = 'block';
+            }
+        });
+        
+        // Form submissions
+        document.getElementById('deposit-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const amount = document.getElementById('deposit-amount').value;
+            const method = document.getElementById('deposit-method').value;
+            
+            alert(`Deposit request for ₱${amount} via ${method} submitted! Our team will contact you for confirmation.`);
+            depositModal.style.display = 'none';
+            this.reset();
+        });
+        
+        document.getElementById('withdraw-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const amount = document.getElementById('withdraw-amount').value;
+            const method = document.getElementById('withdraw-method').value;
+            let account = '';
+            
+            if (method === 'gcash') {
+                account = document.getElementById('gcash-number').value;
+            } else {
+                account = document.getElementById('paymaya-number').value;
+            }
+            
+            alert(`Withdrawal request for ₱${amount} to ${method} (${account}) submitted! Processing time: 1-3 business days.`);
+            withdrawModal.style.display = 'none';
+            this.reset();
         });
         
         // Initialize the app
