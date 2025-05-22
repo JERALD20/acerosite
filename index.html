@@ -13,6 +13,7 @@
             --light: #e0e0e0;
             --success: #00d1b2;
             --warning: #ffdd57;
+            --error: #ff3860;
         }
         
         body {
@@ -178,6 +179,93 @@
             opacity: 0.8;
         }
         
+        /* Music Player Styles */
+        .player-container {
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+        
+        .player-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .player-header h3 {
+            margin: 0;
+            color: var(--secondary);
+        }
+        
+        .status {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .status.earning {
+            background-color: var(--success);
+            color: var(--darker);
+        }
+        
+        .status.idle {
+            background-color: var(--warning);
+            color: var(--darker);
+        }
+        
+        .status.error {
+            background-color: var(--error);
+            color: white;
+        }
+        
+        .timer-display {
+            text-align: center;
+            font-size: 1.2rem;
+            margin: 10px 0;
+        }
+        
+        .earnings-display {
+            text-align: center;
+            font-size: 1.5rem;
+            color: var(--success);
+            margin: 15px 0;
+        }
+        
+        audio {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .station-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .station-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .station-card:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+        
+        .station-card h4 {
+            margin: 0;
+            color: var(--light);
+        }
+        
         @media (max-width: 768px) {
             .investment-tiers {
                 flex-direction: column;
@@ -185,6 +273,10 @@
             
             h1 {
                 font-size: 2rem;
+            }
+            
+            .station-list {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -235,6 +327,34 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+        
+        <!-- Music Player Section -->
+        <div class="card">
+            <h2>Start Earning Now</h2>
+            <div class="player-container">
+                <div class="player-header">
+                    <h3 id="current-station">Select a station to start earning</h3>
+                    <div class="status idle" id="player-status">IDLE</div>
+                </div>
+                
+                <div class="earnings-display" id="earnings-display">
+                    Earnings Today: ₱0.00
+                </div>
+                
+                <div class="timer-display" id="timer-display">
+                    Time Listened: 0:00 / 5:00
+                </div>
+                
+                <audio controls id="audio-player">
+                    Your browser does not support the audio element.
+                </audio>
+                
+                <h4>Available Stations:</h4>
+                <div class="station-list" id="station-list">
+                    <!-- Stations will be loaded from JavaScript -->
+                </div>
+            </div>
         </div>
         
         <div class="card">
@@ -291,6 +411,8 @@
                 <li>No referral system - earnings come purely from music listening</li>
                 <li>Account will be activated within 24 hours after payment confirmation</li>
                 <li>Withdrawals are processed within 1-3 business days</li>
+                <li>Earnings are only counted when music is actively playing</li>
+                <li>System detects background playback - don't mute or pause to earn</li>
             </ul>
         </div>
         
@@ -299,5 +421,179 @@
             <p>Contact us via GCash for any questions</p>
         </footer>
     </div>
+
+    <script>
+        // Radio stations data
+        const stations = [
+            {
+                "name": "Love Radio",
+                "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/LOVERADIO_MNL_SC"
+            },
+            {
+                "name": "Win Radio",
+                "url": "https://stream.zeno.fm/2ss1hgnu6hhvv"
+            },
+            {
+                "name": "Barangay LS",
+                "url": "https://stream.zeno.fm/dphe9050afhvv"
+            },
+            {
+                "name": "DZRH News Radio",
+                "url": "https://a3.asurahosting.com:6910/stream/1/"
+            },
+            {
+                "name": "Bombo Radio Davao City",
+                "url": "https://stream.zeno.fm/n6uph8kyd0quv"
+            },
+            {
+                "name": "iFM Cebu City",
+                "url": "https://magic.radioca.st/stream/1/"
+            },
+            {
+                "name": "Eazy Rock Radio Baguio",
+                "url": "https://easyrockbaguio.radioca.st/;"
+            },
+            {
+                "name": "Yes! FM",
+                "url": "https://yesfmzamboanga.radioca.st/;"
+            },
+            {
+                "name": "Eagle FM",
+                "url": "https://stream.radiojar.com/yus0r2bghd3vv"
+            },
+            {
+                "name": "Magic 89.9",
+                "url": "https://stream-36.zeno.fm/sh37pvfd938uv"
+            }
+        ];
+
+        // DOM elements
+        const audioPlayer = document.getElementById('audio-player');
+        const statusElement = document.getElementById('player-status');
+        const currentStationElement = document.getElementById('current-station');
+        const stationListElement = document.getElementById('station-list');
+        const timerDisplay = document.getElementById('timer-display');
+        const earningsDisplay = document.getElementById('earnings-display');
+        
+        // Earning variables
+        let totalEarnings = 0;
+        let timeListened = 0;
+        let earningInterval;
+        let currentEarningRate = 3; // Default ₱3 per song for minimum investment
+        const earningTimePerSong = 5 * 60; // 5 minutes in seconds
+        
+        // Load stations into the list
+        function loadStations() {
+            stationListElement.innerHTML = '';
+            
+            stations.forEach(station => {
+                const stationCard = document.createElement('div');
+                stationCard.className = 'station-card';
+                stationCard.innerHTML = `<h4>${station.name}</h4>`;
+                
+                stationCard.addEventListener('click', () => {
+                    playStation(station);
+                });
+                
+                stationListElement.appendChild(stationCard);
+            });
+        }
+        
+        // Play selected station
+        function playStation(station) {
+            currentStationElement.textContent = station.name;
+            statusElement.textContent = 'CONNECTING';
+            statusElement.className = 'status idle';
+            
+            audioPlayer.src = station.url;
+            audioPlayer.load();
+            
+            audioPlayer.play().then(() => {
+                statusElement.textContent = 'EARNING';
+                statusElement.className = 'status earning';
+                startEarningTimer();
+            }).catch(e => {
+                statusElement.textContent = 'ERROR';
+                statusElement.className = 'status error';
+                console.error('Playback failed:', e);
+            });
+        }
+        
+        // Start earning timer
+        function startEarningTimer() {
+            clearInterval(earningInterval);
+            timeListened = 0;
+            
+            earningInterval = setInterval(() => {
+                timeListened++;
+                updateTimerDisplay();
+                
+                // Calculate earnings based on time listened
+                if (timeListened >= earningTimePerSong) {
+                    completeEarningTask();
+                }
+            }, 1000);
+        }
+        
+        // Update timer display
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeListened / 60);
+            const seconds = timeListened % 60;
+            timerDisplay.textContent = `Time Listened: ${minutes}:${seconds.toString().padStart(2, '0')} / 5:00`;
+        }
+        
+        // Complete earning task
+        function completeEarningTask() {
+            totalEarnings += currentEarningRate;
+            earningsDisplay.textContent = `Earnings Today: ₱${totalEarnings.toFixed(2)}`;
+            
+            // Reset timer for next song
+            timeListened = 0;
+            updateTimerDisplay();
+            
+            // Notify user
+            alert(`Congratulations! You earned ₱${currentEarningRate} for listening to this song.`);
+        }
+        
+        // Event listeners for audio player
+        audioPlayer.addEventListener('playing', () => {
+            statusElement.textContent = 'EARNING';
+            statusElement.className = 'status earning';
+            startEarningTimer();
+        });
+        
+        audioPlayer.addEventListener('pause', () => {
+            statusElement.textContent = 'PAUSED';
+            statusElement.className = 'status idle';
+            clearInterval(earningInterval);
+        });
+        
+        audioPlayer.addEventListener('ended', () => {
+            statusElement.textContent = 'COMPLETED';
+            statusElement.className = 'status idle';
+            clearInterval(earningInterval);
+        });
+        
+        audioPlayer.addEventListener('error', () => {
+            statusElement.textContent = 'ERROR';
+            statusElement.className = 'status error';
+            clearInterval(earningInterval);
+        });
+        
+        // Initialize the app
+        loadStations();
+        
+        // Simulate different earning rates based on investment
+        function setEarningRate(investmentAmount) {
+            if (investmentAmount >= 500) {
+                currentEarningRate = 5;
+            } else {
+                currentEarningRate = 3;
+            }
+        }
+        
+        // For demo purposes - in real app this would come from user account
+        setEarningRate(50); // Default to minimum investment rate
+    </script>
 </body>
 </html>
