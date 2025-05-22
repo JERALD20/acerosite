@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MusicEarn - Earn by Listening to Music</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary: #6a5acd;
@@ -14,6 +15,7 @@
             --success: #00d1b2;
             --warning: #ffdd57;
             --error: #ff3860;
+            --info: #3298dc;
         }
         
         body {
@@ -38,6 +40,18 @@
             border-radius: 10px;
             margin-bottom: 30px;
             color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.3);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
         }
         
         h1 {
@@ -56,6 +70,19 @@
             padding: 25px;
             margin-bottom: 25px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        
+        .card-badge {
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
         }
         
         h2 {
@@ -206,10 +233,15 @@
             color: var(--darker);
         }
         
+        .btn-info {
+            background: var(--info);
+        }
+        
         .action-buttons {
             display: flex;
             gap: 15px;
             margin-top: 20px;
+            flex-wrap: wrap;
         }
         
         footer {
@@ -275,6 +307,46 @@
             border: 1px solid rgba(255,255,255,0.2);
             background: rgba(255,255,255,0.1);
             color: var(--light);
+        }
+        
+        /* Stats Dashboard */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .stat-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .stat-card h3 {
+            margin-top: 0;
+            color: var(--secondary);
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .stat-value.earnings {
+            color: var(--success);
+        }
+        
+        .stat-value.referrals {
+            color: var(--info);
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
         }
         
         /* Music Player Styles */
@@ -364,6 +436,35 @@
             color: var(--light);
         }
         
+        /* Referral Section */
+        .referral-box {
+            background: rgba(0,209,178,0.1);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid var(--info);
+        }
+        
+        .referral-link {
+            background: rgba(0,0,0,0.3);
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            word-break: break-all;
+            margin: 10px 0;
+        }
+        
+        .copy-btn {
+            background: var(--info);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-left: 10px;
+        }
+        
         @media (max-width: 768px) {
             .investment-tiers {
                 flex-direction: column;
@@ -380,64 +481,93 @@
             .action-buttons {
                 flex-direction: column;
             }
+            
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
+            <div class="header-badge">24/7 Withdrawals</div>
             <h1>MusicEarn</h1>
             <p class="tagline">Earn Money by Listening to Music</p>
         </header>
+        
+        <!-- Stats Dashboard -->
+        <div class="card">
+            <div class="card-badge">Your Earnings</div>
+            <h2>Dashboard</h2>
+            <div class="stats-container">
+                <div class="stat-card">
+                    <h3>Total Earnings</h3>
+                    <div class="stat-value earnings">₱0.00</div>
+                    <div class="stat-label">Available to withdraw</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Today's Earnings</h3>
+                    <div class="stat-value earnings">₱0.00</div>
+                    <div class="stat-label">From listening</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Referral Earnings</h3>
+                    <div class="stat-value referrals">₱0.00</div>
+                    <div class="stat-label">From 0 referrals</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Withdrawals</h3>
+                    <div class="stat-value">0</div>
+                    <div class="stat-label">Total processed</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Referral Section -->
+        <div class="card">
+            <h2>Referral Program</h2>
+            <div class="referral-box">
+                <p><i class="fas fa-link"></i> <strong>Earn ₱1 for every active referral!</strong> Share your link and earn when they complete daily tasks.</p>
+                <div class="referral-link" id="referral-link">
+                    https://musicearn.ph/ref=user123
+                </div>
+                <button class="copy-btn" id="copy-btn">
+                    <i class="fas fa-copy"></i> Copy Link
+                </button>
+                <p><small>Note: You only earn when referrals complete their daily tasks</small></p>
+            </div>
+        </div>
         
         <div class="card">
             <h2>Investment Plan</h2>
             <p>Earn passive income simply by listening to music! Our unique platform allows you to grow your money while enjoying your favorite tunes.</p>
             
             <div class="highlight">
-                <strong>💰 Earnings:</strong> ₱5 per song listened (up to 5 minutes per song)<br>
+                <strong>💰 Earnings:</strong> ₱3 per day (3 songs)<br>
                 <strong>💳 Minimum Investment:</strong> ₱50<br>
                 <strong>💵 Maximum Investment:</strong> ₱1,000<br>
-                <strong>📤 Withdrawal Methods:</strong> GCash & PayMaya
+                <strong>⏳ Cycle Duration:</strong> 20 days<br>
+                <strong>📤 Withdrawal Methods:</strong> GCash (Auto-Processed)<br>
+                <strong>💸 Minimum Withdrawal:</strong> ₱25
             </div>
             
-            <h3>Investment Tiers & Earnings</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Investment Amount</th>
-                        <th>Earnings per Task</th>
-                        <th>Tasks per Day</th>
-                        <th>Cycle Duration</th>
-                        <th>Estimated Monthly Earnings</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>₱50 - ₱499</td>
-                        <td>₱3 per song</td>
-                        <td>3 tasks/day</td>
-                        <td>30 days</td>
-                        <td>₱270 (₱3 × 3 × 30)</td>
-                    </tr>
-                    <tr>
-                        <td>₱500 - ₱1,000</td>
-                        <td>₱5 per song</td>
-                        <td>5 tasks/day</td>
-                        <td>30 days</td>
-                        <td>₱750 (₱5 × 5 × 30)</td>
-                    </tr>
-                </tbody>
-            </table>
-            
             <div class="action-buttons">
-                <button class="btn btn-success" id="deposit-btn">Deposit Funds</button>
-                <button class="btn btn-warning" id="withdraw-btn">Withdraw Earnings</button>
+                <button class="btn btn-success" id="deposit-btn">
+                    <i class="fas fa-money-bill-wave"></i> Deposit Now
+                </button>
+                <button class="btn btn-warning" id="withdraw-btn">
+                    <i class="fas fa-wallet"></i> Withdraw Earnings
+                </button>
+                <button class="btn btn-info" id="earnings-btn">
+                    <i class="fas fa-chart-line"></i> View Earnings
+                </button>
             </div>
         </div>
         
         <!-- Music Player Section -->
         <div class="card">
+            <div class="card-badge">Earn Now</div>
             <h2>Start Earning Now</h2>
             <div class="player-container">
                 <div class="player-header">
@@ -465,48 +595,28 @@
         </div>
         
         <div class="card">
-            <h2>Key Features</h2>
-            <div class="investment-tiers">
-                <div class="tier">
-                    <h3>24/7 Income</h3>
-                    <p>Earn anytime, anywhere! Our system works around the clock to generate income for you.</p>
-                </div>
-                <div class="tier">
-                    <h3>Flexible Withdrawals</h3>
-                    <p>Cash out your earnings anytime via GCash or PayMaya with minimum ₱50 withdrawal.</p>
-                </div>
-                <div class="tier">
-                    <h3>Passive Earnings</h3>
-                    <p>Just listen to music and earn money without any complex requirements.</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="card">
-            <h2>How to Invest?</h2>
+            <h2>How It Works</h2>
             <div class="steps">
                 <div class="step">
                     <h3>Deposit via GCash</h3>
                     <div class="payment-details">
                         <div class="hidden-details" id="gcash-details">
-                            <strong>Account Name:</strong> [Hidden - Click Reveal]<br>
+                            <strong>Account Name:</strong> JE***D A.<br>
                             <strong>GCash Number:</strong> [Hidden - Click Reveal]
                         </div>
                         <button class="reveal-btn" id="reveal-btn">Reveal Details</button>
                     </div>
-                    <p>Send your investment amount (₱50-₱1,000) to the GCash details above.</p>
+                    <p>Send your investment amount (₱50-₱1,000) to the GCash details above. Your account will be activated automatically within minutes.</p>
                 </div>
                 
                 <div class="step">
                     <h3>Start Earning</h3>
-                    <p>Once your deposit is confirmed, you'll receive login details to access your account.</p>
-                    <p>Complete your daily listening tasks (3-5 songs per day depending on your investment tier).</p>
+                    <p>Complete your 3 daily listening tasks (5 minutes per song). Earn ₱3 per day with ₱50 investment.</p>
                 </div>
                 
                 <div class="step">
                     <h3>Withdraw Earnings</h3>
-                    <p>Request withdrawals anytime via GCash or PayMaya once you reach the ₱50 minimum.</p>
-                    <p>Enjoy your passive income!</p>
+                    <p>Request withdrawals anytime (minimum ₱25) via GCash. Withdrawals are auto-processed 24/7, limit once per day.</p>
                 </div>
             </div>
         </div>
@@ -514,13 +624,14 @@
         <div class="card">
             <h2>Terms & Conditions</h2>
             <ul>
-                <li>Each task = 1 song (5 minutes maximum listening time)</li>
-                <li>Minimum withdrawal amount: ₱50</li>
-                <li>No referral system - earnings come purely from music listening</li>
-                <li>Account will be activated within 24 hours after payment confirmation</li>
-                <li>Withdrawals are processed within 1-3 business days</li>
-                <li>Earnings are only counted when music is actively playing</li>
+                <li>₱3 daily earnings with ₱50 minimum investment (3 songs per day)</li>
+                <li>20-day investment cycle</li>
+                <li>₱25 minimum withdrawal via GCash only</li>
+                <li>Auto-processed withdrawals (processed within 1 hour)</li>
+                <li>1 withdrawal per day maximum</li>
+                <li>₱1 per active referral (must complete daily tasks)</li>
                 <li>System detects background playback - don't mute or pause to earn</li>
+                <li>No refunds on investments</li>
             </ul>
         </div>
         
@@ -534,33 +645,28 @@
     <div id="deposit-modal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>Deposit Funds</h2>
+            <h2><i class="fas fa-money-bill-wave"></i> Deposit Funds</h2>
             <form id="deposit-form">
                 <div class="form-group">
                     <label for="deposit-amount">Amount (₱50-₱1,000)</label>
                     <input type="number" id="deposit-amount" min="50" max="1000" required>
                 </div>
+                
+                <div class="payment-details">
+                    <p><strong>Send payment to:</strong></p>
+                    <p><strong>Account Name:</strong> JE***D A.</p>
+                    <p><strong>GCash Number:</strong> 0997***222</p>
+                    <p>After payment, your account will be activated automatically within 5 minutes.</p>
+                </div>
+                
                 <div class="form-group">
-                    <label for="deposit-method">Payment Method</label>
-                    <select id="deposit-method" required>
-                        <option value="">Select method</option>
-                        <option value="gcash">GCash</option>
-                        <option value="paymaya">PayMaya</option>
-                    </select>
+                    <label for="payment-proof">Upload Payment Proof (Screenshot)</label>
+                    <input type="file" id="payment-proof" accept="image/*" required>
                 </div>
-                <div class="form-group" id="gcash-instructions" style="display:none;">
-                    <p>Send your payment to:</p>
-                    <div class="payment-details">
-                        <strong>Account Name:</strong> Jerald Acero<br>
-                        <strong>GCash Number:</strong> 0997 801 4222
-                    </div>
-                    <p>After payment, upload screenshot proof below:</p>
-                    <input type="file" id="payment-proof" accept="image/*">
-                </div>
-                <div class="form-group" id="paymaya-instructions" style="display:none;">
-                    <p>Coming soon - PayMaya integration</p>
-                </div>
-                <button type="submit" class="btn btn-success">Submit Deposit</button>
+                
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-check"></i> Confirm Deposit
+                </button>
             </form>
         </div>
     </div>
@@ -569,30 +675,90 @@
     <div id="withdraw-modal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>Withdraw Earnings</h2>
+            <h2><i class="fas fa-wallet"></i> Withdraw Earnings</h2>
             <form id="withdraw-form">
                 <div class="form-group">
-                    <label for="withdraw-amount">Amount (Minimum ₱50)</label>
-                    <input type="number" id="withdraw-amount" min="50" required>
+                    <label for="withdraw-amount">Amount (Minimum ₱25)</label>
+                    <input type="number" id="withdraw-amount" min="25" required>
                 </div>
+                
                 <div class="form-group">
-                    <label for="withdraw-method">Withdrawal Method</label>
-                    <select id="withdraw-method" required>
-                        <option value="">Select method</option>
-                        <option value="gcash">GCash</option>
-                        <option value="paymaya">PayMaya</option>
-                    </select>
-                </div>
-                <div class="form-group" id="gcash-withdraw-details" style="display:none;">
                     <label for="gcash-number">GCash Number</label>
-                    <input type="text" id="gcash-number" placeholder="09XXXXXXXXX">
+                    <input type="text" id="gcash-number" placeholder="09XXXXXXXXX" required>
                 </div>
-                <div class="form-group" id="paymaya-withdraw-details" style="display:none;">
-                    <label for="paymaya-number">PayMaya Number</label>
-                    <input type="text" id="paymaya-number" placeholder="09XXXXXXXXX">
+                
+                <div class="highlight">
+                    <p><i class="fas fa-info-circle"></i> Withdrawals are auto-processed within 1 hour. Maximum 1 withdrawal per day.</p>
                 </div>
-                <button type="submit" class="btn btn-warning">Request Withdrawal</button>
+                
+                <button type="submit" class="btn btn-warning">
+                    <i class="fas fa-paper-plane"></i> Request Withdrawal
+                </button>
             </form>
+        </div>
+    </div>
+
+    <!-- Earnings Modal -->
+    <div id="earnings-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2><i class="fas fa-chart-line"></i> Earnings Details</h2>
+            
+            <h3>Listening Earnings</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Songs</th>
+                        <th>Earnings</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Today</td>
+                        <td>0/3</td>
+                        <td>₱0.00</td>
+                    </tr>
+                    <tr>
+                        <td>Yesterday</td>
+                        <td>3/3</td>
+                        <td>₱3.00</td>
+                    </tr>
+                    <tr>
+                        <td>This Week</td>
+                        <td>9/9</td>
+                        <td>₱9.00</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>Referral Earnings</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Referral</th>
+                        <th>Active Days</th>
+                        <th>Earnings</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>user456</td>
+                        <td>5</td>
+                        <td>₱5.00</td>
+                    </tr>
+                    <tr>
+                        <td>user789</td>
+                        <td>2</td>
+                        <td>₱2.00</td>
+                    </tr>
+                    <tr>
+                        <td>Total</td>
+                        <td>7</td>
+                        <td>₱7.00</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
@@ -650,20 +816,34 @@
         const earningsDisplay = document.getElementById('earnings-display');
         
         // Earning variables
-        let totalEarnings = 0;
+        let totalEarnings = 7.00; // Sample data
+        let todayEarnings = 0.00;
+        let referralEarnings = 7.00;
         let timeListened = 0;
+        let songsCompleted = 0;
         let earningInterval;
-        let currentEarningRate = 3; // Default ₱3 per song for minimum investment
         const earningTimePerSong = 5 * 60; // 5 minutes in seconds
         
         // Modal elements
         const depositModal = document.getElementById('deposit-modal');
         const withdrawModal = document.getElementById('withdraw-modal');
+        const earningsModal = document.getElementById('earnings-modal');
         const depositBtn = document.getElementById('deposit-btn');
         const withdrawBtn = document.getElementById('withdraw-btn');
+        const earningsBtn = document.getElementById('earnings-btn');
         const closeBtns = document.querySelectorAll('.close');
         const revealBtn = document.getElementById('reveal-btn');
         const gcashDetails = document.getElementById('gcash-details');
+        const copyBtn = document.getElementById('copy-btn');
+        const referralLink = document.getElementById('referral-link');
+        
+        // Update stats display
+        function updateStats() {
+            document.querySelector('.stat-value.earnings').textContent = `₱${totalEarnings.toFixed(2)}`;
+            document.querySelectorAll('.stat-value.earnings')[1].textContent = `₱${todayEarnings.toFixed(2)}`;
+            document.querySelector('.stat-value.referrals').textContent = `₱${referralEarnings.toFixed(2)}`;
+            earningsDisplay.textContent = `Earnings Today: ₱${todayEarnings.toFixed(2)}`;
+        }
         
         // Load stations into the list
         function loadStations() {
@@ -712,7 +892,7 @@
                 updateTimerDisplay();
                 
                 // Calculate earnings based on time listened
-                if (timeListened >= earningTimePerSong) {
+                if (timeListened >= earningTimePerSong && songsCompleted < 3) {
                     completeEarningTask();
                 }
             }, 1000);
@@ -727,15 +907,21 @@
         
         // Complete earning task
         function completeEarningTask() {
-            totalEarnings += currentEarningRate;
-            earningsDisplay.textContent = `Earnings Today: ₱${totalEarnings.toFixed(2)}`;
+            songsCompleted++;
+            todayEarnings += 1.00;
+            totalEarnings += 1.00;
             
             // Reset timer for next song
             timeListened = 0;
             updateTimerDisplay();
+            updateStats();
             
-            // Notify user
-            alert(`Congratulations! You earned ₱${currentEarningRate} for listening to this song.`);
+            // Notify user if they completed all daily tasks
+            if (songsCompleted === 3) {
+                alert(`Daily tasks completed! You earned ₱3.00 today.`);
+            } else {
+                alert(`Song completed! You earned ₱1.00 (${songsCompleted}/3 daily tasks)`);
+            }
         }
         
         // Event listeners for audio player
@@ -772,10 +958,15 @@
             withdrawModal.style.display = 'block';
         });
         
+        earningsBtn.addEventListener('click', () => {
+            earningsModal.style.display = 'block';
+        });
+        
         closeBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 depositModal.style.display = 'none';
                 withdrawModal.style.display = 'none';
+                earningsModal.style.display = 'none';
             });
         });
         
@@ -786,6 +977,9 @@
             if (e.target === withdrawModal) {
                 withdrawModal.style.display = 'none';
             }
+            if (e.target === earningsModal) {
+                earningsModal.style.display = 'none';
+            }
         });
         
         // Reveal GCash details
@@ -793,7 +987,7 @@
         revealBtn.addEventListener('click', () => {
             if (!detailsRevealed) {
                 gcashDetails.innerHTML = `
-                    <strong>Account Name:</strong> Jerald Acero<br>
+                    <strong>Account Name:</strong> JE***D A.<br>
                     <strong>GCash Number:</strong> 0997 801 4222
                 `;
                 gcashDetails.style.filter = 'none';
@@ -801,7 +995,7 @@
                 detailsRevealed = true;
             } else {
                 gcashDetails.innerHTML = `
-                    <strong>Account Name:</strong> [Hidden - Click Reveal]<br>
+                    <strong>Account Name:</strong> JE***D A.<br>
                     <strong>GCash Number:</strong> [Hidden - Click Reveal]
                 `;
                 gcashDetails.style.filter = 'blur(5px)';
@@ -810,37 +1004,21 @@
             }
         });
         
-        // Payment method selection
-        document.getElementById('deposit-method').addEventListener('change', function() {
-            document.getElementById('gcash-instructions').style.display = 'none';
-            document.getElementById('paymaya-instructions').style.display = 'none';
-            
-            if (this.value === 'gcash') {
-                document.getElementById('gcash-instructions').style.display = 'block';
-            } else if (this.value === 'paymaya') {
-                document.getElementById('paymaya-instructions').style.display = 'block';
-            }
-        });
-        
-        // Withdrawal method selection
-        document.getElementById('withdraw-method').addEventListener('change', function() {
-            document.getElementById('gcash-withdraw-details').style.display = 'none';
-            document.getElementById('paymaya-withdraw-details').style.display = 'none';
-            
-            if (this.value === 'gcash') {
-                document.getElementById('gcash-withdraw-details').style.display = 'block';
-            } else if (this.value === 'paymaya') {
-                document.getElementById('paymaya-withdraw-details').style.display = 'block';
-            }
+        // Copy referral link
+        copyBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(referralLink.textContent.trim());
+            copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+            setTimeout(() => {
+                copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy Link';
+            }, 2000);
         });
         
         // Form submissions
         document.getElementById('deposit-form').addEventListener('submit', function(e) {
             e.preventDefault();
             const amount = document.getElementById('deposit-amount').value;
-            const method = document.getElementById('deposit-method').value;
             
-            alert(`Deposit request for ₱${amount} via ${method} submitted! Our team will contact you for confirmation.`);
+            alert(`Deposit request for ₱${amount} submitted! Your account will be activated within 5 minutes after verification.`);
             depositModal.style.display = 'none';
             this.reset();
         });
@@ -848,34 +1026,20 @@
         document.getElementById('withdraw-form').addEventListener('submit', function(e) {
             e.preventDefault();
             const amount = document.getElementById('withdraw-amount').value;
-            const method = document.getElementById('withdraw-method').value;
-            let account = '';
+            const gcashNumber = document.getElementById('gcash-number').value;
             
-            if (method === 'gcash') {
-                account = document.getElementById('gcash-number').value;
-            } else {
-                account = document.getElementById('paymaya-number').value;
-            }
-            
-            alert(`Withdrawal request for ₱${amount} to ${method} (${account}) submitted! Processing time: 1-3 business days.`);
+            alert(`Withdrawal request for ₱${amount} to GCash (${gcashNumber}) submitted! Funds will arrive within 1 hour.`);
             withdrawModal.style.display = 'none';
+            
+            // Deduct from total earnings (in real app this would be server-side)
+            totalEarnings -= parseFloat(amount);
+            updateStats();
             this.reset();
         });
         
         // Initialize the app
         loadStations();
-        
-        // Simulate different earning rates based on investment
-        function setEarningRate(investmentAmount) {
-            if (investmentAmount >= 500) {
-                currentEarningRate = 5;
-            } else {
-                currentEarningRate = 3;
-            }
-        }
-        
-        // For demo purposes - in real app this would come from user account
-        setEarningRate(50); // Default to minimum investment rate
+        updateStats();
     </script>
 </body>
 </html>
