@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RADIO - Online Radio Player</title>
+    <title>ACERO RADIO - Premium Online Radio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary: #8a7cff;
-            --secondary: #6a5acd;
+            --primary-dark: #6a5acd;
+            --primary-light: #b3abff;
             --dark: #121212;
             --darker: #0a0a0a;
             --light: #e0e0e0;
@@ -15,6 +17,13 @@
             --success: #00d1b2;
             --error: #ff3860;
             --warning: #ffdd57;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-hover: rgba(255, 255, 255, 0.1);
+        }
+        
+        * {
+            box-sizing: border-box;
+            transition: background-color 0.2s ease, transform 0.2s ease;
         }
         
         body {
@@ -23,66 +32,106 @@
             margin: 0;
             padding: 20px;
             color: var(--light);
-            height: 100vh;
-            overflow: hidden;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
         
         .container {
-            max-width: 800px;
+            max-width: 1000px;
             margin: 0 auto;
-            height: calc(100vh - 40px);
+            min-height: calc(100vh - 40px);
             display: flex;
             flex-direction: column;
+            gap: 20px;
         }
         
         header {
             text-align: center;
-            margin-bottom: 20px;
             flex-shrink: 0;
+            position: relative;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .logo-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
         }
         
         h1 {
             color: var(--primary);
-            font-size: 2.2rem;
-            margin-bottom: 5px;
+            font-size: 2.5rem;
+            margin: 0;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 10px rgba(138, 124, 255, 0.3);
         }
         
         .tagline {
             color: var(--light);
             opacity: 0.8;
-            margin-bottom: 20px;
-            font-size: 1rem;
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+        
+        .version {
+            background: var(--primary-dark);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            display: inline-block;
         }
         
         .player-container {
             background: var(--dark);
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            margin-bottom: 20px;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            margin-bottom: 10px;
             flex-shrink: 0;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
         
         .station-info {
             display: flex;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            gap: 15px;
         }
         
         .station-name {
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             font-weight: bold;
-            color: var(--primary);
-            margin-right: 15px;
+            color: var(--primary-light);
+            flex-grow: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         
         .status {
-            padding: 4px 10px;
+            padding: 6px 12px;
             border-radius: 20px;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             font-weight: bold;
-            background-color: var(--secondary);
+            background-color: var(--primary-dark);
             color: white;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+        
+        .status i {
+            font-size: 0.8rem;
         }
         
         .status.playing {
@@ -100,68 +149,205 @@
             color: var(--darker);
         }
         
+        .audio-container {
+            position: relative;
+            margin-bottom: 10px;
+        }
+        
         audio {
             width: 100%;
-            margin-bottom: 15px;
-            border-radius: 8px;
-            filter: invert(0.9);
+            border-radius: 10px;
+            filter: invert(0.9) hue-rotate(180deg) contrast(0.8) brightness(1.2);
+        }
+        
+        /* Custom audio controls */
+        audio::-webkit-media-controls-panel {
+            background-color: var(--dark);
+            border-radius: 10px;
+        }
+        
+        audio::-webkit-media-controls-play-button,
+        audio::-webkit-media-controls-mute-button {
+            filter: invert(1);
         }
         
         .stations-container {
             background: var(--dark);
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             flex-grow: 1;
             overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
         }
         
         h2 {
             color: var(--primary);
-            font-size: 1.5rem;
-            margin-top: 0;
-            margin-bottom: 15px;
+            font-size: 1.6rem;
+            margin: 0;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .station-count {
+            background: var(--primary-dark);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .search-box {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 8px 15px;
+            color: var(--light);
+            font-size: 0.9rem;
+            width: 250px;
+        }
+        
+        .search-box:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(138, 124, 255, 0.3);
         }
         
         .station-list {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 12px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
         }
         
         .station-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            padding: 12px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 18px;
             cursor: pointer;
-            transition: all 0.2s ease;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
         
         .station-card:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-2px);
+            background: var(--card-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .station-card.active {
+            border: 1px solid var(--primary);
+            background: rgba(138, 124, 255, 0.1);
+        }
+        
+        .station-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .station-icon i {
+            color: white;
+            font-size: 1.2rem;
         }
         
         .station-card h3 {
             margin: 0;
             color: var(--lighter);
             font-size: 1rem;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .station-card p {
+            margin: 3px 0 0;
+            color: var(--light);
+            opacity: 0.7;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         
         footer {
             text-align: center;
-            margin-top: 20px;
+            margin-top: auto;
             color: var(--light);
             opacity: 0.6;
-            font-size: 0.8rem;
-            flex-shrink: 1;
+            font-size: 0.85rem;
+            padding: 15px 0;
         }
         
-        @media (max-width: 600px) {
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 10px;
+        }
+        
+        .footer-links a {
+            color: var(--primary-light);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Loading animation */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .spinner {
+            animation: spin 1s linear infinite;
+            display: inline-block;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
             .container {
                 padding: 15px;
-                height: calc(100vh - 30px);
+                gap: 15px;
             }
             
             .station-list {
@@ -169,198 +355,320 @@
             }
             
             h1 {
-                font-size: 1.8rem;
+                font-size: 2rem;
+            }
+            
+            .logo-icon {
+                font-size: 2rem;
+            }
+            
+            .player-container,
+            .stations-container {
+                padding: 18px;
+            }
+            
+            .search-box {
+                width: 100%;
+                margin-top: 10px;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
             }
         }
         
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 4px;
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: var(--primary);
-            border-radius: 4px;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--secondary);
+        @media (max-width: 480px) {
+            .station-info {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            
+            .status {
+                align-self: flex-start;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>ACERO RADIO</h1>
-            <p class="tagline">welcome to our beta radio station</p>
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-broadcast-tower"></i>
+                </div>
+                <h1>ACERO RADIO</h1>
+            </div>
+            <p class="tagline">Stream your favorite stations in high quality</p>
+            <span class="version">BETA v1.1</span>
         </header>
         
         <div class="player-container">
             <div class="station-info">
-                <div class="station-name" id="current-station">Select Your Want</div>
-                <div class="status" id="status">IDLE</div>
+                <div class="station-name" id="current-station">Select a station to begin</div>
+                <div class="status" id="status">
+                    <i class="fas fa-pause"></i>
+                    <span>IDLE</span>
+                </div>
             </div>
-            <audio controls id="audio-player">
-                Your browser does not support the audio element.
-            </audio>
+            <div class="audio-container">
+                <audio controls id="audio-player">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
         </div>
         
         <div class="stations-container">
-            <h2>Available Radio Stations</h2>
+            <div class="section-header">
+                <h2>
+                    <i class="fas fa-list"></i>
+                    <span>Available Stations</span>
+                    <span class="station-count" id="station-count">0</span>
+                </h2>
+                <input type="text" class="search-box" id="search-box" placeholder="Search stations...">
+            </div>
             <div class="station-list" id="station-list">
                 <!-- Stations will be loaded from JSON -->
             </div>
         </div>
         
         <footer>
-            RADIO Player &copy; 2023 | Stream your favorite stations
+            <div>ACERO RADIO Player &copy; 2023 | Premium Streaming Experience</div>
+            <div class="footer-links">
+                <a href="#"><i class="fas fa-info-circle"></i> About</a>
+                <a href="#"><i class="fas fa-cog"></i> Settings</a>
+                <a href="#"><i class="fas fa-headphones"></i> Support</a>
+                <a href="#"><i class="fas fa-share-alt"></i> Share</a>
+            </div>
         </footer>
     </div>
 
     <script>
-        // Radio stations data
+        // Enhanced radio stations data with genres
         const stations = [
-{
-"name": "Love Radio",
-"url": "https://playerservices.streamtheworld.com/api/livestream-redirect/LOVERADIO_MNL_SC"
-},
-{
-"name": "Win Radio",
-"url": "https://stream.zeno.fm/2ss1hgnu6hhvv"
-},
-{
-"name": "Barangay LS",
-"url": "https://stream.zeno.fm/dphe9050afhvv"
-},
-{
-"name": "DZRH News Radio",
-"url": "https://a3.asurahosting.com:6910/stream/1/"
-},
-{
-"name": "Bombo Radio Davao City",
-"url": "https://stream.zeno.fm/n6uph8kyd0quv"
-},
-{
-"name": "iFM Cebu City",
-"url": "https://magic.radioca.st/stream/1/"
-},
-{
-"name": "Eazy Rock Radio Baguio",
-"url": "https://easyrockbaguio.radioca.st/;"
-},
-{
-"name": "Yes! FM",
-"url": "https://yesfmzamboanga.radioca.st/;"
-},
-{
-"name": "Eagle FM",
-"url": "https://stream.radiojar.com/yus0r2bghd3vv"
-},
-{
-"name": "Republ1ka FM1",
-"url": "https://cast.tunzilla.com/http://122.53.138.32:8000/dxfo.mp3"
-},
-{
-"name": "Magic 89.9",
-"url": "https://stream-36.zeno.fm/sh37pvfd938uv"
-},
-{
-"name": "MOR 101.9 FM",
-"url": "https://stream-149.zeno.fm/0ha8ftewqp8uv?zt=eyJhbGciOiJIUzI1NiJ9.eyJzdHJlYW0iOiIwaGE4ZnRld3FwOHV2IiwiaG9zdCI6InN0cmVhbS0xNDkuemVuby5mbSIsInJ0dGwiOjUsImp0aSI6IndEdzlGZ29qUmx5VTQzSHlxMkpvNVEiLCJpYXQiOjE3NDc3MzYwMjUsImV4cCI6MTc0NzczNjA4NX0.tO0kUP1Ryq4Sk2xM1lco3FMGwBY2fM0AX5JBryMBFKU"
-},
-{
-"name": "STAR FM",
-"url": "https://stream.zeno.fm/536cwdq78heuv"
-},
-{
-"name": "MONSTER RADIO",
-"url": "https://in-icecast.eradioportal.com:8443/monsterrrx"
-}
-
-];
+            {
+                "name": "Love Radio",
+                "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/LOVERADIO_MNL_SC",
+                "genre": "Pop"
+            },
+            {
+                "name": "Win Radio",
+                "url": "https://stream.zeno.fm/2ss1hgnu6hhvv",
+                "genre": "Variety"
+            },
+            {
+                "name": "Barangay LS",
+                "url": "https://stream.zeno.fm/dphe9050afhvv",
+                "genre": "Talk"
+            },
+            {
+                "name": "DZRH News Radio",
+                "url": "https://a3.asurahosting.com:6910/stream/1/",
+                "genre": "News"
+            },
+            {
+                "name": "Bombo Radio Davao City",
+                "url": "https://stream.zeno.fm/n6uph8kyd0quv",
+                "genre": "News"
+            },
+            {
+                "name": "iFM Cebu City",
+                "url": "https://magic.radioca.st/stream/1/",
+                "genre": "Music"
+            },
+            {
+                "name": "Eazy Rock Radio Baguio",
+                "url": "https://easyrockbaguio.radioca.st/;",
+                "genre": "Rock"
+            },
+            {
+                "name": "Yes! FM",
+                "url": "https://yesfmzamboanga.radioca.st/;",
+                "genre": "Top 40"
+            },
+            {
+                "name": "Eagle FM",
+                "url": "https://stream.radiojar.com/yus0r2bghd3vv",
+                "genre": "Music"
+            },
+            {
+                "name": "Republ1ka FM1",
+                "url": "https://cast.tunzilla.com/http://122.53.138.32:8000/dxfo.mp3",
+                "genre": "Variety"
+            },
+            {
+                "name": "Magic 89.9",
+                "url": "https://stream-36.zeno.fm/sh37pvfd938uv",
+                "genre": "Music"
+            },
+            {
+                "name": "MOR 101.9 FM",
+                "url": "https://stream-149.zeno.fm/0ha8ftewqp8uv",
+                "genre": "Contemporary"
+            },
+            {
+                "name": "STAR FM",
+                "url": "https://stream.zeno.fm/536cwdq78heuv",
+                "genre": "Music"
+            },
+            {
+                "name": "MONSTER RADIO",
+                "url": "https://in-icecast.eradioportal.com:8443/monsterrrx",
+                "genre": "Rock"
+            }
+        ];
 
         // DOM elements
         const audioPlayer = document.getElementById('audio-player');
         const statusElement = document.getElementById('status');
+        const statusIcon = statusElement.querySelector('i');
+        const statusText = statusElement.querySelector('span');
         const currentStationElement = document.getElementById('current-station');
         const stationListElement = document.getElementById('station-list');
+        const stationCountElement = document.getElementById('station-count');
+        const searchBox = document.getElementById('search-box');
+        
+        let currentStation = null;
+        let filteredStations = [...stations];
         
         // Load stations into the list
         function loadStations() {
             stationListElement.innerHTML = '';
             
-            stations.forEach(station => {
+            filteredStations.forEach(station => {
                 const stationCard = document.createElement('div');
                 stationCard.className = 'station-card';
-                stationCard.innerHTML = `<h3>${station.name}</h3>`;
+                stationCard.innerHTML = `
+                    <div class="station-icon">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <div>
+                        <h3>${station.name}</h3>
+                        <p>${station.genre}</p>
+                    </div>
+                `;
                 
                 stationCard.addEventListener('click', () => {
                     playStation(station);
+                    
+                    // Update active state
+                    document.querySelectorAll('.station-card').forEach(card => {
+                        card.classList.remove('active');
+                    });
+                    stationCard.classList.add('active');
                 });
                 
                 stationListElement.appendChild(stationCard);
             });
+            
+            // Update station count
+            stationCountElement.textContent = filteredStations.length;
         }
         
         // Play selected station
         function playStation(station) {
+            currentStation = station;
             currentStationElement.textContent = station.name;
-            statusElement.textContent = 'LOADING';
+            
+            // Update status
+            statusText.textContent = 'BUFFERING';
             statusElement.className = 'status buffering';
+            statusIcon.className = 'fas fa-spinner spinner';
             
             audioPlayer.src = station.url;
             audioPlayer.load();
-            audioPlayer.play().catch(e => {
-                statusElement.textContent = 'ERROR';
-                statusElement.className = 'status error';
-                console.error('Playback failed:', e);
-            });
+            
+            // Try to play the station
+            const playPromise = audioPlayer.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.catch(e => {
+                    statusText.textContent = 'ERROR';
+                    statusElement.className = 'status error';
+                    statusIcon.className = 'fas fa-exclamation-circle';
+                    console.error('Playback failed:', e);
+                });
+            }
         }
+        
+        // Search functionality
+        searchBox.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            
+            if (searchTerm === '') {
+                filteredStations = [...stations];
+            } else {
+                filteredStations = stations.filter(station => 
+                    station.name.toLowerCase().includes(searchTerm) || 
+                    station.genre.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            loadStations();
+        });
         
         // Event listeners for audio player
         audioPlayer.addEventListener('playing', () => {
-            statusElement.textContent = 'PLAYING';
+            statusText.textContent = 'PLAYING';
             statusElement.className = 'status playing';
+            statusIcon.className = 'fas fa-play';
+        });
+        
+        audioPlayer.addEventListener('pause', () => {
+            if (audioPlayer.src && !audioPlayer.paused) return;
+            
+            statusText.textContent = 'PAUSED';
+            statusElement.className = 'status';
+            statusIcon.className = 'fas fa-pause';
         });
         
         audioPlayer.addEventListener('error', () => {
-            statusElement.textContent = 'ERROR';
+            statusText.textContent = 'ERROR';
             statusElement.className = 'status error';
+            statusIcon.className = 'fas fa-exclamation-circle';
         });
         
         audioPlayer.addEventListener('waiting', () => {
-            statusElement.textContent = 'BUFFERING';
+            statusText.textContent = 'BUFFERING';
             statusElement.className = 'status buffering';
+            statusIcon.className = 'fas fa-spinner spinner';
+        });
+        
+        audioPlayer.addEventListener('ended', () => {
+            statusText.textContent = 'ENDED';
+            statusElement.className = 'status';
+            statusIcon.className = 'fas fa-stop';
         });
         
         // Initialize the app
         loadStations();
-    </script>
-        <script>
+        
+        // Auto-play first station (optional)
+        // if (stations.length > 0) {
+        //     setTimeout(() => {
+        //         playStation(stations[0]);
+        //         document.querySelector('.station-card')?.classList.add('active');
+        //     }, 500);
+        // }
+        
+        // Fullscreen mode on click (optional)
         document.addEventListener('DOMContentLoaded', () => {
-            // Listen for clicks anywhere on the body
             document.body.addEventListener('click', requestFullscreen);
             
             function requestFullscreen() {
-                // Check if fullscreen is available
-                if (document.documentElement.requestFullscreen) {
-                    document.documentElement.requestFullscreen();
-                } 
-                // Safari
-                else if (document.documentElement.webkitRequestFullscreen) {
-                    document.documentElement.webkitRequestFullscreen();
-                } 
-                // IE/Edge
-                else if (document.documentElement.msRequestFullscreen) {
-                    document.documentElement.msRequestFullscreen();
+                if (!document.fullscreenElement) {
+                    if (document.documentElement.requestFullscreen) {
+                        document.documentElement.requestFullscreen();
+                    } else if (document.documentElement.webkitRequestFullscreen) {
+                        document.documentElement.webkitRequestFullscreen();
+                    } else if (document.documentElement.msRequestFullscreen) {
+                        document.documentElement.msRequestFullscreen();
+                    }
                 }
                 
-                // Remove the click listener after entering fullscreen
+                // Remove the click listener after first interaction
                 document.body.removeEventListener('click', requestFullscreen);
             }
         });
