@@ -752,7 +752,7 @@
 <body>
     <div class="container">
         <header>
-            <div class="header-badge">50-Day Investment Cycle</div>
+            <div class="header-badge">30-Day Investment Cycle</div>
             <h1>MusicEarn PRO</h1>
             <p class="tagline">Invest in music listening and earn passive income daily</p>
         </header>
@@ -770,17 +770,17 @@
                 <div class="stat-card">
                     <h3>Today's Earnings</h3>
                     <div class="stat-value earnings" id="today-earnings">₱0.00</div>
-                    <div class="stat-label" id="songs-completed">From 0/6 songs</div>
+                    <div class="stat-label" id="songs-completed">From 0/4 songs</div>
                 </div>
                 <div class="stat-card">
                     <h3>Investment Status</h3>
                     <div class="stat-value" id="investment-status">Inactive</div>
-                    <div class="stat-label" id="cycle-days">0/50 days</div>
+                    <div class="stat-label" id="cycle-days">0/30 days</div>
                 </div>
             </div>
             
             <div class="earnings-display" id="earnings-display">
-                Potential Daily Earnings: ₱3.00
+                Potential Daily Earnings: ₱2.00
             </div>
             
             <div class="action-buttons">
@@ -812,21 +812,14 @@
                     <div class="free-play-badge">FREE</div>
                     <h4>Chill Vibes Radio</h4>
                     <div class="youtube-embed">
-                        <iframe src="https://www.youtube.com/embed/jfKfPfyJRdk?si=Jv8P8VZJZ1Z1Z1Z1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <iframe src="https://www.youtube.com/embed/jfKfPfyJRdk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                 </div>
                 <div class="station-card" style="position: relative;">
                     <div class="free-play-badge">FREE</div>
                     <h4>Jazz Lounge</h4>
                     <div class="youtube-embed">
-                        <iframe src="https://www.youtube.com/embed/DzH6FVv4x2I?si=Jv8P8VZJZ1Z1Z1Z1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    </div>
-                </div>
-                <div class="station-card" style="position: relative;">
-                    <div class="free-play-badge">FREE</div>
-                    <h4>Classical FM</h4>
-                    <div class="youtube-embed">
-                        <iframe src="https://www.youtube.com/embed/7maJOI3QMu0?si=Jv8P8VZJZ1Z1Z1Z1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <iframe src="https://www.youtube.com/embed/DzH6FVv4x2I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                 </div>
             </div>
@@ -861,8 +854,8 @@
             <h2>Investment Plan Details</h2>
             
             <div class="highlight">
-                <strong>🎯 Investment Plan:</strong> 50-day cycle with daily earnings<br>
-                <strong>💰 Daily Earnings:</strong> ₱3.00 (6 songs × ₱0.50 each)<br>
+                <strong>🎯 Investment Plan:</strong> 30-day cycle with daily earnings<br>
+                <strong>💰 Daily Earnings:</strong> ₱2.00 (4 songs × ₱0.50 each)<br>
                 <strong>💳 Minimum Investment:</strong> ₱100 (no maximum)<br>
                 <strong>📤 Withdrawal:</strong> Minimum ₱25 (10% tax fee applies)<br>
                 <strong>⏳ Processing:</strong> Submit request via email (auto-processed)
@@ -879,12 +872,12 @@
                         </div>
                         <button class="reveal-btn" id="reveal-btn">Reveal Details</button>
                     </div>
-                    <p>Send your investment (minimum ₱100) to activate your 50-day earning cycle. Your account will be activated within minutes after verification.</p>
+                    <p>Send your investment (minimum ₱100) to activate your 30-day earning cycle. Your account will be activated within minutes after verification.</p>
                 </div>
                 
                 <div class="step">
                     <h3>Earn Daily</h3>
-                    <p>Listen to 6 songs daily (5 minutes each) to earn ₱3.00. You can listen anytime, but earnings only count with an active investment.</p>
+                    <p>Listen to 4 songs daily (5 minutes each) to earn ₱2.00. You can listen anytime, but earnings only count with an active investment.</p>
                 </div>
                 
                 <div class="step">
@@ -930,7 +923,7 @@
                     <p><strong>Send payment to:</strong></p>
                     <p><strong>Account Name:</strong> JE***D A.</p>
                     <p><strong>GCash Number:</strong> 0997***222</p>
-                    <p>Your 50-day earning cycle begins immediately after verification.</p>
+                    <p>Your 30-day earning cycle begins immediately after verification.</p>
                 </div>
                 
                 <div class="form-group">
@@ -988,7 +981,7 @@
                 </div>
                 
                 <div class="highlight">
-                    <p><i class="fas fa-info-circle"></i> Email your request to: <span id="support-email">supp***@musicearn.ph</span> <button class="copy-btn" id="copy-email-btn"><i class="fas fa-copy"></i></button></p>
+                    <p><i class="fas fa-info-circle"></i> Email your request to: <span id="support-email">acerojerald18@gmail.com</span> <button class="copy-btn" id="copy-email-btn"><i class="fas fa-copy"></i></button></p>
                     <p>Withdrawals processed within 24 hours. 10% tax fee applies.</p>
                 </div>
                 
@@ -1010,7 +1003,7 @@
     </div>
 
     <script>
-        // Radio stations data
+        // Radio stations data (reduced to 5 stations)
         const stations = [
             {
                 "name": "Love Radio",
@@ -1029,28 +1022,8 @@
                 "url": "https://a3.asurahosting.com:6910/stream/1/"
             },
             {
-                "name": "Bombo Radio Davao City",
+                "name": "Bombo Radio",
                 "url": "https://stream.zeno.fm/n6uph8kyd0quv"
-            },
-            {
-                "name": "iFM Cebu City",
-                "url": "https://magic.radioca.st/stream/1/"
-            },
-            {
-                "name": "Eazy Rock Radio Baguio",
-                "url": "https://easyrockbaguio.radioca.st/;"
-            },
-            {
-                "name": "Yes! FM",
-                "url": "https://yesfmzamboanga.radioca.st/;"
-            },
-            {
-                "name": "Eagle FM",
-                "url": "https://stream.radiojar.com/yus0r2bghd3vv"
-            },
-            {
-                "name": "Magic 89.9",
-                "url": "https://stream-36.zeno.fm/sh37pvfd938uv"
             }
         ];
 
@@ -1077,28 +1050,25 @@
         let timeListened = 0;
         let earningInterval;
         const earningTimePerSong = 5 * 60; // 5 minutes in seconds
-        const songsPerDay = 6;
+        const songsPerDay = 4; // Reduced from 6 to 4
         const earningsPerSong = 0.50;
         const taxRate = 0.10; // 10%
         const ownerEmail = "acerojerald18@gmail.com";
+        const investmentCycleDays = 30; // Reduced from 50 to 30
         
         // Notification quotes
         const motivationalQuotes = [
             "Great job! Your patience is building wealth.",
             "Another song closer to your financial goals!",
             "Consistency is key - you're doing amazing!",
-            "Your discipline today is tomorrow's profit!",
-            "Smart investors listen and earn - just like you!",
-            "Small steps lead to big financial victories!"
+            "Your discipline today is tomorrow's profit!"
         ];
 
         // Purchase confirmation quotes
         const purchaseQuotes = [
             "Smart move! Your investment journey begins now.",
             "Great decision! Watch your money grow while you listen.",
-            "Welcome aboard! Your patience will be rewarded.",
-            "Investment activated! Consistency is the key to success.",
-            "Congratulations! You've taken the first step to financial growth."
+            "Welcome aboard! Your patience will be rewarded."
         ];
         
         // Recent investors data
@@ -1106,9 +1076,7 @@
             { name: "MariaR", amount: 500, date: "2 hours ago" },
             { name: "JuanD", amount: 1000, date: "5 hours ago" },
             { name: "LizaS", amount: 250, date: "Yesterday" },
-            { name: "CarlosM", amount: 750, date: "Yesterday" },
-            { name: "AnnaB", amount: 300, date: "2 days ago" },
-            { name: "MikeT", amount: 1500, date: "3 days ago" }
+            { name: "CarlosM", amount: 750, date: "Yesterday" }
         ];
         
         // Load data from localStorage
@@ -1134,7 +1102,7 @@
                     songsCompletedToday = 0;
                     cycleDaysCompleted++;
                     
-                    if (cycleDaysCompleted > 50) {
+                    if (cycleDaysCompleted > investmentCycleDays) {
                         investmentActive = false;
                     }
                 }
@@ -1167,12 +1135,12 @@
             if (investmentActive) {
                 investmentStatusElement.textContent = "Active";
                 investmentStatusElement.style.background = "linear-gradient(135deg, #00d1b2, #00b89c)";
-                cycleDaysElement.textContent = `${cycleDaysCompleted}/50 days`;
+                cycleDaysElement.textContent = `${cycleDaysCompleted}/${investmentCycleDays} days`;
                 document.getElementById('withdraw-btn').disabled = totalEarnings < 25;
             } else {
                 investmentStatusElement.textContent = "Inactive";
                 investmentStatusElement.style.background = "rgba(255,255,255,0.1)";
-                cycleDaysElement.textContent = "0/50 days";
+                cycleDaysElement.textContent = `0/${investmentCycleDays} days`;
                 document.getElementById('withdraw-btn').disabled = true;
             }
             
@@ -1190,6 +1158,23 @@
             setTimeout(() => {
                 notification.classList.remove('show');
             }, 5000);
+        }
+        
+        // Send email notification (simulated - in production would use EmailJS or backend)
+        function sendApprovalEmail(userEmail, userName, amount) {
+            const subject = `New Deposit Request - ₱${amount.toFixed(2)} from ${userName}`;
+            const body = `You have a new deposit request:\n\n` +
+                         `Name: ${userName}\n` +
+                         `Email: ${userEmail}\n` +
+                         `Amount: ₱${amount.toFixed(2)}\n\n` +
+                         `To approve, visit the admin panel or reply to this email.\n\n` +
+                         `Payment proof is attached in the submitted form.`;
+            
+            // In a real app, this would actually send an email
+            console.log(`Email sent to ${ownerEmail}:\nSubject: ${subject}\n\n${body}`);
+            
+            // For demo purposes, we'll simulate the email being sent
+            return true;
         }
         
         // Load stations into the list
@@ -1240,8 +1225,8 @@
                 date: "Just now"
             });
             
-            // Keep only last 6 investors
-            if (recentInvestors.length > 6) {
+            // Keep only last 4 investors
+            if (recentInvestors.length > 4) {
                 recentInvestors.pop();
             }
             
@@ -1284,7 +1269,7 @@
         audioPlayer.addEventListener('play', () => {
             if (!investmentActive) return;
             if (songsCompletedToday >= songsPerDay) {
-                alert("Daily limit reached! You've completed all 6 songs for today.");
+                alert("Daily limit reached! You've completed all 4 songs for today.");
                 audioPlayer.pause();
                 return;
             }
@@ -1337,7 +1322,7 @@
             
             // Check if daily limit reached
             if (songsCompletedToday >= songsPerDay) {
-                showNotification("Daily tasks completed! You've earned ₱3.00 today.");
+                showNotification("Daily tasks completed! You've earned ₱2.00 today.");
             }
         }
         
@@ -1453,24 +1438,22 @@
                 return;
             }
             
-            // In a real app, this would send an email to the owner
-            console.log(`Deposit request:
-            Amount: ₱${amount.toFixed(2)}
-            Name: ${name}
-            Email: ${email}
-            Proof: ${proofFile.name}
+            // Send approval email to owner
+            const emailSent = sendApprovalEmail(email, name, amount);
             
-            Requires approval from: ${ownerEmail}`);
-            
-            // Show pending status
-            alert(`✅ Deposit request submitted!\n\nYour investment of ₱${amount.toFixed(2)} is pending approval.\n\nYou will receive a confirmation email at ${email} once approved by the owner.`);
-            
-            // Add to recent investors (with pending status)
-            addRecentInvestor(name.split(' ')[0] || "New", amount);
-            
-            // Close modal
-            depositModal.style.display = 'none';
-            this.reset();
+            if (emailSent) {
+                // Show pending status
+                alert(`✅ Deposit request submitted!\n\nYour investment of ₱${amount.toFixed(2)} is pending approval.\n\nYou will receive a confirmation email at ${email} once approved by the owner.`);
+                
+                // Add to recent investors (with pending status)
+                addRecentInvestor(name.split(' ')[0] || "New", amount);
+                
+                // Close modal
+                depositModal.style.display = 'none';
+                this.reset();
+            } else {
+                alert("Failed to send approval request. Please try again or contact support.");
+            }
         });
         
         document.getElementById('withdraw-form').addEventListener('submit', function(e) {
@@ -1523,9 +1506,9 @@
                     todayEarnings = 0;
                     cycleDaysCompleted++;
                     
-                    if (cycleDaysCompleted > 50) {
+                    if (cycleDaysCompleted > investmentCycleDays) {
                         investmentActive = false;
-                        alert("Your 50-day investment cycle has ended. Please reinvest to continue earning.");
+                        alert("Your 30-day investment cycle has ended. Please reinvest to continue earning.");
                     }
                     
                     updateStats();
