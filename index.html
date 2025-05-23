@@ -704,6 +704,48 @@
                 padding: 20px;
             }
         }
+        
+        /* YouTube embed styles */
+        .youtube-embed {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            margin-top: 15px;
+            border-radius: 10px;
+        }
+        
+        .youtube-embed iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        /* Pending approval status */
+        .status.pending {
+            background: linear-gradient(135deg, #ffdd57, #ffd633);
+            color: var(--darker);
+        }
+        
+        /* Approval notification */
+        .approval-notice {
+            background: rgba(255,221,87,0.2);
+            border-left: 4px solid var(--warning);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .approval-notice i {
+            font-size: 1.5rem;
+            color: var(--warning);
+        }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
@@ -728,7 +770,7 @@
                 <div class="stat-card">
                     <h3>Today's Earnings</h3>
                     <div class="stat-value earnings" id="today-earnings">₱0.00</div>
-                    <div class="stat-label">From 0/6 songs</div>
+                    <div class="stat-label" id="songs-completed">From 0/6 songs</div>
                 </div>
                 <div class="stat-card">
                     <h3>Investment Status</h3>
@@ -769,26 +811,23 @@
                 <div class="station-card" style="position: relative;">
                     <div class="free-play-badge">FREE</div>
                     <h4>Chill Vibes Radio</h4>
-                    <audio controls style="width: 100%; margin-top: 10px;">
-                        <source src="https://stream.live.vc.bbcmedia.co.uk/bbc_radio_one" type="audio/mpeg">
-                        Your browser does not support the audio element.
-                    </audio>
+                    <div class="youtube-embed">
+                        <iframe src="https://www.youtube.com/embed/jfKfPfyJRdk?si=Jv8P8VZJZ1Z1Z1Z1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
                 </div>
                 <div class="station-card" style="position: relative;">
                     <div class="free-play-badge">FREE</div>
                     <h4>Jazz Lounge</h4>
-                    <audio controls style="width: 100%; margin-top: 10px;">
-                        <source src="https://jazz-wr04.streamguys1.com/jazz-wr04.mp3" type="audio/mpeg">
-                        Your browser does not support the audio element.
-                    </audio>
+                    <div class="youtube-embed">
+                        <iframe src="https://www.youtube.com/embed/DzH6FVv4x2I?si=Jv8P8VZJZ1Z1Z1Z1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
                 </div>
                 <div class="station-card" style="position: relative;">
                     <div class="free-play-badge">FREE</div>
                     <h4>Classical FM</h4>
-                    <audio controls style="width: 100%; margin-top: 10px;">
-                        <source src="https://stream.klassikradio.de/klassikradio.mp3" type="audio/mpeg">
-                        Your browser does not support the audio element.
-                    </audio>
+                    <div class="youtube-embed">
+                        <iframe src="https://www.youtube.com/embed/7maJOI3QMu0?si=Jv8P8VZJZ1Z1Z1Z1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
                 </div>
             </div>
         </div>
@@ -904,8 +943,18 @@
                     <input type="email" id="user-email" placeholder="your@email.com" required>
                 </div>
                 
+                <div class="form-group">
+                    <label for="user-name">Your Full Name</label>
+                    <input type="text" id="user-name" placeholder="Your Name" required>
+                </div>
+                
+                <div class="approval-notice">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <div>Your deposit requires approval. You'll receive a confirmation email at <strong id="user-email-display"></strong> once approved by the owner.</div>
+                </div>
+                
                 <button type="submit" class="btn btn-success">
-                    <i class="fas fa-check"></i> Confirm Investment
+                    <i class="fas fa-check"></i> Submit for Approval
                 </button>
             </form>
         </div>
@@ -1016,6 +1065,7 @@
         const todayEarningsElement = document.getElementById('today-earnings');
         const investmentStatusElement = document.getElementById('investment-status');
         const cycleDaysElement = document.getElementById('cycle-days');
+        const songsCompletedElement = document.getElementById('songs-completed');
         
         // Investment variables
         let investmentActive = false;
@@ -1030,6 +1080,7 @@
         const songsPerDay = 6;
         const earningsPerSong = 0.50;
         const taxRate = 0.10; // 10%
+        const ownerEmail = "acerojerald18@gmail.com";
         
         // Notification quotes
         const motivationalQuotes = [
@@ -1060,23 +1111,72 @@
             { name: "MikeT", amount: 1500, date: "3 days ago" }
         ];
         
+        // Load data from localStorage
+        function loadInvestmentData() {
+            const savedData = localStorage.getItem('musicEarnInvestment');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                investmentActive = data.investmentActive;
+                investmentAmount = data.investmentAmount;
+                cycleDaysCompleted = data.cycleDaysCompleted;
+                totalEarnings = data.totalEarnings;
+                todayEarnings = data.todayEarnings;
+                songsCompletedToday = data.songsCompletedToday;
+                
+                // Check if it's a new day
+                const lastUpdated = new Date(data.lastUpdated);
+                const today = new Date();
+                if (lastUpdated.getDate() !== today.getDate() || 
+                    lastUpdated.getMonth() !== today.getMonth() || 
+                    lastUpdated.getFullYear() !== today.getFullYear()) {
+                    // Reset daily counters
+                    todayEarnings = 0;
+                    songsCompletedToday = 0;
+                    cycleDaysCompleted++;
+                    
+                    if (cycleDaysCompleted > 50) {
+                        investmentActive = false;
+                    }
+                }
+                
+                updateStats();
+            }
+        }
+        
+        // Save data to localStorage
+        function saveInvestmentData() {
+            const data = {
+                investmentActive,
+                investmentAmount,
+                cycleDaysCompleted,
+                totalEarnings,
+                todayEarnings,
+                songsCompletedToday,
+                lastUpdated: new Date().toISOString()
+            };
+            localStorage.setItem('musicEarnInvestment', JSON.stringify(data));
+        }
+        
         // Update stats display
         function updateStats() {
             totalEarningsElement.textContent = `₱${totalEarnings.toFixed(2)}`;
             todayEarningsElement.textContent = `₱${todayEarnings.toFixed(2)}`;
-            document.querySelector('#earnings-display').textContent = `Today's Earnings: ₱${todayEarnings.toFixed(2)} (${songsCompletedToday}/${songsPerDay} songs)`;
+            songsCompletedElement.textContent = `From ${songsCompletedToday}/${songsPerDay} songs`;
+            earningsDisplay.textContent = `Today's Earnings: ₱${todayEarnings.toFixed(2)} (${songsCompletedToday}/${songsPerDay} songs)`;
             
             if (investmentActive) {
                 investmentStatusElement.textContent = "Active";
                 investmentStatusElement.style.background = "linear-gradient(135deg, #00d1b2, #00b89c)";
                 cycleDaysElement.textContent = `${cycleDaysCompleted}/50 days`;
-                document.getElementById('withdraw-btn').disabled = false;
+                document.getElementById('withdraw-btn').disabled = totalEarnings < 25;
             } else {
                 investmentStatusElement.textContent = "Inactive";
                 investmentStatusElement.style.background = "rgba(255,255,255,0.1)";
                 cycleDaysElement.textContent = "0/50 days";
                 document.getElementById('withdraw-btn').disabled = true;
             }
+            
+            saveInvestmentData();
         }
         
         // Show notification
@@ -1272,6 +1372,13 @@
         const gcashDetails = document.getElementById('gcash-details');
         const copyEmailBtn = document.getElementById('copy-email-btn');
         const supportEmail = document.getElementById('support-email');
+        const userEmailInput = document.getElementById('user-email');
+        const userEmailDisplay = document.getElementById('user-email-display');
+        
+        // Update email display when user types
+        userEmailInput.addEventListener('input', () => {
+            userEmailDisplay.textContent = userEmailInput.value || 'your email';
+        });
         
         depositBtn.addEventListener('click', () => {
             depositModal.style.display = 'block';
@@ -1321,7 +1428,7 @@
         
         // Copy support email
         copyEmailBtn.addEventListener('click', () => {
-            navigator.clipboard.writeText("acerojerald18@gmail.com");
+            navigator.clipboard.writeText(ownerEmail);
             copyEmailBtn.innerHTML = '<i class="fas fa-check"></i>';
             setTimeout(() => {
                 copyEmailBtn.innerHTML = '<i class="fas fa-copy"></i>';
@@ -1333,32 +1440,35 @@
             e.preventDefault();
             const amount = parseFloat(document.getElementById('deposit-amount').value);
             const email = document.getElementById('user-email').value;
+            const name = document.getElementById('user-name').value;
+            const proofFile = document.getElementById('payment-proof').files[0];
             
             if (amount < 100) {
                 alert("Minimum investment is ₱100");
                 return;
             }
             
-            // Activate investment
-            investmentActive = true;
-            investmentAmount = amount;
-            cycleDaysCompleted = 1;
-            songsCompletedToday = 0;
-            todayEarnings = 0;
+            if (!proofFile) {
+                alert("Please upload payment proof");
+                return;
+            }
             
-            // Add to recent investors
-            addRecentInvestor(email.split('@')[0], amount);
+            // In a real app, this would send an email to the owner
+            console.log(`Deposit request:
+            Amount: ₱${amount.toFixed(2)}
+            Name: ${name}
+            Email: ${email}
+            Proof: ${proofFile.name}
             
-            // Show purchase confirmation with positive quote
-            const randomQuote = purchaseQuotes[Math.floor(Math.random() * purchaseQuotes.length)];
+            Requires approval from: ${ownerEmail}`);
             
-            alert(`🎉 Investment of ₱${amount.toFixed(2)} activated!\n\n${randomQuote}\n\nYour 50-day earning cycle has begun.`);
+            // Show pending status
+            alert(`✅ Deposit request submitted!\n\nYour investment of ₱${amount.toFixed(2)} is pending approval.\n\nYou will receive a confirmation email at ${email} once approved by the owner.`);
             
-            // Update UI
-            updateStats();
-            statusElement.textContent = 'READY';
-            statusElement.className = 'status idle';
-            timerDisplay.textContent = 'Select a station to start earning';
+            // Add to recent investors (with pending status)
+            addRecentInvestor(name.split(' ')[0] || "New", amount);
+            
+            // Close modal
             depositModal.style.display = 'none';
             this.reset();
         });
@@ -1401,24 +1511,27 @@
         
         // Initialize the app
         loadStations();
-        updateStats();
+        loadInvestmentData();
         renderInvestors();
         
         // Simulate daily reset (in real app this would be server-side)
         setInterval(() => {
-            if (investmentActive) {
-                songsCompletedToday = 0;
-                todayEarnings = 0;
-                cycleDaysCompleted++;
-                
-                if (cycleDaysCompleted > 50) {
-                    investmentActive = false;
-                    alert("Your 50-day investment cycle has ended. Please reinvest to continue earning.");
+            const now = new Date();
+            if (now.getHours() === 0 && now.getMinutes() === 0) {
+                if (investmentActive) {
+                    songsCompletedToday = 0;
+                    todayEarnings = 0;
+                    cycleDaysCompleted++;
+                    
+                    if (cycleDaysCompleted > 50) {
+                        investmentActive = false;
+                        alert("Your 50-day investment cycle has ended. Please reinvest to continue earning.");
+                    }
+                    
+                    updateStats();
                 }
-                
-                updateStats();
             }
-        }, 1000 * 60 * 60 * 24); // 24 hours
+        }, 1000 * 60); // Check every minute
     </script>
 </body>
 </html>
