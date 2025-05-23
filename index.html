@@ -1,592 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MusicEarn PRO - Admin Panel</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary: #6a5acd;
-            --secondary: #8a7cff;
-            --dark: #121212;
-            --darker: #0a0a0a;
-            --light: #e0e0e0;
-            --success: #00d1b2;
-            --warning: #ffdd57;
-            --error: #ff3860;
-            --info: #3298dc;
-            --gradient: linear-gradient(135deg, #6a5acd, #8a7cff);
-        }
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--darker);
-            margin: 0;
-            padding: 0;
-            color: var(--light);
-            line-height: 1.6;
-        }
-        
-        .admin-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        header {
-            text-align: center;
-            padding: 30px 0;
-            background: var(--gradient);
-            border-radius: 15px;
-            margin-bottom: 30px;
-            color: white;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(106, 90, 205, 0.3);
-        }
-        
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-        
-        .admin-card {
-            background: rgba(30, 30, 30, 0.8);
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 30px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-            position: relative;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-        
-        h2 {
-            color: var(--secondary);
-            margin-top: 0;
-            padding-bottom: 10px;
-            font-weight: 600;
-            font-size: 1.8rem;
-            position: relative;
-        }
-        
-        h2::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 50px;
-            height: 3px;
-            background: var(--gradient);
-            border-radius: 3px;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 25px 0;
-            background: rgba(30, 30, 30, 0.5);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        
-        th, td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        
-        th {
-            background: var(--gradient);
-            color: white;
-            font-weight: 500;
-        }
-        
-        tr:nth-child(even) {
-            background: rgba(255,255,255,0.03);
-        }
-        
-        tr:hover {
-            background: rgba(106, 90, 205, 0.1);
-        }
-        
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            background: var(--gradient);
-            color: white;
-            padding: 12px 25px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-            margin-top: 10px;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-            box-shadow: 0 4px 15px rgba(106, 90, 205, 0.3);
-        }
-        
-        .btn:hover {
-            background: var(--primary);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(106, 90, 205, 0.4);
-        }
-        
-        .btn-success {
-            background: linear-gradient(135deg, #00d1b2, #00b89c);
-            box-shadow: 0 4px 15px rgba(0, 209, 178, 0.3);
-        }
-        
-        .btn-success:hover {
-            background: #00d1b2;
-            box-shadow: 0 8px 20px rgba(0, 209, 178, 0.4);
-        }
-        
-        .btn-warning {
-            background: linear-gradient(135deg, #ffdd57, #ffd633);
-            color: var(--darker);
-            box-shadow: 0 4px 15px rgba(255, 221, 87, 0.3);
-        }
-        
-        .btn-warning:hover {
-            background: #ffdd57;
-            box-shadow: 0 8px 20px rgba(255, 221, 87, 0.4);
-        }
-        
-        .btn-danger {
-            background: linear-gradient(135deg, #ff3860, #ff144d);
-            box-shadow: 0 4px 15px rgba(255, 56, 96, 0.3);
-        }
-        
-        .btn-danger:hover {
-            background: #ff3860;
-            box-shadow: 0 8px 20px rgba(255, 56, 96, 0.4);
-        }
-        
-        .action-buttons {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-            flex-wrap: wrap;
-        }
-        
-        .status-badge {
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-        
-        .status-pending {
-            background: rgba(255,221,87,0.2);
-            color: #ffdd57;
-        }
-        
-        .status-approved {
-            background: rgba(0,209,178,0.2);
-            color: #00d1b2;
-        }
-        
-        .status-rejected {
-            background: rgba(255,56,96,0.2);
-            color: #ff3860;
-        }
-        
-        .login-form {
-            max-width: 500px;
-            margin: 50px auto;
-            padding: 30px;
-            background: rgba(30, 30, 30, 0.8);
-            border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--secondary);
-            font-weight: 500;
-        }
-        
-        .form-group input {
-            width: 100%;
-            padding: 12px 15px;
-            border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.2);
-            background: rgba(255,255,255,0.1);
-            color: var(--light);
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-        
-        .form-group input:focus {
-            border-color: var(--primary);
-            background: rgba(106, 90, 205, 0.1);
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(106, 90, 205, 0.2);
-        }
-        
-        /* Notification styles */
-        .notification {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: var(--gradient);
-            color: white;
-            padding: 15px 25px;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(106, 90, 205, 0.4);
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            transform: translateX(150%);
-            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        }
-        
-        .notification.show {
-            transform: translateX(0);
-        }
-        
-        .notification-icon {
-            font-size: 1.5rem;
-        }
-        
-        /* Responsive styles */
-        @media (max-width: 768px) {
-            .admin-container {
-                padding: 15px;
-            }
-            
-            h1 {
-                font-size: 2rem;
-            }
-            
-            .admin-card {
-                padding: 20px;
-            }
-            
-            th, td {
-                padding: 10px;
-                font-size: 0.9rem;
-            }
-            
-            .action-buttons {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .btn {
-                width: 100%;
-            }
-        }
-    </style>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Previous head content remains the same -->
+    <!-- Add Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-storage-compat.js"></script>
 </head>
 <body>
-    <div id="login-section" class="admin-container">
-        <div class="login-form">
-            <h2 style="text-align: center;">Admin Login</h2>
-            <div class="form-group">
-                <label for="admin-email">Email Address</label>
-                <input type="email" id="admin-email" placeholder="your@email.com">
-            </div>
-            <div class="form-group">
-                <label for="admin-password">Password</label>
-                <input type="password" id="admin-password" placeholder="••••••••">
-            </div>
-            <button class="btn btn-success" id="login-btn">
-                <i class="fas fa-sign-in-alt"></i> Login
-            </button>
-        </div>
-    </div>
-
-    <div id="admin-section" class="admin-container" style="display: none;">
-        <header>
-            <h1>MusicEarn PRO Admin Panel</h1>
-            <p>Manage investor deposits and platform settings</p>
-            <button id="logout-btn" class="btn btn-danger" style="position: absolute; top: 20px; right: 20px;">
-                <i class="fas fa-sign-out-alt"></i> Logout
-            </button>
-        </header>
-        
-        <div class="admin-card">
-            <h2>Pending Deposits</h2>
-            <table id="pending-deposits">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Investor</th>
-                        <th>Email</th>
-                        <th>Amount</th>
-                        <th>Proof</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Will be populated by JavaScript -->
-                </tbody>
-            </table>
-        </div>
-        
-        <div class="admin-card">
-            <h2>Recent Approvals</h2>
-            <table id="approved-deposits">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Investor</th>
-                        <th>Amount</th>
-                        <th>Status</th>
-                        <th>Approved At</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Will be populated by JavaScript -->
-                </tbody>
-            </table>
-        </div>
-        
-        <div class="admin-card">
-            <h2>Platform Settings</h2>
-            <div class="form-group">
-                <label for="owner-email">Owner Email</label>
-                <input type="email" id="owner-email" value="acerojerald18@gmail.com" readonly>
-            </div>
-            <div class="form-group">
-                <label for="site-url">Site URL</label>
-                <input type="text" id="site-url" value="https://music2earn.pages.dev" readonly>
-            </div>
-            <button class="btn btn-warning" id="refresh-btn">
-                <i class="fas fa-sync-alt"></i> Refresh Data
-            </button>
-        </div>
-    </div>
-
-    <!-- Notification -->
-    <div class="notification" id="notification">
-        <div class="notification-icon">
-            <i class="fas fa-check-circle"></i>
-        </div>
-        <div class="notification-content" id="notification-content">
-            Notification message here
-        </div>
-    </div>
+    <!-- Previous body content remains the same until the script section -->
 
     <script>
-        // Admin credentials (in a real app, this would be server-side authentication)
-        const ADMIN_EMAIL = "acerojerald18@gmail.com";
-        const ADMIN_PASSWORD = "MusicEarnPRO123"; // Change this to your secure password
-        
-        // Sample data (in a real app, this would come from a database)
-        let deposits = [
-            {
-                id: 1,
-                date: "2023-11-15 14:30",
-                name: "Maria Reyes",
-                email: "maria@gmail.com",
-                amount: 500,
-                proof: "maria_proof.jpg",
-                status: "pending",
-                approvedAt: null
-            },
-            {
-                id: 2,
-                date: "2023-11-15 10:15",
-                name: "Juan Dela Cruz",
-                email: "juan@gmail.com",
-                amount: 1000,
-                proof: "juan_proof.png",
-                status: "pending",
-                approvedAt: null
-            },
-            {
-                id: 3,
-                date: "2023-11-14 16:45",
-                name: "Liza Soberano",
-                email: "liza@gmail.com",
-                amount: 250,
-                proof: "liza_proof.jpg",
-                status: "approved",
-                approvedAt: "2023-11-14 17:30"
-            },
-            {
-                id: 4,
-                date: "2023-11-14 09:20",
-                name: "Carlos Morales",
-                email: "carlos@gmail.com",
-                amount: 750,
-                proof: "carlos_proof.png",
-                status: "rejected",
-                approvedAt: "2023-11-14 10:00"
-            }
-        ];
-        
-        // DOM elements
-        const loginSection = document.getElementById('login-section');
-        const adminSection = document.getElementById('admin-section');
-        const loginBtn = document.getElementById('login-btn');
-        const logoutBtn = document.getElementById('logout-btn');
-        const refreshBtn = document.getElementById('refresh-btn');
-        const adminEmailInput = document.getElementById('admin-email');
-        const adminPasswordInput = document.getElementById('admin-password');
-        const pendingDepositsTable = document.getElementById('pending-deposits').querySelector('tbody');
-        const approvedDepositsTable = document.getElementById('approved-deposits').querySelector('tbody');
-        
-        // Check if user is logged in (from localStorage)
-        function checkLogin() {
-            const isLoggedIn = localStorage.getItem('musicEarnAdminLoggedIn') === 'true';
-            if (isLoggedIn) {
-                loginSection.style.display = 'none';
-                adminSection.style.display = 'block';
-                loadDeposits();
-            }
-        }
-        
-        // Load deposits data
-        function loadDeposits() {
-            // Clear tables
-            pendingDepositsTable.innerHTML = '';
-            approvedDepositsTable.innerHTML = '';
-            
-            // Populate pending deposits
-            deposits.filter(d => d.status === 'pending').forEach(deposit => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${deposit.date}</td>
-                    <td>${deposit.name}</td>
-                    <td>${deposit.email}</td>
-                    <td>₱${deposit.amount.toFixed(2)}</td>
-                    <td><a href="#" class="view-proof" data-id="${deposit.id}">View Proof</a></td>
-                    <td>
-                        <button class="btn btn-success approve-btn" data-id="${deposit.id}" style="padding: 8px 15px; font-size: 0.9rem;">
-                            <i class="fas fa-check"></i> Approve
-                        </button>
-                        <button class="btn btn-danger reject-btn" data-id="${deposit.id}" style="padding: 8px 15px; font-size: 0.9rem;">
-                            <i class="fas fa-times"></i> Reject
-                        </button>
-                    </td>
-                `;
-                pendingDepositsTable.appendChild(row);
-            });
-            
-            // Populate approved/rejected deposits
-            deposits.filter(d => d.status !== 'pending').forEach(deposit => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${deposit.date}</td>
-                    <td>${deposit.name}</td>
-                    <td>₱${deposit.amount.toFixed(2)}</td>
-                    <td><span class="status-badge ${deposit.status === 'approved' ? 'status-approved' : 'status-rejected'}">${deposit.status.toUpperCase()}</span></td>
-                    <td>${deposit.approvedAt || 'N/A'}</td>
-                `;
-                approvedDepositsTable.appendChild(row);
-            });
-            
-            // Add event listeners
-            document.querySelectorAll('.approve-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const depositId = parseInt(this.getAttribute('data-id'));
-                    approveDeposit(depositId, true);
-                });
-            });
-            
-            document.querySelectorAll('.reject-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const depositId = parseInt(this.getAttribute('data-id'));
-                    approveDeposit(depositId, false);
-                });
-            });
-            
-            document.querySelectorAll('.view-proof').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const depositId = parseInt(this.getAttribute('data-id'));
-                    const deposit = deposits.find(d => d.id === depositId);
-                    if (deposit) {
-                        alert(`Showing payment proof for ${deposit.name}: ${deposit.proof}\n\n(In a real app, this would display the actual image)`);
-                    }
-                });
-            });
-        }
-        
-        // Approve or reject a deposit
-        function approveDeposit(id, approve) {
-            const depositIndex = deposits.findIndex(d => d.id === id);
-            if (depositIndex !== -1) {
-                deposits[depositIndex].status = approve ? 'approved' : 'rejected';
-                deposits[depositIndex].approvedAt = new Date().toLocaleString();
-                
-                // In a real app, you would:
-                // 1. Update the database
-                // 2. Send confirmation email to investor
-                // 3. Update the investor's account on the main site
-                
-                showNotification(`Deposit ${approve ? 'approved' : 'rejected'} successfully!`);
-                loadDeposits();
-                
-                // Simulate updating the main site
-                console.log(`Updating main site (${document.getElementById('site-url').value}) with new deposit status for ID ${id}`);
-            }
-        }
-        
-        // Show notification
-        function showNotification(message) {
-            const notification = document.getElementById('notification');
-            const content = document.getElementById('notification-content');
-            
-            content.textContent = message;
-            notification.classList.add('show');
-            
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 5000);
-        }
-        
-        // Event listeners
+        // Firebase configuration (same as main site)
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "music2earn-pro.firebaseapp.com",
+            databaseURL: "https://music2earn-pro-default-rtdb.firebaseio.com",
+            projectId: "music2earn-pro",
+            storageBucket: "music2earn-pro.appspot.com",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const auth = firebase.auth();
+        const storage = firebase.storage();
+
+        // Reference to database
+        const depositsRef = database.ref('deposits');
+        const usersRef = database.ref('users');
+        const investmentsRef = database.ref('investments');
+
+        // Admin login with Firebase Authentication
         loginBtn.addEventListener('click', function() {
             const email = adminEmailInput.value.trim();
             const password = adminPasswordInput.value.trim();
             
-            if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
-                localStorage.setItem('musicEarnAdminLoggedIn', 'true');
+            auth.signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    // Login successful
+                    loginSection.style.display = 'none';
+                    adminSection.style.display = 'block';
+                    loadDeposits();
+                    showNotification('Login successful! Welcome to the admin panel.');
+                })
+                .catch((error) => {
+                    alert('Login error: ' + error.message);
+                });
+        });
+
+        // Real-time deposit loading
+        function loadDeposits() {
+            depositsRef.orderByChild('date').on('value', (snapshot) => {
+                const depositsData = snapshot.val() || {};
+                deposits = Object.values(depositsData);
+                
+                // Clear tables
+                pendingDepositsTable.innerHTML = '';
+                approvedDepositsTable.innerHTML = '';
+                
+                // Process deposits
+                Object.entries(depositsData).forEach(([id, deposit]) => {
+                    if (deposit.status === 'pending') {
+                        addPendingDepositRow(id, deposit);
+                    } else {
+                        addProcessedDepositRow(id, deposit);
+                    }
+                });
+            });
+        }
+
+        function addPendingDepositRow(id, deposit) {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${new Date(deposit.date).toLocaleString()}</td>
+                <td>${deposit.name}</td>
+                <td>${deposit.email}</td>
+                <td>₱${deposit.amount.toFixed(2)}</td>
+                <td><a href="#" class="view-proof" data-id="${id}">View Proof</a></td>
+                <td>
+                    <button class="btn btn-success approve-btn" data-id="${id}" style="padding: 8px 15px; font-size: 0.9rem;">
+                        <i class="fas fa-check"></i> Approve
+                    </button>
+                    <button class="btn btn-danger reject-btn" data-id="${id}" style="padding: 8px 15px; font-size: 0.9rem;">
+                        <i class="fas fa-times"></i> Reject
+                    </button>
+                </td>
+            `;
+            pendingDepositsTable.appendChild(row);
+            
+            // Add event listeners
+            row.querySelector('.approve-btn').addEventListener('click', () => processDeposit(id, true));
+            row.querySelector('.reject-btn').addEventListener('click', () => processDeposit(id, false));
+            row.querySelector('.view-proof').addEventListener('click', (e) => {
+                e.preventDefault();
+                viewProof(deposit.proofUrl);
+            });
+        }
+
+        function addProcessedDepositRow(id, deposit) {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${new Date(deposit.date).toLocaleString()}</td>
+                <td>${deposit.name}</td>
+                <td>₱${deposit.amount.toFixed(2)}</td>
+                <td><span class="status-badge ${deposit.status === 'approved' ? 'status-approved' : 'status-rejected'}">${deposit.status.toUpperCase()}</span></td>
+                <td>${deposit.approvedAt ? new Date(deposit.approvedAt).toLocaleString() : 'N/A'}</td>
+            `;
+            approvedDepositsTable.appendChild(row);
+        }
+
+        async function processDeposit(id, approve) {
+            try {
+                const updates = {
+                    status: approve ? 'approved' : 'rejected',
+                    approvedAt: new Date().toISOString()
+                };
+                
+                await depositsRef.child(id).update(updates);
+                
+                if (approve) {
+                    // Activate investment for this user
+                    const depositSnapshot = await depositsRef.child(id).once('value');
+                    const deposit = depositSnapshot.val();
+                    
+                    await investmentsRef.child(deposit.userId).set({
+                        amount: deposit.amount,
+                        startDate: new Date().toISOString(),
+                        endDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+                        status: "active",
+                        earnings: 0
+                    });
+                    
+                    showNotification(`Deposit approved and investment activated for ${deposit.name}`);
+                } else {
+                    showNotification(`Deposit rejected for ${deposit.name}`);
+                }
+            } catch (error) {
+                console.error("Error processing deposit:", error);
+                showNotification("Error processing deposit. Please try again.");
+            }
+        }
+
+        async function viewProof(proofUrl) {
+            try {
+                // Get download URL from Firebase Storage
+                const storageRef = storage.refFromURL(`gs://music2earn-pro.appspot.com/${proofUrl}`);
+                const url = await storageRef.getDownloadURL();
+                
+                // Open in new tab (or show in modal)
+                window.open(url, '_blank');
+            } catch (error) {
+                console.error("Error loading proof:", error);
+                alert("Could not load payment proof. Error: " + error.message);
+            }
+        }
+
+        // Logout
+        logoutBtn.addEventListener('click', function() {
+            auth.signOut().then(() => {
+                adminSection.style.display = 'none';
+                loginSection.style.display = 'block';
+                showNotification('You have been logged out successfully.');
+            });
+        });
+
+        // Check auth state on load
+        auth.onAuthStateChanged((user) => {
+            if (user && user.email === ADMIN_EMAIL) {
                 loginSection.style.display = 'none';
                 adminSection.style.display = 'block';
                 loadDeposits();
-                showNotification('Login successful! Welcome to the admin panel.');
-            } else {
-                alert('Invalid email or password. Please try again.');
             }
         });
-        
-        logoutBtn.addEventListener('click', function() {
-            localStorage.removeItem('musicEarnAdminLoggedIn');
-            adminSection.style.display = 'none';
-            loginSection.style.display = 'block';
-            adminEmailInput.value = '';
-            adminPasswordInput.value = '';
-            showNotification('You have been logged out successfully.');
-        });
-        
-        refreshBtn.addEventListener('click', function() {
-            // In a real app, this would fetch fresh data from the server
-            showNotification('Data refreshed successfully!');
-            loadDeposits();
-        });
-        
-        // Check login status on page load
-        checkLogin();
-        
-        // Auto-fill admin email for convenience (remove in production)
+
+        // Auto-fill admin email for convenience
         adminEmailInput.value = ADMIN_EMAIL;
     </script>
 </body>
