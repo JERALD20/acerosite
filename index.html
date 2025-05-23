@@ -1,184 +1,805 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Previous head content remains the same -->
-    <!-- Add Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-storage-compat.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music2EarnPRO - Invest & Earn</title>
+    <style>
+        :root {
+            --primary: #4a148c;
+            --secondary: #7b1fa2;
+            --accent: #e91e63;
+            --light: #f3e5f5;
+            --dark: #12005e;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --error: #f44336;
+            --text: #333;
+            --bg: #f9f9f9;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .user-panel {
+            background: white;
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .user-info {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--light);
+            margin: 0 auto 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--primary);
+        }
+        
+        .balance {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 0.5rem 0;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+            margin: 0.25rem;
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: var(--secondary);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .tasks-panel {
+            background: white;
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .task-card {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .task-info {
+            flex: 1;
+        }
+        
+        .task-title {
+            font-weight: bold;
+            margin-bottom: 0.25rem;
+        }
+        
+        .task-reward {
+            color: var(--success);
+            font-weight: bold;
+        }
+        
+        .task-timer {
+            color: var(--warning);
+        }
+        
+        .status {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .status.playing {
+            background-color: var(--success);
+            color: white;
+        }
+        
+        .status.buffering {
+            background-color: var(--warning);
+            color: white;
+        }
+        
+        .status.error {
+            background-color: var(--error);
+            color: white;
+        }
+        
+        .station-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .station-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .station-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .station-card.premium {
+            border: 2px solid var(--accent);
+            position: relative;
+        }
+        
+        .station-card.premium::after {
+            content: 'PREMIUM';
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--accent);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0 8px 0 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .quote {
+            font-style: italic;
+            color: var(--secondary);
+            text-align: center;
+            margin: 1rem 0;
+            padding: 0.5rem;
+            border-left: 3px solid var(--accent);
+            background-color: var(--light);
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: #666;
+        }
+        
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Previous body content remains the same until the script section -->
-
-    <script>
-        // Firebase configuration (same as main site)
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "music2earn-pro.firebaseapp.com",
-            databaseURL: "https://music2earn-pro-default-rtdb.firebaseio.com",
-            projectId: "music2earn-pro",
-            storageBucket: "music2earn-pro.appspot.com",
-            messagingSenderId: "YOUR_SENDER_ID",
-            appId: "YOUR_APP_ID"
-        };
-
-        // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
-        const auth = firebase.auth();
-        const storage = firebase.storage();
-
-        // Reference to database
-        const depositsRef = database.ref('deposits');
-        const usersRef = database.ref('users');
-        const investmentsRef = database.ref('investments');
-
-        // Admin login with Firebase Authentication
-        loginBtn.addEventListener('click', function() {
-            const email = adminEmailInput.value.trim();
-            const password = adminPasswordInput.value.trim();
+    <header>
+        <h1>Music2EarnPRO</h1>
+        <p>Invest in music, earn while you listen!</p>
+    </header>
+    
+    <div class="container">
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-value" id="total-users">1,248</div>
+                <div class="stat-label">Total Investors</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="total-earned">₱62,400</div>
+                <div class="stat-label">Total Earned</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="active-tasks">6</div>
+                <div class="stat-label">Daily Tasks</div>
+            </div>
+        </div>
+        
+        <div class="dashboard">
+            <div class="user-panel">
+                <div class="user-info">
+                    <div class="avatar">👤</div>
+                    <h3 id="username">Guest User</h3>
+                    <div class="balance">₱0.00</div>
+                    <div class="status" id="user-status">Not Invested</div>
+                </div>
+                
+                <button class="btn" id="deposit-btn">Deposit</button>
+                <button class="btn btn-secondary" id="withdraw-btn" disabled>Withdraw</button>
+                <button class="btn btn-outline" id="contact-btn">Contact Support</button>
+                
+                <div class="quote" id="user-quote">
+                    "Invest in your ears, and your wallet will thank you!"
+                </div>
+            </div>
             
-            auth.signInWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    // Login successful
-                    loginSection.style.display = 'none';
-                    adminSection.style.display = 'block';
-                    loadDeposits();
-                    showNotification('Login successful! Welcome to the admin panel.');
-                })
-                .catch((error) => {
-                    alert('Login error: ' + error.message);
-                });
-        });
-
-        // Real-time deposit loading
-        function loadDeposits() {
-            depositsRef.orderByChild('date').on('value', (snapshot) => {
-                const depositsData = snapshot.val() || {};
-                deposits = Object.values(depositsData);
+            <div class="tasks-panel">
+                <h2>Today's Tasks</h2>
+                <p>Complete 6 tasks to earn ₱3.00 today!</p>
                 
-                // Clear tables
-                pendingDepositsTable.innerHTML = '';
-                approvedDepositsTable.innerHTML = '';
+                <div id="task-list">
+                    <!-- Tasks will be loaded here -->
+                </div>
                 
-                // Process deposits
-                Object.entries(depositsData).forEach(([id, deposit]) => {
-                    if (deposit.status === 'pending') {
-                        addPendingDepositRow(id, deposit);
-                    } else {
-                        addProcessedDepositRow(id, deposit);
+                <h2>Radio Stations</h2>
+                <div id="station-list" class="station-list">
+                    <!-- Stations will be loaded here -->
+                </div>
+                
+                <audio id="audio-player" hidden></audio>
+                <div class="status" id="player-status">IDLE</div>
+                <div id="current-station">No station selected</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Deposit Modal -->
+    <div class="modal" id="deposit-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Make a Deposit</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="quote" id="deposit-quote">
+                "Small investments today lead to big returns tomorrow!"
+            </div>
+            <div class="form-group">
+                <label for="deposit-amount">Amount (₱50-₱1000)</label>
+                <input type="number" id="deposit-amount" min="50" max="1000" placeholder="Enter amount">
+            </div>
+            <div class="form-group">
+                <label for="deposit-method">Payment Method</label>
+                <select id="deposit-method">
+                    <option value="gcash">GCash (09978014222 - J****D A.)</option>
+                    <option value="cash">Cash Deposit (09978014222)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="deposit-proof">Payment Proof (Screenshot)</label>
+                <input type="file" id="deposit-proof" accept="image/*">
+            </div>
+            <button class="btn" id="submit-deposit">Submit Deposit</button>
+            <p>After submitting, please send payment proof to <a href="mailto:acerojerald18@gmail.com">acerojerald18@gmail.com</a></p>
+        </div>
+    </div>
+    
+    <!-- Withdraw Modal -->
+    <div class="modal" id="withdraw-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Request Withdrawal</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="quote" id="withdraw-quote">
+                "Your hard work deserves to be rewarded!"
+            </div>
+            <div class="form-group">
+                <label for="withdraw-amount">Amount (Minimum ₱25)</label>
+                <input type="number" id="withdraw-amount" min="25" placeholder="Enter amount">
+            </div>
+            <div class="form-group">
+                <label for="withdraw-method">Receive Via</label>
+                <select id="withdraw-method">
+                    <option value="gcash">GCash</option>
+                    <option value="bank">Bank Transfer</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="withdraw-account">Account Number</label>
+                <input type="text" id="withdraw-account" placeholder="Enter account number">
+            </div>
+            <button class="btn" id="submit-withdraw">Request Withdrawal</button>
+            <p>Note: 5% tax fee will be deducted from your withdrawal amount.</p>
+        </div>
+    </div>
+    
+    <!-- Task Complete Modal -->
+    <div class="modal" id="task-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Task Completed!</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="quote" id="task-quote">
+                "Every minute of listening brings you closer to your goals!"
+            </div>
+            <p>You've earned <strong>₱0.50</strong> for completing this task!</p>
+            <p>Tasks completed: <span id="tasks-completed">0</span>/6</p>
+            <button class="btn" id="next-task">Next Task</button>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2023 Music2EarnPRO. All rights reserved.</p>
+        <p>Contact support: <a href="t.me/Music2EarnPRO" style="color: white;">t.me/Music2EarnPRO</a></p>
+    </footer>
+    
+    <script>
+        // User data
+        let userData = {
+            balance: 0,
+            invested: false,
+            tasksCompleted: 0,
+            currentTask: null,
+            taskTimer: null
+        };
+        
+        // Stations data
+        const stations = [
+            { id: 1, name: "Pop Hits Radio", url: "https://example.com/stream1", premium: true },
+            { id: 2, name: "Jazz Lounge", url: "https://example.com/stream2", premium: true },
+            { id: 3, name: "Rock Nation", url: "https://example.com/stream3", premium: true },
+            { id: 4, name: "Classical FM", url: "https://example.com/stream4", premium: true },
+            { id: 5, name: "EDM Zone", url: "https://example.com/stream5", premium: true },
+            { id: 6, name: "Free Live Song", url: "https://example.com/freestream", premium: false }
+        ];
+        
+        // Tasks data
+        const dailyTasks = [
+            { id: 1, title: "Listen to Pop Hits Radio", stationId: 1, completed: false },
+            { id: 2, title: "Listen to Jazz Lounge", stationId: 2, completed: false },
+            { id: 3, title: "Listen to Rock Nation", stationId: 3, completed: false },
+            { id: 4, title: "Listen to Classical FM", stationId: 4, completed: false },
+            { id: 5, title: "Listen to EDM Zone", stationId: 5, completed: false },
+            { id: 6, title: "Discover New Music", stationId: 6, completed: false }
+        ];
+        
+        // Positive quotes
+        const quotes = {
+            deposit: [
+                "Small investments today lead to big returns tomorrow!",
+                "Your musical journey to earnings starts here!",
+                "Invest in your future, one song at a time!",
+                "Great things begin with small deposits!"
+            ],
+            withdraw: [
+                "Your hard work deserves to be rewarded!",
+                "Enjoy the fruits of your listening labor!",
+                "Success is when preparation meets opportunity - withdraw now!",
+                "Your earnings are music to your wallet!"
+            ],
+            task: [
+                "Every minute of listening brings you closer to your goals!",
+                "Great job! Your consistency is paying off!",
+                "One task down, more earnings to come!",
+                "The sweet sound of success is in your ears!"
+            ],
+            user: [
+                "Invest in your ears, and your wallet will thank you!",
+                "Music pays when you listen the right way!",
+                "Your favorite tunes are now your earning tools!",
+                "Turn up the volume on your earnings!"
+            ]
+        };
+        
+        // DOM elements
+        const depositBtn = document.getElementById('deposit-btn');
+        const withdrawBtn = document.getElementById('withdraw-btn');
+        const contactBtn = document.getElementById('contact-btn');
+        const depositModal = document.getElementById('deposit-modal');
+        const withdrawModal = document.getElementById('withdraw-modal');
+        const taskModal = document.getElementById('task-modal');
+        const closeModals = document.querySelectorAll('.close-modal');
+        const stationList = document.getElementById('station-list');
+        const taskList = document.getElementById('task-list');
+        const audioPlayer = document.getElementById('audio-player');
+        const playerStatus = document.getElementById('player-status');
+        const currentStation = document.getElementById('current-station');
+        const userBalance = document.querySelector('.balance');
+        const userStatus = document.getElementById('user-status');
+        const username = document.getElementById('username');
+        
+        // Initialize the app
+        function initApp() {
+            loadStations();
+            loadTasks();
+            updateUserDisplay();
+            
+            // Check if user data exists in localStorage
+            const savedUser = localStorage.getItem('music2earn_user');
+            if (savedUser) {
+                userData = JSON.parse(savedUser);
+                updateUserDisplay();
+            }
+        }
+        
+        // Load stations into the list
+        function loadStations() {
+            stationList.innerHTML = '';
+            
+            stations.forEach(station => {
+                const stationCard = document.createElement('div');
+                stationCard.className = `station-card ${station.premium ? 'premium' : ''}`;
+                stationCard.innerHTML = `<h3>${station.name}</h3>`;
+                
+                stationCard.addEventListener('click', () => {
+                    if (station.premium && !userData.invested) {
+                        alert('Please make a deposit to access premium stations');
+                        return;
+                    }
+                    playStation(station);
+                    
+                    // If this is the current task station, start the timer
+                    if (userData.currentTask && userData.currentTask.stationId === station.id) {
+                        startTaskTimer();
                     }
                 });
+                
+                stationList.appendChild(stationCard);
             });
         }
-
-        function addPendingDepositRow(id, deposit) {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${new Date(deposit.date).toLocaleString()}</td>
-                <td>${deposit.name}</td>
-                <td>${deposit.email}</td>
-                <td>₱${deposit.amount.toFixed(2)}</td>
-                <td><a href="#" class="view-proof" data-id="${id}">View Proof</a></td>
-                <td>
-                    <button class="btn btn-success approve-btn" data-id="${id}" style="padding: 8px 15px; font-size: 0.9rem;">
-                        <i class="fas fa-check"></i> Approve
-                    </button>
-                    <button class="btn btn-danger reject-btn" data-id="${id}" style="padding: 8px 15px; font-size: 0.9rem;">
-                        <i class="fas fa-times"></i> Reject
-                    </button>
-                </td>
-            `;
-            pendingDepositsTable.appendChild(row);
+        
+        // Load tasks into the list
+        function loadTasks() {
+            taskList.innerHTML = '';
             
-            // Add event listeners
-            row.querySelector('.approve-btn').addEventListener('click', () => processDeposit(id, true));
-            row.querySelector('.reject-btn').addEventListener('click', () => processDeposit(id, false));
-            row.querySelector('.view-proof').addEventListener('click', (e) => {
-                e.preventDefault();
-                viewProof(deposit.proofUrl);
-            });
-        }
-
-        function addProcessedDepositRow(id, deposit) {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${new Date(deposit.date).toLocaleString()}</td>
-                <td>${deposit.name}</td>
-                <td>₱${deposit.amount.toFixed(2)}</td>
-                <td><span class="status-badge ${deposit.status === 'approved' ? 'status-approved' : 'status-rejected'}">${deposit.status.toUpperCase()}</span></td>
-                <td>${deposit.approvedAt ? new Date(deposit.approvedAt).toLocaleString() : 'N/A'}</td>
-            `;
-            approvedDepositsTable.appendChild(row);
-        }
-
-        async function processDeposit(id, approve) {
-            try {
-                const updates = {
-                    status: approve ? 'approved' : 'rejected',
-                    approvedAt: new Date().toISOString()
-                };
+            dailyTasks.forEach(task => {
+                const station = stations.find(s => s.id === task.stationId);
+                const taskCard = document.createElement('div');
+                taskCard.className = 'task-card';
+                taskCard.innerHTML = `
+                    <div class="task-info">
+                        <div class="task-title">${task.title}</div>
+                        <div>Listen for 3 minutes</div>
+                    </div>
+                    <div class="task-reward">+₱0.50</div>
+                    ${task.completed ? '<div class="status playing">COMPLETED</div>' : ''}
+                `;
                 
-                await depositsRef.child(id).update(updates);
-                
-                if (approve) {
-                    // Activate investment for this user
-                    const depositSnapshot = await depositsRef.child(id).once('value');
-                    const deposit = depositSnapshot.val();
-                    
-                    await investmentsRef.child(deposit.userId).set({
-                        amount: deposit.amount,
-                        startDate: new Date().toISOString(),
-                        endDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
-                        status: "active",
-                        earnings: 0
+                if (!task.completed) {
+                    taskCard.addEventListener('click', () => {
+                        if (!userData.invested) {
+                            alert('Please make a deposit to complete tasks');
+                            return;
+                        }
+                        
+                        userData.currentTask = task;
+                        const station = stations.find(s => s.id === task.stationId);
+                        playStation(station);
+                        startTaskTimer();
                     });
-                    
-                    showNotification(`Deposit approved and investment activated for ${deposit.name}`);
-                } else {
-                    showNotification(`Deposit rejected for ${deposit.name}`);
                 }
-            } catch (error) {
-                console.error("Error processing deposit:", error);
-                showNotification("Error processing deposit. Please try again.");
-            }
-        }
-
-        async function viewProof(proofUrl) {
-            try {
-                // Get download URL from Firebase Storage
-                const storageRef = storage.refFromURL(`gs://music2earn-pro.appspot.com/${proofUrl}`);
-                const url = await storageRef.getDownloadURL();
                 
-                // Open in new tab (or show in modal)
-                window.open(url, '_blank');
-            } catch (error) {
-                console.error("Error loading proof:", error);
-                alert("Could not load payment proof. Error: " + error.message);
+                taskList.appendChild(taskCard);
+            });
+        }
+        
+        // Play selected station
+        function playStation(station) {
+            currentStation.textContent = station.name;
+            playerStatus.textContent = 'BUFFERING';
+            playerStatus.className = 'status buffering';
+            
+            audioPlayer.src = station.url;
+            audioPlayer.load();
+            audioPlayer.play().catch(e => {
+                playerStatus.textContent = 'ERROR';
+                playerStatus.className = 'status error';
+                console.error('Playback failed:', e);
+            });
+        }
+        
+        // Start task timer
+        function startTaskTimer() {
+            if (userData.taskTimer) {
+                clearTimeout(userData.taskTimer);
+            }
+            
+            // Complete task after 3 minutes (180000ms)
+            userData.taskTimer = setTimeout(() => {
+                completeTask();
+            }, 180000); // 3 minutes in milliseconds
+        }
+        
+        // Complete current task
+        function completeTask() {
+            if (!userData.currentTask) return;
+            
+            // Find the task in dailyTasks
+            const taskIndex = dailyTasks.findIndex(t => t.id === userData.currentTask.id);
+            if (taskIndex !== -1) {
+                dailyTasks[taskIndex].completed = true;
+                userData.tasksCompleted++;
+                userData.balance += 0.50;
+                userData.currentTask = null;
+                
+                // Update display
+                updateUserDisplay();
+                loadTasks();
+                
+                // Show task complete modal
+                showRandomQuote('task', 'task-quote');
+                document.getElementById('tasks-completed').textContent = userData.tasksCompleted;
+                taskModal.style.display = 'flex';
             }
         }
-
-        // Logout
-        logoutBtn.addEventListener('click', function() {
-            auth.signOut().then(() => {
-                adminSection.style.display = 'none';
-                loginSection.style.display = 'block';
-                showNotification('You have been logged out successfully.');
+        
+        // Update user display
+        function updateUserDisplay() {
+            userBalance.textContent = `₱${userData.balance.toFixed(2)}`;
+            username.textContent = userData.invested ? 'Premium Investor' : 'Guest User';
+            userStatus.textContent = userData.invested ? 'Invested' : 'Not Invested';
+            userStatus.className = `status ${userData.invested ? 'playing' : 'error'}`;
+            withdrawBtn.disabled = userData.balance < 25;
+            
+            // Save to localStorage
+            localStorage.setItem('music2earn_user', JSON.stringify(userData));
+        }
+        
+        // Show random quote
+        function showRandomQuote(type, elementId) {
+            const quoteList = quotes[type];
+            const randomQuote = quoteList[Math.floor(Math.random() * quoteList.length)];
+            document.getElementById(elementId).textContent = `"${randomQuote}"`;
+        }
+        
+        // Event listeners
+        depositBtn.addEventListener('click', () => {
+            showRandomQuote('deposit', 'deposit-quote');
+            depositModal.style.display = 'flex';
+        });
+        
+        withdrawBtn.addEventListener('click', () => {
+            showRandomQuote('withdraw', 'withdraw-quote');
+            document.getElementById('withdraw-amount').value = userData.balance >= 25 ? userData.balance : 25;
+            withdrawModal.style.display = 'flex';
+        });
+        
+        contactBtn.addEventListener('click', () => {
+            window.open('https://t.me/Music2EarnPRO', '_blank');
+        });
+        
+        closeModals.forEach(btn => {
+            btn.addEventListener('click', () => {
+                depositModal.style.display = 'none';
+                withdrawModal.style.display = 'none';
+                taskModal.style.display = 'none';
             });
         });
-
-        // Check auth state on load
-        auth.onAuthStateChanged((user) => {
-            if (user && user.email === ADMIN_EMAIL) {
-                loginSection.style.display = 'none';
-                adminSection.style.display = 'block';
-                loadDeposits();
+        
+        document.getElementById('submit-deposit').addEventListener('click', () => {
+            const amount = parseFloat(document.getElementById('deposit-amount').value);
+            
+            if (isNaN(amount) || amount < 50 || amount > 1000) {
+                alert('Please enter a valid amount between ₱50 and ₱1000');
+                return;
             }
+            
+            const proof = document.getElementById('deposit-proof').files[0];
+            if (!proof) {
+                alert('Please upload payment proof');
+                return;
+            }
+            
+            // In a real app, you would send this to your server
+            alert(`Deposit of ₱${amount} submitted! Please send payment proof to acerojerald18@gmail.com`);
+            
+            // Update user data
+            userData.invested = true;
+            updateUserDisplay();
+            depositModal.style.display = 'none';
         });
-
-        // Auto-fill admin email for convenience
-        adminEmailInput.value = ADMIN_EMAIL;
+        
+        document.getElementById('submit-withdraw').addEventListener('click', () => {
+            const amount = parseFloat(document.getElementById('withdraw-amount').value);
+            const method = document.getElementById('withdraw-method').value;
+            const account = document.getElementById('withdraw-account').value;
+            
+            if (isNaN(amount) {
+                alert('Please enter a valid amount');
+                return;
+            }
+            
+            if (amount < 25) {
+                alert('Minimum withdrawal is ₱25');
+                return;
+            }
+            
+            if (amount > userData.balance) {
+                alert('Insufficient balance');
+                return;
+            }
+            
+            if (!account) {
+                alert('Please enter your account number');
+                return;
+            }
+            
+            // Calculate tax (5%)
+            const tax = amount * 0.05;
+            const netAmount = amount - tax;
+            
+            // In a real app, you would send this to your server
+            alert(`Withdrawal request for ₱${amount} submitted!\nTax (5%): ₱${tax.toFixed(2)}\nNet amount: ₱${netAmount.toFixed(2)}\nWill be sent to ${account} via ${method}`);
+            
+            // Update user data
+            userData.balance -= amount;
+            updateUserDisplay();
+            withdrawModal.style.display = 'none';
+        });
+        
+        document.getElementById('next-task').addEventListener('click', () => {
+            taskModal.style.display = 'none';
+        });
+        
+        // Audio player events
+        audioPlayer.addEventListener('playing', () => {
+            playerStatus.textContent = 'PLAYING';
+            playerStatus.className = 'status playing';
+        });
+        
+        audioPlayer.addEventListener('error', () => {
+            playerStatus.textContent = 'ERROR';
+            playerStatus.className = 'status error';
+        });
+        
+        audioPlayer.addEventListener('waiting', () => {
+            playerStatus.textContent = 'BUFFERING';
+            playerStatus.className = 'status buffering';
+        });
+        
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', initApp);
+        
+        // Fullscreen on click
+        document.addEventListener('click', function requestFullscreen() {
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen();
+            } else if (document.documentElement.webkitRequestFullscreen) {
+                document.documentElement.webkitRequestFullscreen();
+            } else if (document.documentElement.msRequestFullscreen) {
+                document.documentElement.msRequestFullscreen();
+            }
+            
+            // Remove the listener after first click
+            document.removeEventListener('click', requestFullscreen);
+        }, { once: true });
     </script>
 </body>
 </html>
