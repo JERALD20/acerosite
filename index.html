@@ -728,7 +728,7 @@
                 <div class="stat-card">
                     <h3>Today's Earnings</h3>
                     <div class="stat-value earnings" id="today-earnings">₱0.00</div>
-                    <div class="stat-label">From 0/6 songs</div>
+                    <div class="stat-label" id="songs-completed">From 0/6 songs</div>
                 </div>
                 <div class="stat-card">
                     <h3>Investment Status</h3>
@@ -1016,20 +1016,79 @@
         const todayEarningsElement = document.getElementById('today-earnings');
         const investmentStatusElement = document.getElementById('investment-status');
         const cycleDaysElement = document.getElementById('cycle-days');
+        const songsCompletedElement = document.getElementById('songs-completed');
         
-        // Investment variables
-        let investmentActive = false;
-        let investmentAmount = 0;
-        let cycleDaysCompleted = 0;
-        let totalEarnings = 0;
-        let todayEarnings = 0;
-        let songsCompletedToday = 0;
+        // Investment variables with localStorage integration
+        let investmentData = JSON.parse(localStorage.getItem('musicEarnData')) || {
+            active: false,
+            amount: 0,
+            cycleDays: 0,
+            totalEarnings: 0,
+            todayEarnings: 0,
+            songsCompleted: 0,
+            lastActiveDate: null
+        };
+
+        // Initialize variables from localStorage
+        let investmentActive = investmentData.active;
+        let investmentAmount = investmentData.amount;
+        let cycleDaysCompleted = investmentData.cycleDays;
+        let totalEarnings = investmentData.totalEarnings;
+        let todayEarnings = investmentData.todayEarnings;
+        let songsCompletedToday = investmentData.songsCompleted;
         let timeListened = 0;
         let earningInterval;
         const earningTimePerSong = 5 * 60; // 5 minutes in seconds
         const songsPerDay = 6;
         const earningsPerSong = 0.50;
         const taxRate = 0.10; // 10%
+        
+        // Check if it's a new day to reset daily counters
+        function checkNewDay() {
+            const today = new Date().toDateString();
+            const lastActive = investmentData.lastActiveDate ? new Date(investmentData.lastActiveDate).toDateString() : null;
+            
+            if (lastActive !== today) {
+                // It's a new day, reset daily counters
+                songsCompletedToday = 0;
+                todayEarnings = 0;
+                
+                // If investment is active, increment cycle days
+                if (investmentActive) {
+                    cycleDaysCompleted++;
+                    
+                    // Check if investment cycle is complete
+                    if (cycleDaysCompleted > 50) {
+                        investmentActive = false;
+                        showNotification("Your 50-day investment cycle has ended. Please reinvest to continue earning.");
+                    }
+                }
+                
+                // Update last active date
+                investmentData.lastActiveDate = new Date().toISOString();
+                
+                // Save to localStorage
+                saveInvestmentData();
+                
+                // Update UI
+                updateStats();
+            }
+        }
+        
+        // Save investment data to localStorage
+        function saveInvestmentData() {
+            investmentData = {
+                active: investmentActive,
+                amount: investmentAmount,
+                cycleDays: cycleDaysCompleted,
+                totalEarnings: totalEarnings,
+                todayEarnings: todayEarnings,
+                songsCompleted: songsCompletedToday,
+                lastActiveDate: investmentData.lastActiveDate || new Date().toISOString()
+            };
+            
+            localStorage.setItem('musicEarnData', JSON.stringify(investmentData));
+        }
         
         // Notification quotes
         const motivationalQuotes = [
@@ -1064,7 +1123,8 @@
         function updateStats() {
             totalEarningsElement.textContent = `₱${totalEarnings.toFixed(2)}`;
             todayEarningsElement.textContent = `₱${todayEarnings.toFixed(2)}`;
-            document.querySelector('#earnings-display').textContent = `Today's Earnings: ₱${todayEarnings.toFixed(2)} (${songsCompletedToday}/${songsPerDay} songs)`;
+            songsCompletedElement.textContent = `From ${songsCompletedToday}/${songsPerDay} songs`;
+            earningsDisplay.textContent = `Today's Earnings: ₱${todayEarnings.toFixed(2)} (${songsCompletedToday}/${songsPerDay} songs)`;
             
             if (investmentActive) {
                 investmentStatusElement.textContent = "Active";
@@ -1077,6 +1137,9 @@
                 cycleDaysElement.textContent = "0/50 days";
                 document.getElementById('withdraw-btn').disabled = true;
             }
+            
+            // Save data after updating stats
+            saveInvestmentData();
         }
         
         // Show notification
@@ -1226,7 +1289,7 @@
             // Show notification
             showNotification(`Song completed! +₱${earningsPerSong.toFixed(2)}. ${randomQuote}`);
             
-            // Update UI
+            // Update UI and save data
             updateStats();
             statusElement.textContent = 'COMPLETED';
             statusElement.className = 'status idle';
@@ -1345,6 +1408,7 @@
             cycleDaysCompleted = 1;
             songsCompletedToday = 0;
             todayEarnings = 0;
+            investmentData.lastActiveDate = new Date().toISOString();
             
             // Add to recent investors
             addRecentInvestor(email.split('@')[0], amount);
@@ -1354,7 +1418,7 @@
             
             alert(`🎉 Investment of ₱${amount.toFixed(2)} activated!\n\n${randomQuote}\n\nYour 50-day earning cycle has begun.`);
             
-            // Update UI
+            // Update UI and save data
             updateStats();
             statusElement.textContent = 'READY';
             statusElement.className = 'status idle';
@@ -1392,6 +1456,8 @@
             
             // Deduct from total earnings
             totalEarnings -= amount;
+            
+            // Update UI and save data
             updateStats();
             
             alert(`Withdrawal request for ₱${amount.toFixed(2)} submitted!\n\nNet amount after 10% tax: ₱${netAmount.toFixed(2)}\n\nFunds will be sent to ${gcashNumber} within 24 hours.`);
@@ -1401,24 +1467,9 @@
         
         // Initialize the app
         loadStations();
+        checkNewDay(); // Check if it's a new day to reset counters
         updateStats();
         renderInvestors();
-        
-        // Simulate daily reset (in real app this would be server-side)
-        setInterval(() => {
-            if (investmentActive) {
-                songsCompletedToday = 0;
-                todayEarnings = 0;
-                cycleDaysCompleted++;
-                
-                if (cycleDaysCompleted > 50) {
-                    investmentActive = false;
-                    alert("Your 50-day investment cycle has ended. Please reinvest to continue earning.");
-                }
-                
-                updateStats();
-            }
-        }, 1000 * 60 * 60 * 24); // 24 hours
     </script>
 </body>
 </html>
