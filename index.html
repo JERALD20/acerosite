@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MusicEarn - Invest & Earn by Listening</title>
+    <title>MusicEarn PRO - Invest & Earn</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -613,6 +613,62 @@
             font-size: 1.5rem;
         }
         
+        /* New styles for recent investors */
+        .investors-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+        
+        .investor-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid rgba(106, 90, 205, 0.3);
+        }
+        
+        .investor-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gradient);
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .investor-name {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .investor-amount {
+            color: var(--success);
+            font-size: 0.9rem;
+        }
+        
+        .investor-date {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+        
+        .free-play-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0,209,178,0.2);
+            color: var(--success);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+        
         /* Responsive styles */
         @media (max-width: 768px) {
             .container {
@@ -695,10 +751,52 @@
             </div>
         </div>
         
-        <!-- Music Player Section -->
+        <!-- Recent Investors Section -->
+        <div class="card">
+            <h2>Recent Investors</h2>
+            <div class="investors-container" id="investors-container">
+                <!-- Will be populated by JavaScript -->
+            </div>
+        </div>
+        
+        <!-- Free Music Player Section -->
+        <div class="card">
+            <div class="card-badge">Free Listening</div>
+            <h2>Enjoy Free Music</h2>
+            <p>Listen to these stations anytime, even without investment. Earnings only apply with active investment plan.</p>
+            
+            <div class="station-list">
+                <div class="station-card" style="position: relative;">
+                    <div class="free-play-badge">FREE</div>
+                    <h4>Chill Vibes Radio</h4>
+                    <audio controls style="width: 100%; margin-top: 10px;">
+                        <source src="https://stream.live.vc.bbcmedia.co.uk/bbc_radio_one" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <div class="station-card" style="position: relative;">
+                    <div class="free-play-badge">FREE</div>
+                    <h4>Jazz Lounge</h4>
+                    <audio controls style="width: 100%; margin-top: 10px;">
+                        <source src="https://jazz-wr04.streamguys1.com/jazz-wr04.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <div class="station-card" style="position: relative;">
+                    <div class="free-play-badge">FREE</div>
+                    <h4>Classical FM</h4>
+                    <audio controls style="width: 100%; margin-top: 10px;">
+                        <source src="https://stream.klassikradio.de/klassikradio.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Premium Music Player Section -->
         <div class="card">
             <div class="card-badge">Earning Platform</div>
-            <h2>Music Player</h2>
+            <h2>Premium Music Player</h2>
             <div class="player-container">
                 <div class="player-header">
                     <h3 id="current-station">Select a station to play</h3>
@@ -762,7 +860,7 @@
             
             <div class="highlight">
                 <h3>Can I listen without investing?</h3>
-                <p>Yes! You can enjoy our music player anytime, but earnings only accumulate with an active investment plan.</p>
+                <p>Yes! You can enjoy our free music stations anytime, but earnings only accumulate with an active investment plan.</p>
                 
                 <h3>How do withdrawals work?</h3>
                 <p>Email your withdrawal request (including your GCash number) to our support address. Withdrawals are processed within 24 hours with a 10% tax fee.</p>
@@ -774,7 +872,7 @@
         
         <footer>
             <p>MusicEarn PRO &copy; 2023 | Secure Investment Platform</p>
-            <p>Contact support for assistance</p>
+            <p><a href="https://t.me/Music2EarnPRO/" target="_blank" style="color: var(--secondary); text-decoration: none;"><i class="fab fa-telegram"></i> Contact support for assistance</a></p>
         </footer>
     </div>
 
@@ -942,6 +1040,25 @@
             "Smart investors listen and earn - just like you!",
             "Small steps lead to big financial victories!"
         ];
+
+        // Purchase confirmation quotes
+        const purchaseQuotes = [
+            "Smart move! Your investment journey begins now.",
+            "Great decision! Watch your money grow while you listen.",
+            "Welcome aboard! Your patience will be rewarded.",
+            "Investment activated! Consistency is the key to success.",
+            "Congratulations! You've taken the first step to financial growth."
+        ];
+        
+        // Recent investors data
+        const recentInvestors = [
+            { name: "MariaR", amount: 500, date: "2 hours ago" },
+            { name: "JuanD", amount: 1000, date: "5 hours ago" },
+            { name: "LizaS", amount: 250, date: "Yesterday" },
+            { name: "CarlosM", amount: 750, date: "Yesterday" },
+            { name: "AnnaB", amount: 300, date: "2 days ago" },
+            { name: "MikeT", amount: 1500, date: "3 days ago" }
+        ];
         
         // Update stats display
         function updateStats() {
@@ -990,6 +1107,45 @@
                 
                 stationListElement.appendChild(stationCard);
             });
+        }
+        
+        // Render investors list
+        function renderInvestors() {
+            const container = document.getElementById('investors-container');
+            container.innerHTML = '';
+            
+            recentInvestors.forEach(investor => {
+                const card = document.createElement('div');
+                card.className = 'investor-card';
+                
+                const initials = investor.name.substring(0, 2).toUpperCase();
+                const amountFormatted = `₱${investor.amount.toFixed(2)}`;
+                
+                card.innerHTML = `
+                    <div class="investor-avatar">${initials}</div>
+                    <div class="investor-name">${investor.name}</div>
+                    <div class="investor-amount">${amountFormatted}</div>
+                    <div class="investor-date">${investor.date}</div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+        
+        // Add new investor
+        function addRecentInvestor(name, amount) {
+            recentInvestors.unshift({
+                name: name,
+                amount: amount,
+                date: "Just now"
+            });
+            
+            // Keep only last 6 investors
+            if (recentInvestors.length > 6) {
+                recentInvestors.pop();
+            }
+            
+            renderInvestors();
         }
         
         // Play selected station
@@ -1190,13 +1346,19 @@
             songsCompletedToday = 0;
             todayEarnings = 0;
             
+            // Add to recent investors
+            addRecentInvestor(email.split('@')[0], amount);
+            
+            // Show purchase confirmation with positive quote
+            const randomQuote = purchaseQuotes[Math.floor(Math.random() * purchaseQuotes.length)];
+            
+            alert(`🎉 Investment of ₱${amount.toFixed(2)} activated!\n\n${randomQuote}\n\nYour 50-day earning cycle has begun.`);
+            
             // Update UI
             updateStats();
             statusElement.textContent = 'READY';
             statusElement.className = 'status idle';
             timerDisplay.textContent = 'Select a station to start earning';
-            
-            alert(`Investment of ₱${amount.toFixed(2)} activated! Your 50-day earning cycle has begun.`);
             depositModal.style.display = 'none';
             this.reset();
         });
@@ -1240,6 +1402,7 @@
         // Initialize the app
         loadStations();
         updateStats();
+        renderInvestors();
         
         // Simulate daily reset (in real app this would be server-side)
         setInterval(() => {
