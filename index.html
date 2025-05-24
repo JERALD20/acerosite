@@ -613,50 +613,6 @@
             font-size: 1.5rem;
         }
         
-        /* New styles for recent investors */
-        .investors-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 15px;
-            margin: 25px 0;
-        }
-        
-        .investor-card {
-            background: rgba(255,255,255,0.05);
-            border-radius: 10px;
-            padding: 15px;
-            text-align: center;
-            border: 1px solid rgba(106, 90, 205, 0.3);
-        }
-        
-        .investor-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: var(--gradient);
-            margin: 0 auto 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-        }
-        
-        .investor-name {
-            font-weight: 500;
-            margin-bottom: 5px;
-        }
-        
-        .investor-amount {
-            color: var(--success);
-            font-size: 0.9rem;
-        }
-        
-        .investor-date {
-            font-size: 0.8rem;
-            opacity: 0.7;
-        }
-        
         .free-play-badge {
             position: absolute;
             top: 10px;
@@ -748,14 +704,6 @@
                 <button class="btn btn-warning" id="withdraw-btn" disabled>
                     <i class="fas fa-wallet"></i> Withdraw Earnings
                 </button>
-            </div>
-        </div>
-        
-        <!-- Recent Investors Section -->
-        <div class="card">
-            <h2>Recent Investors</h2>
-            <div class="investors-container" id="investors-container">
-                <!-- Will be populated by JavaScript -->
             </div>
         </div>
         
@@ -1026,7 +974,8 @@
             totalEarnings: 0,
             todayEarnings: 0,
             songsCompleted: 0,
-            lastActiveDate: null
+            lastActiveDate: null,
+            lastEarningTime: 0
         };
 
         // Initialize variables from localStorage
@@ -1084,7 +1033,8 @@
                 totalEarnings: totalEarnings,
                 todayEarnings: todayEarnings,
                 songsCompleted: songsCompletedToday,
-                lastActiveDate: investmentData.lastActiveDate || new Date().toISOString()
+                lastActiveDate: investmentData.lastActiveDate || new Date().toISOString(),
+                lastEarningTime: timeListened
             };
             
             localStorage.setItem('musicEarnData', JSON.stringify(investmentData));
@@ -1107,16 +1057,6 @@
             "Welcome aboard! Your patience will be rewarded.",
             "Investment activated! Consistency is the key to success.",
             "Congratulations! You've taken the first step to financial growth."
-        ];
-        
-        // Recent investors data
-        const recentInvestors = [
-            { name: "MariaR", amount: 500, date: "2 hours ago" },
-            { name: "JuanD", amount: 1000, date: "5 hours ago" },
-            { name: "LizaS", amount: 250, date: "Yesterday" },
-            { name: "CarlosM", amount: 750, date: "Yesterday" },
-            { name: "AnnaB", amount: 300, date: "2 days ago" },
-            { name: "MikeT", amount: 1500, date: "3 days ago" }
         ];
         
         // Update stats display
@@ -1170,45 +1110,6 @@
                 
                 stationListElement.appendChild(stationCard);
             });
-        }
-        
-        // Render investors list
-        function renderInvestors() {
-            const container = document.getElementById('investors-container');
-            container.innerHTML = '';
-            
-            recentInvestors.forEach(investor => {
-                const card = document.createElement('div');
-                card.className = 'investor-card';
-                
-                const initials = investor.name.substring(0, 2).toUpperCase();
-                const amountFormatted = `₱${investor.amount.toFixed(2)}`;
-                
-                card.innerHTML = `
-                    <div class="investor-avatar">${initials}</div>
-                    <div class="investor-name">${investor.name}</div>
-                    <div class="investor-amount">${amountFormatted}</div>
-                    <div class="investor-date">${investor.date}</div>
-                `;
-                
-                container.appendChild(card);
-            });
-        }
-        
-        // Add new investor
-        function addRecentInvestor(name, amount) {
-            recentInvestors.unshift({
-                name: name,
-                amount: amount,
-                date: "Just now"
-            });
-            
-            // Keep only last 6 investors
-            if (recentInvestors.length > 6) {
-                recentInvestors.pop();
-            }
-            
-            renderInvestors();
         }
         
         // Play selected station
@@ -1410,9 +1311,6 @@
             todayEarnings = 0;
             investmentData.lastActiveDate = new Date().toISOString();
             
-            // Add to recent investors
-            addRecentInvestor(email.split('@')[0], amount);
-            
             // Show purchase confirmation with positive quote
             const randomQuote = purchaseQuotes[Math.floor(Math.random() * purchaseQuotes.length)];
             
@@ -1469,7 +1367,6 @@
         loadStations();
         checkNewDay(); // Check if it's a new day to reset counters
         updateStats();
-        renderInvestors();
     </script>
 </body>
 </html>
