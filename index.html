@@ -35,6 +35,243 @@
             padding: 20px;
         }
         
+        /* Login Page Styles */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: var(--darker);
+        }
+        
+        .login-box {
+            background: rgba(30, 30, 30, 0.9);
+            border-radius: 15px;
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .login-logo {
+            margin-bottom: 30px;
+        }
+        
+        .login-logo h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .login-tabs {
+            display: flex;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            overflow: hidden;
+            background: rgba(255,255,255,0.05);
+        }
+        
+        .login-tab {
+            flex: 1;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .login-tab.active {
+            background: var(--gradient);
+            color: white;
+        }
+        
+        .login-form {
+            display: none;
+        }
+        
+        .login-form.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--secondary);
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.1);
+            color: var(--light);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus {
+            border-color: var(--primary);
+            background: rgba(106, 90, 205, 0.1);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(106, 90, 205, 0.2);
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            border-radius: 8px;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(106, 90, 205, 0.4);
+        }
+        
+        .login-footer {
+            margin-top: 25px;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.6);
+        }
+        
+        /* Admin Dashboard Styles */
+        .admin-dashboard {
+            display: none;
+            padding: 20px;
+        }
+        
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .admin-title {
+            font-size: 1.8rem;
+            margin: 0;
+            color: var(--secondary);
+        }
+        
+        .logout-btn {
+            background: var(--error);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .logout-btn:hover {
+            background: #ff144d;
+            transform: translateY(-2px);
+        }
+        
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .admin-stat-card {
+            background: rgba(30, 30, 30, 0.8);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .admin-stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 10px 0;
+            color: var(--secondary);
+        }
+        
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: rgba(30, 30, 30, 0.8);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .admin-table th, .admin-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .admin-table th {
+            background: var(--gradient);
+            color: white;
+            font-weight: 500;
+        }
+        
+        .admin-table tr:hover {
+            background: rgba(106, 90, 205, 0.1);
+        }
+        
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .status-active {
+            background: rgba(0, 209, 178, 0.2);
+            color: var(--success);
+        }
+        
+        .status-inactive {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--light);
+        }
+        
+        .action-btn {
+            padding: 5px 10px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            margin-right: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .edit-btn {
+            background: var(--warning);
+            color: var(--darker);
+        }
+        
+        .delete-btn {
+            background: var(--error);
+            color: white;
+        }
+        
+        /* Main App Styles (existing styles) */
         header {
             text-align: center;
             padding: 40px 0;
@@ -659,16 +896,77 @@
             .modal-content {
                 padding: 20px;
             }
+            
+            .login-box {
+                padding: 30px 20px;
+            }
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
+    <!-- Login Page -->
+    <div class="login-container" id="login-page">
+        <div class="login-box">
+            <div class="login-logo">
+                <h1>MusicEarn PRO</h1>
+                <p>Invest & Earn Platform</p>
+            </div>
+            
+            <div class="login-tabs">
+                <div class="login-tab active" id="user-tab">User Login</div>
+                <div class="login-tab" id="admin-tab">Admin Login</div>
+            </div>
+            
+            <!-- User Login Form -->
+            <form id="user-login-form" class="login-form active">
+                <div class="form-group">
+                    <label for="user-email">Email Address</label>
+                    <input type="email" id="user-email" placeholder="your@email.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="user-password">Password</label>
+                    <input type="password" id="user-password" placeholder="••••••••" required>
+                </div>
+                
+                <button type="submit" class="login-btn">Login as User</button>
+                
+                <div class="login-footer">
+                    Don't have an account? <a href="#" id="register-link">Register here</a>
+                </div>
+            </form>
+            
+            <!-- Admin Login Form -->
+            <form id="admin-login-form" class="login-form">
+                <div class="form-group">
+                    <label for="admin-username">Admin Username</label>
+                    <input type="text" id="admin-username" placeholder="Enter admin username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="admin-password">Admin Password</label>
+                    <input type="password" id="admin-password" placeholder="••••••••" required>
+                </div>
+                
+                <button type="submit" class="login-btn">Login as Admin</button>
+                
+                <div class="login-footer">
+                    <a href="#" id="back-to-user-login">Back to User Login</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- User Dashboard (Main App) -->
+    <div class="container" id="user-dashboard" style="display: none;">
         <header>
             <div class="header-badge">50-Day Investment Cycle</div>
             <h1>MusicEarn PRO</h1>
             <p class="tagline">Invest in music listening and earn passive income daily</p>
+            <button class="logout-btn" id="user-logout-btn" style="position: absolute; left: 20px; top: 20px; padding: 8px 15px; background: var(--error); border: none; border-radius: 5px; color: white; cursor: pointer;">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
         </header>
         
         <!-- Stats Dashboard -->
@@ -824,6 +1122,74 @@
         </footer>
     </div>
 
+    <!-- Admin Dashboard -->
+    <div class="admin-dashboard" id="admin-dashboard">
+        <div class="admin-header">
+            <h1 class="admin-title">MusicEarn PRO Admin Dashboard</h1>
+            <button class="logout-btn" id="admin-logout-btn">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+        
+        <div class="admin-stats">
+            <div class="admin-stat-card">
+                <h3>Total Users</h3>
+                <div class="admin-stat-value" id="total-users">0</div>
+                <p>Registered users</p>
+            </div>
+            <div class="admin-stat-card">
+                <h3>Active Investments</h3>
+                <div class="admin-stat-value" id="active-investments">0</div>
+                <p>Currently active</p>
+            </div>
+            <div class="admin-stat-card">
+                <h3>Total Earnings</h3>
+                <div class="admin-stat-value" id="total-platform-earnings">₱0.00</div>
+                <p>All users combined</p>
+            </div>
+            <div class="admin-stat-card">
+                <h3>Pending Withdrawals</h3>
+                <div class="admin-stat-value" id="pending-withdrawals">0</div>
+                <p>Requests to process</p>
+            </div>
+        </div>
+        
+        <h2>User Management</h2>
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>Email</th>
+                    <th>Investment</th>
+                    <th>Status</th>
+                    <th>Earnings</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="users-table-body">
+                <!-- Users will be loaded from JavaScript -->
+            </tbody>
+        </table>
+        
+        <h2>Withdrawal Requests</h2>
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Request ID</th>
+                    <th>User Email</th>
+                    <th>Amount</th>
+                    <th>GCash Number</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="withdrawals-table-body">
+                <!-- Withdrawals will be loaded from JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
     <!-- Deposit Modal -->
     <div id="deposit-modal" class="modal">
         <div class="modal-content">
@@ -909,464 +1275,660 @@
     </div>
 
     <script>
-        // Radio stations data
-        const stations = [
-            {
-                "name": "Love Radio",
-                "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/LOVERADIO_MNL_SC"
-            },
-            {
-                "name": "Win Radio",
-                "url": "https://stream.zeno.fm/2ss1hgnu6hhvv"
-            },
-            {
-                "name": "Barangay LS",
-                "url": "https://stream.zeno.fm/dphe9050afhvv"
-            },
-            {
-                "name": "DZRH News Radio",
-                "url": "https://a3.asurahosting.com:6910/stream/1/"
-            },
-            {
-                "name": "Bombo Radio Davao City",
-                "url": "https://stream.zeno.fm/n6uph8kyd0quv"
-            },
-            {
-                "name": "iFM Cebu City",
-                "url": "https://magic.radioca.st/stream/1/"
-            },
-            {
-                "name": "Eazy Rock Radio Baguio",
-                "url": "https://easyrockbaguio.radioca.st/;"
-            },
-            {
-                "name": "Yes! FM",
-                "url": "https://yesfmzamboanga.radioca.st/;"
-            },
-            {
-                "name": "Eagle FM",
-                "url": "https://stream.radiojar.com/yus0r2bghd3vv"
-            },
-            {
-                "name": "Magic 89.9",
-                "url": "https://stream-36.zeno.fm/sh37pvfd938uv"
-            }
-        ];
-
-        // DOM elements
-        const audioPlayer = document.getElementById('audio-player');
-        const statusElement = document.getElementById('player-status');
-        const currentStationElement = document.getElementById('current-station');
-        const stationListElement = document.getElementById('station-list');
-        const timerDisplay = document.getElementById('timer-display');
-        const earningsDisplay = document.getElementById('earnings-display');
-        const totalEarningsElement = document.getElementById('total-earnings');
-        const todayEarningsElement = document.getElementById('today-earnings');
-        const investmentStatusElement = document.getElementById('investment-status');
-        const cycleDaysElement = document.getElementById('cycle-days');
-        const songsCompletedElement = document.getElementById('songs-completed');
+        // ======================
+        // AUTHENTICATION SYSTEM
+        // ======================
         
-        // Investment variables with localStorage integration
-        let investmentData = JSON.parse(localStorage.getItem('musicEarnData')) || {
-            active: false,
-            amount: 0,
-            cycleDays: 0,
-            totalEarnings: 0,
-            todayEarnings: 0,
-            songsCompleted: 0,
-            lastActiveDate: null,
-            lastEarningTime: 0
+        // User accounts database (in a real app, this would be server-side)
+        const userAccounts = [
+            { email: "user@example.com", password: "password123", name: "Demo User" },
+            { email: "test@test.com", password: "test123", name: "Test User" }
+        ];
+        
+        // Admin credentials (in a real app, this would be server-side with proper hashing)
+        const adminCredentials = {
+            username: "admin",
+            password: "admin123"
         };
-
-        // Initialize variables from localStorage
-        let investmentActive = investmentData.active;
-        let investmentAmount = investmentData.amount;
-        let cycleDaysCompleted = investmentData.cycleDays;
-        let totalEarnings = investmentData.totalEarnings;
-        let todayEarnings = investmentData.todayEarnings;
-        let songsCompletedToday = investmentData.songsCompleted;
-        let timeListened = 0;
-        let earningInterval;
-        const earningTimePerSong = 5 * 60; // 5 minutes in seconds
-        const songsPerDay = 6;
-        const earningsPerSong = 0.50;
-        const taxRate = 0.10; // 10%
         
-        // Check if it's a new day to reset daily counters
-        function checkNewDay() {
-            const today = new Date().toDateString();
-            const lastActive = investmentData.lastActiveDate ? new Date(investmentData.lastActiveDate).toDateString() : null;
-            
-            if (lastActive !== today) {
-                // It's a new day, reset daily counters
-                songsCompletedToday = 0;
-                todayEarnings = 0;
-                
-                // If investment is active, increment cycle days
-                if (investmentActive) {
-                    cycleDaysCompleted++;
-                    
-                    // Check if investment cycle is complete
-                    if (cycleDaysCompleted > 50) {
-                        investmentActive = false;
-                        showNotification("Your 50-day investment cycle has ended. Please reinvest to continue earning.");
-                    }
-                }
-                
-                // Update last active date
-                investmentData.lastActiveDate = new Date().toISOString();
-                
-                // Save to localStorage
-                saveInvestmentData();
-                
-                // Update UI
-                updateStats();
-            }
-        }
+        // Current logged in user
+        let currentUser = null;
+        let isAdmin = false;
         
-        // Save investment data to localStorage
-        function saveInvestmentData() {
-            investmentData = {
-                active: investmentActive,
-                amount: investmentAmount,
-                cycleDays: cycleDaysCompleted,
-                totalEarnings: totalEarnings,
-                todayEarnings: todayEarnings,
-                songsCompleted: songsCompletedToday,
-                lastActiveDate: investmentData.lastActiveDate || new Date().toISOString(),
-                lastEarningTime: timeListened
-            };
-            
-            localStorage.setItem('musicEarnData', JSON.stringify(investmentData));
-        }
+        // DOM elements for auth
+        const loginPage = document.getElementById('login-page');
+        const userDashboard = document.getElementById('user-dashboard');
+        const adminDashboard = document.getElementById('admin-dashboard');
+        const userLoginForm = document.getElementById('user-login-form');
+        const adminLoginForm = document.getElementById('admin-login-form');
+        const userTab = document.getElementById('user-tab');
+        const adminTab = document.getElementById('admin-tab');
+        const backToUserLogin = document.getElementById('back-to-user-login');
+        const registerLink = document.getElementById('register-link');
+        const userLogoutBtn = document.getElementById('user-logout-btn');
+        const adminLogoutBtn = document.getElementById('admin-logout-btn');
         
-        // Notification quotes
-        const motivationalQuotes = [
-            "Great job! Your patience is building wealth.",
-            "Another song closer to your financial goals!",
-            "Consistency is key - you're doing amazing!",
-            "Your discipline today is tomorrow's profit!",
-            "Smart investors listen and earn - just like you!",
-            "Small steps lead to big financial victories!"
-        ];
-
-        // Purchase confirmation quotes
-        const purchaseQuotes = [
-            "Smart move! Your investment journey begins now.",
-            "Great decision! Watch your money grow while you listen.",
-            "Welcome aboard! Your patience will be rewarded.",
-            "Investment activated! Consistency is the key to success.",
-            "Congratulations! You've taken the first step to financial growth."
-        ];
-        
-        // Update stats display
-        function updateStats() {
-            totalEarningsElement.textContent = `₱${totalEarnings.toFixed(2)}`;
-            todayEarningsElement.textContent = `₱${todayEarnings.toFixed(2)}`;
-            songsCompletedElement.textContent = `From ${songsCompletedToday}/${songsPerDay} songs`;
-            earningsDisplay.textContent = `Today's Earnings: ₱${todayEarnings.toFixed(2)} (${songsCompletedToday}/${songsPerDay} songs)`;
-            
-            if (investmentActive) {
-                investmentStatusElement.textContent = "Active";
-                investmentStatusElement.style.background = "linear-gradient(135deg, #00d1b2, #00b89c)";
-                cycleDaysElement.textContent = `${cycleDaysCompleted}/50 days`;
-                document.getElementById('withdraw-btn').disabled = false;
-            } else {
-                investmentStatusElement.textContent = "Inactive";
-                investmentStatusElement.style.background = "rgba(255,255,255,0.1)";
-                cycleDaysElement.textContent = "0/50 days";
-                document.getElementById('withdraw-btn').disabled = true;
-            }
-            
-            // Save data after updating stats
-            saveInvestmentData();
-        }
-        
-        // Show notification
-        function showNotification(message) {
-            const notification = document.getElementById('notification');
-            const content = document.getElementById('notification-content');
-            
-            content.textContent = message;
-            notification.classList.add('show');
-            
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 5000);
-        }
-        
-        // Load stations into the list
-        function loadStations() {
-            stationListElement.innerHTML = '';
-            
-            stations.forEach(station => {
-                const stationCard = document.createElement('div');
-                stationCard.className = 'station-card';
-                stationCard.innerHTML = `<h4>${station.name}</h4>`;
-                
-                stationCard.addEventListener('click', () => {
-                    playStation(station);
-                });
-                
-                stationListElement.appendChild(stationCard);
-            });
-        }
-        
-        // Play selected station
-        function playStation(station) {
-            currentStationElement.textContent = station.name;
-            
-            if (!investmentActive) {
-                statusElement.textContent = 'INACTIVE';
-                statusElement.className = 'status inactive';
-                timerDisplay.textContent = 'Activate investment to earn';
-                return;
-            }
-            
-            statusElement.textContent = 'CONNECTING';
-            statusElement.className = 'status idle';
-            
-            audioPlayer.src = station.url;
-            audioPlayer.load();
-            
-            audioPlayer.play().then(() => {
-                statusElement.textContent = 'READY';
-                statusElement.className = 'status idle';
-                timerDisplay.textContent = 'Click play to start earning';
-                
-                // Reset earning when new station is selected
-                clearInterval(earningInterval);
-                timeListened = 0;
-            }).catch(e => {
-                statusElement.textContent = 'ERROR';
-                statusElement.className = 'status error';
-                console.error('Playback failed:', e);
-            });
-        }
-        
-        // Start earning timer when audio plays
-        audioPlayer.addEventListener('play', () => {
-            if (!investmentActive) return;
-            if (songsCompletedToday >= songsPerDay) {
-                alert("Daily limit reached! You've completed all 6 songs for today.");
-                audioPlayer.pause();
-                return;
-            }
-            
-            statusElement.textContent = 'EARNING';
-            statusElement.className = 'status earning';
-            startEarningTimer();
+        // Switch between user and admin login forms
+        userTab.addEventListener('click', () => {
+            userTab.classList.add('active');
+            adminTab.classList.remove('active');
+            document.getElementById('user-login-form').classList.add('active');
+            document.getElementById('admin-login-form').classList.remove('active');
         });
         
-        // Start earning timer
-        function startEarningTimer() {
-            clearInterval(earningInterval);
-            timeListened = 0;
+        adminTab.addEventListener('click', () => {
+            adminTab.classList.add('active');
+            userTab.classList.remove('active');
+            document.getElementById('admin-login-form').classList.add('active');
+            document.getElementById('user-login-form').classList.remove('active');
+        });
+        
+        backToUserLogin.addEventListener('click', (e) => {
+            e.preventDefault();
+            userTab.click();
+        });
+        
+        // Register link (simplified for demo)
+        registerLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            alert("Registration would be handled here in a real application");
+        });
+        
+        // User login
+        userLoginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('user-email').value;
+            const password = document.getElementById('user-password').value;
             
-            earningInterval = setInterval(() => {
-                timeListened++;
-                const minutes = Math.floor(timeListened / 60);
-                const seconds = timeListened % 60;
-                timerDisplay.textContent = `Time Listened: ${minutes}:${seconds.toString().padStart(2, '0')} / 5:00`;
-                
-                // Complete task after 5 minutes
-                if (timeListened >= earningTimePerSong) {
-                    completeEarningTask();
-                }
-            }, 1000);
+            // Find user in database
+            const user = userAccounts.find(u => u.email === email && u.password === password);
+            
+            if (user) {
+                currentUser = user;
+                isAdmin = false;
+                loginUser();
+            } else {
+                alert("Invalid email or password");
+            }
+        });
+        
+        // Admin login
+        adminLoginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const username = document.getElementById('admin-username').value;
+            const password = document.getElementById('admin-password').value;
+            
+            if (username === adminCredentials.username && password === adminCredentials.password) {
+                currentUser = { username: "admin" };
+                isAdmin = true;
+                loginUser();
+                loadAdminDashboard();
+            } else {
+                alert("Invalid admin credentials");
+            }
+        });
+        
+        // Logout functionality
+        userLogoutBtn.addEventListener('click', logout);
+        adminLogoutBtn.addEventListener('click', logout);
+        
+        function logout() {
+            currentUser = null;
+            isAdmin = false;
+            loginPage.style.display = 'flex';
+            userDashboard.style.display = 'none';
+            adminDashboard.style.display = 'none';
+            
+            // Reset forms
+            userLoginForm.reset();
+            adminLoginForm.reset();
         }
         
-        // Complete earning task
-        function completeEarningTask() {
-            clearInterval(earningInterval);
+        function loginUser() {
+            loginPage.style.display = 'none';
             
-            songsCompletedToday++;
-            todayEarnings += earningsPerSong;
-            totalEarnings += earningsPerSong;
+            if (isAdmin) {
+                adminDashboard.style.display = 'block';
+                userDashboard.style.display = 'none';
+            } else {
+                userDashboard.style.display = 'block';
+                adminDashboard.style.display = 'none';
+                initUserApp();
+            }
+        }
+        
+        // ======================
+        // ADMIN DASHBOARD FUNCTIONS
+        // ======================
+        
+        // Mock data for admin dashboard
+        const mockUsers = [
+            { id: 1, email: "user1@example.com", investment: 500, status: "Active", earnings: 45.50, cycleDays: 15 },
+            { id: 2, email: "user2@example.com", investment: 100, status: "Active", earnings: 9.00, cycleDays: 3 },
+            { id: 3, email: "user3@example.com", investment: 1000, status: "Inactive", earnings: 0, cycleDays: 0 },
+            { id: 4, email: "user4@example.com", investment: 200, status: "Active", earnings: 18.00, cycleDays: 6 }
+        ];
+        
+        const mockWithdrawals = [
+            { id: 1, email: "user1@example.com", amount: 25, gcash: "09123456789", status: "Pending", date: "2023-06-15" },
+            { id: 2, email: "user2@example.com", amount: 15, gcash: "09987654321", status: "Completed", date: "2023-06-14" },
+            { id: 3, email: "user4@example.com", amount: 10, gcash: "09111222333", status: "Pending", date: "2023-06-15" }
+        ];
+        
+        function loadAdminDashboard() {
+            // Update stats
+            document.getElementById('total-users').textContent = mockUsers.length;
+            document.getElementById('active-investments').textContent = mockUsers.filter(u => u.status === "Active").length;
+            document.getElementById('total-platform-earnings').textContent = `₱${mockUsers.reduce((sum, user) => sum + user.earnings, 0).toFixed(2)}`;
+            document.getElementById('pending-withdrawals').textContent = mockWithdrawals.filter(w => w.status === "Pending").length;
             
-            // Get random motivational quote
-            const randomQuote = motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
+            // Load users table
+            const usersTableBody = document.getElementById('users-table-body');
+            usersTableBody.innerHTML = '';
+            
+            mockUsers.forEach(user => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${user.id}</td>
+                    <td>${user.email}</td>
+                    <td>₱${user.investment.toFixed(2)}</td>
+                    <td><span class="status-badge ${user.status === "Active" ? "status-active" : "status-inactive"}">${user.status}</span></td>
+                    <td>₱${user.earnings.toFixed(2)} (${user.cycleDays}/50 days)</td>
+                    <td>
+                        <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
+                        <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
+                    </td>
+                `;
+                usersTableBody.appendChild(row);
+            });
+            
+            // Load withdrawals table
+            const withdrawalsTableBody = document.getElementById('withdrawals-table-body');
+            withdrawalsTableBody.innerHTML = '';
+            
+            mockWithdrawals.forEach(withdrawal => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${withdrawal.id}</td>
+                    <td>${withdrawal.email}</td>
+                    <td>₱${withdrawal.amount.toFixed(2)}</td>
+                    <td>${withdrawal.gcash}</td>
+                    <td>${withdrawal.status}</td>
+                    <td>${withdrawal.date}</td>
+                    <td>
+                        ${withdrawal.status === "Pending" ? 
+                          '<button class="action-btn edit-btn">Approve</button>' : 
+                          '<span class="status-badge status-active">Completed</span>'}
+                    </td>
+                `;
+                withdrawalsTableBody.appendChild(row);
+            });
+        }
+        
+        // ======================
+        // USER APPLICATION CODE
+        // ======================
+        
+        function initUserApp() {
+            // Radio stations data
+            const stations = [
+                {
+                    "name": "Love Radio",
+                    "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/LOVERADIO_MNL_SC"
+                },
+                {
+                    "name": "Win Radio",
+                    "url": "https://stream.zeno.fm/2ss1hgnu6hhvv"
+                },
+                {
+                    "name": "Barangay LS",
+                    "url": "https://stream.zeno.fm/dphe9050afhvv"
+                },
+                {
+                    "name": "DZRH News Radio",
+                    "url": "https://a3.asurahosting.com:6910/stream/1/"
+                },
+                {
+                    "name": "Bombo Radio Davao City",
+                    "url": "https://stream.zeno.fm/n6uph8kyd0quv"
+                },
+                {
+                    "name": "iFM Cebu City",
+                    "url": "https://magic.radioca.st/stream/1/"
+                },
+                {
+                    "name": "Eazy Rock Radio Baguio",
+                    "url": "https://easyrockbaguio.radioca.st/;"
+                },
+                {
+                    "name": "Yes! FM",
+                    "url": "https://yesfmzamboanga.radioca.st/;"
+                },
+                {
+                    "name": "Eagle FM",
+                    "url": "https://stream.radiojar.com/yus0r2bghd3vv"
+                },
+                {
+                    "name": "Magic 89.9",
+                    "url": "https://stream-36.zeno.fm/sh37pvfd938uv"
+                }
+            ];
+
+            // DOM elements
+            const audioPlayer = document.getElementById('audio-player');
+            const statusElement = document.getElementById('player-status');
+            const currentStationElement = document.getElementById('current-station');
+            const stationListElement = document.getElementById('station-list');
+            const timerDisplay = document.getElementById('timer-display');
+            const earningsDisplay = document.getElementById('earnings-display');
+            const totalEarningsElement = document.getElementById('total-earnings');
+            const todayEarningsElement = document.getElementById('today-earnings');
+            const investmentStatusElement = document.getElementById('investment-status');
+            const cycleDaysElement = document.getElementById('cycle-days');
+            const songsCompletedElement = document.getElementById('songs-completed');
+            
+            // Investment variables with localStorage integration
+            let investmentData = JSON.parse(localStorage.getItem('musicEarnData')) || {
+                active: false,
+                amount: 0,
+                cycleDays: 0,
+                totalEarnings: 0,
+                todayEarnings: 0,
+                songsCompleted: 0,
+                lastActiveDate: null,
+                lastEarningTime: 0
+            };
+
+            // Initialize variables from localStorage
+            let investmentActive = investmentData.active;
+            let investmentAmount = investmentData.amount;
+            let cycleDaysCompleted = investmentData.cycleDays;
+            let totalEarnings = investmentData.totalEarnings;
+            let todayEarnings = investmentData.todayEarnings;
+            let songsCompletedToday = investmentData.songsCompleted;
+            let timeListened = 0;
+            let earningInterval;
+            const earningTimePerSong = 5 * 60; // 5 minutes in seconds
+            const songsPerDay = 6;
+            const earningsPerSong = 0.50;
+            const taxRate = 0.10; // 10%
+            
+            // Check if it's a new day to reset daily counters
+            function checkNewDay() {
+                const today = new Date().toDateString();
+                const lastActive = investmentData.lastActiveDate ? new Date(investmentData.lastActiveDate).toDateString() : null;
+                
+                if (lastActive !== today) {
+                    // It's a new day, reset daily counters
+                    songsCompletedToday = 0;
+                    todayEarnings = 0;
+                    
+                    // If investment is active, increment cycle days
+                    if (investmentActive) {
+                        cycleDaysCompleted++;
+                        
+                        // Check if investment cycle is complete
+                        if (cycleDaysCompleted > 50) {
+                            investmentActive = false;
+                            showNotification("Your 50-day investment cycle has ended. Please reinvest to continue earning.");
+                        }
+                    }
+                    
+                    // Update last active date
+                    investmentData.lastActiveDate = new Date().toISOString();
+                    
+                    // Save to localStorage
+                    saveInvestmentData();
+                    
+                    // Update UI
+                    updateStats();
+                }
+            }
+            
+            // Save investment data to localStorage
+            function saveInvestmentData() {
+                investmentData = {
+                    active: investmentActive,
+                    amount: investmentAmount,
+                    cycleDays: cycleDaysCompleted,
+                    totalEarnings: totalEarnings,
+                    todayEarnings: todayEarnings,
+                    songsCompleted: songsCompletedToday,
+                    lastActiveDate: investmentData.lastActiveDate || new Date().toISOString(),
+                    lastEarningTime: timeListened
+                };
+                
+                localStorage.setItem('musicEarnData', JSON.stringify(investmentData));
+            }
+            
+            // Notification quotes
+            const motivationalQuotes = [
+                "Great job! Your patience is building wealth.",
+                "Another song closer to your financial goals!",
+                "Consistency is key - you're doing amazing!",
+                "Your discipline today is tomorrow's profit!",
+                "Smart investors listen and earn - just like you!",
+                "Small steps lead to big financial victories!"
+            ];
+
+            // Purchase confirmation quotes
+            const purchaseQuotes = [
+                "Smart move! Your investment journey begins now.",
+                "Great decision! Watch your money grow while you listen.",
+                "Welcome aboard! Your patience will be rewarded.",
+                "Investment activated! Consistency is the key to success.",
+                "Congratulations! You've taken the first step to financial growth."
+            ];
+            
+            // Update stats display
+            function updateStats() {
+                totalEarningsElement.textContent = `₱${totalEarnings.toFixed(2)}`;
+                todayEarningsElement.textContent = `₱${todayEarnings.toFixed(2)}`;
+                songsCompletedElement.textContent = `From ${songsCompletedToday}/${songsPerDay} songs`;
+                earningsDisplay.textContent = `Today's Earnings: ₱${todayEarnings.toFixed(2)} (${songsCompletedToday}/${songsPerDay} songs)`;
+                
+                if (investmentActive) {
+                    investmentStatusElement.textContent = "Active";
+                    investmentStatusElement.style.background = "linear-gradient(135deg, #00d1b2, #00b89c)";
+                    cycleDaysElement.textContent = `${cycleDaysCompleted}/50 days`;
+                    document.getElementById('withdraw-btn').disabled = false;
+                } else {
+                    investmentStatusElement.textContent = "Inactive";
+                    investmentStatusElement.style.background = "rgba(255,255,255,0.1)";
+                    cycleDaysElement.textContent = "0/50 days";
+                    document.getElementById('withdraw-btn').disabled = true;
+                }
+                
+                // Save data after updating stats
+                saveInvestmentData();
+            }
             
             // Show notification
-            showNotification(`Song completed! +₱${earningsPerSong.toFixed(2)}. ${randomQuote}`);
-            
-            // Update UI and save data
-            updateStats();
-            statusElement.textContent = 'COMPLETED';
-            statusElement.className = 'status idle';
-            timerDisplay.textContent = `Task ${songsCompletedToday}/${songsPerDay} completed`;
-            
-            // Pause audio
-            audioPlayer.pause();
-            
-            // Check if daily limit reached
-            if (songsCompletedToday >= songsPerDay) {
-                showNotification("Daily tasks completed! You've earned ₱3.00 today.");
+            function showNotification(message) {
+                const notification = document.getElementById('notification');
+                const content = document.getElementById('notification-content');
+                
+                content.textContent = message;
+                notification.classList.add('show');
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 5000);
             }
-        }
-        
-        // Event listeners for audio player
-        audioPlayer.addEventListener('pause', () => {
-            if (statusElement.textContent === 'EARNING') {
-                statusElement.textContent = 'PAUSED';
+            
+            // Load stations into the list
+            function loadStations() {
+                stationListElement.innerHTML = '';
+                
+                stations.forEach(station => {
+                    const stationCard = document.createElement('div');
+                    stationCard.className = 'station-card';
+                    stationCard.innerHTML = `<h4>${station.name}</h4>`;
+                    
+                    stationCard.addEventListener('click', () => {
+                        playStation(station);
+                    });
+                    
+                    stationListElement.appendChild(stationCard);
+                });
+            }
+            
+            // Play selected station
+            function playStation(station) {
+                currentStationElement.textContent = station.name;
+                
+                if (!investmentActive) {
+                    statusElement.textContent = 'INACTIVE';
+                    statusElement.className = 'status inactive';
+                    timerDisplay.textContent = 'Activate investment to earn';
+                    return;
+                }
+                
+                statusElement.textContent = 'CONNECTING';
+                statusElement.className = 'status idle';
+                
+                audioPlayer.src = station.url;
+                audioPlayer.load();
+                
+                audioPlayer.play().then(() => {
+                    statusElement.textContent = 'READY';
+                    statusElement.className = 'status idle';
+                    timerDisplay.textContent = 'Click play to start earning';
+                    
+                    // Reset earning when new station is selected
+                    clearInterval(earningInterval);
+                    timeListened = 0;
+                }).catch(e => {
+                    statusElement.textContent = 'ERROR';
+                    statusElement.className = 'status error';
+                    console.error('Playback failed:', e);
+                });
+            }
+            
+            // Start earning timer when audio plays
+            audioPlayer.addEventListener('play', () => {
+                if (!investmentActive) return;
+                if (songsCompletedToday >= songsPerDay) {
+                    alert("Daily limit reached! You've completed all 6 songs for today.");
+                    audioPlayer.pause();
+                    return;
+                }
+                
+                statusElement.textContent = 'EARNING';
+                statusElement.className = 'status earning';
+                startEarningTimer();
+            });
+            
+            // Start earning timer
+            function startEarningTimer() {
+                clearInterval(earningInterval);
+                timeListened = 0;
+                
+                earningInterval = setInterval(() => {
+                    timeListened++;
+                    const minutes = Math.floor(timeListened / 60);
+                    const seconds = timeListened % 60;
+                    timerDisplay.textContent = `Time Listened: ${minutes}:${seconds.toString().padStart(2, '0')} / 5:00`;
+                    
+                    // Complete task after 5 minutes
+                    if (timeListened >= earningTimePerSong) {
+                        completeEarningTask();
+                    }
+                }, 1000);
+            }
+            
+            // Complete earning task
+            function completeEarningTask() {
+                clearInterval(earningInterval);
+                
+                songsCompletedToday++;
+                todayEarnings += earningsPerSong;
+                totalEarnings += earningsPerSong;
+                
+                // Get random motivational quote
+                const randomQuote = motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
+                
+                // Show notification
+                showNotification(`Song completed! +₱${earningsPerSong.toFixed(2)}. ${randomQuote}`);
+                
+                // Update UI and save data
+                updateStats();
+                statusElement.textContent = 'COMPLETED';
+                statusElement.className = 'status idle';
+                timerDisplay.textContent = `Task ${songsCompletedToday}/${songsPerDay} completed`;
+                
+                // Pause audio
+                audioPlayer.pause();
+                
+                // Check if daily limit reached
+                if (songsCompletedToday >= songsPerDay) {
+                    showNotification("Daily tasks completed! You've earned ₱3.00 today.");
+                }
+            }
+            
+            // Event listeners for audio player
+            audioPlayer.addEventListener('pause', () => {
+                if (statusElement.textContent === 'EARNING') {
+                    statusElement.textContent = 'PAUSED';
+                    statusElement.className = 'status idle';
+                    clearInterval(earningInterval);
+                }
+            });
+            
+            audioPlayer.addEventListener('ended', () => {
+                statusElement.textContent = 'ENDED';
                 statusElement.className = 'status idle';
                 clearInterval(earningInterval);
-            }
-        });
-        
-        audioPlayer.addEventListener('ended', () => {
-            statusElement.textContent = 'ENDED';
-            statusElement.className = 'status idle';
-            clearInterval(earningInterval);
-        });
-        
-        audioPlayer.addEventListener('error', () => {
-            statusElement.textContent = 'ERROR';
-            statusElement.className = 'status error';
-            clearInterval(earningInterval);
-        });
-        
-        // Modal functionality
-        const depositModal = document.getElementById('deposit-modal');
-        const withdrawModal = document.getElementById('withdraw-modal');
-        const depositBtn = document.getElementById('deposit-btn');
-        const withdrawBtn = document.getElementById('withdraw-btn');
-        const closeBtns = document.querySelectorAll('.close');
-        const revealBtn = document.getElementById('reveal-btn');
-        const gcashDetails = document.getElementById('gcash-details');
-        const copyEmailBtn = document.getElementById('copy-email-btn');
-        const supportEmail = document.getElementById('support-email');
-        
-        depositBtn.addEventListener('click', () => {
-            depositModal.style.display = 'block';
-        });
-        
-        withdrawBtn.addEventListener('click', () => {
-            withdrawModal.style.display = 'block';
-        });
-        
-        closeBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                depositModal.style.display = 'none';
-                withdrawModal.style.display = 'none';
             });
-        });
-        
-        window.addEventListener('click', (e) => {
-            if (e.target === depositModal) {
+            
+            audioPlayer.addEventListener('error', () => {
+                statusElement.textContent = 'ERROR';
+                statusElement.className = 'status error';
+                clearInterval(earningInterval);
+            });
+            
+            // Modal functionality
+            const depositModal = document.getElementById('deposit-modal');
+            const withdrawModal = document.getElementById('withdraw-modal');
+            const depositBtn = document.getElementById('deposit-btn');
+            const withdrawBtn = document.getElementById('withdraw-btn');
+            const closeBtns = document.querySelectorAll('.close');
+            const revealBtn = document.getElementById('reveal-btn');
+            const gcashDetails = document.getElementById('gcash-details');
+            const copyEmailBtn = document.getElementById('copy-email-btn');
+            const supportEmail = document.getElementById('support-email');
+            
+            depositBtn.addEventListener('click', () => {
+                depositModal.style.display = 'block';
+            });
+            
+            withdrawBtn.addEventListener('click', () => {
+                withdrawModal.style.display = 'block';
+            });
+            
+            closeBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    depositModal.style.display = 'none';
+                    withdrawModal.style.display = 'none';
+                });
+            });
+            
+            window.addEventListener('click', (e) => {
+                if (e.target === depositModal) {
+                    depositModal.style.display = 'none';
+                }
+                if (e.target === withdrawModal) {
+                    withdrawModal.style.display = 'none';
+                }
+            });
+            
+            // Reveal GCash details
+            let detailsRevealed = false;
+            revealBtn.addEventListener('click', () => {
+                if (!detailsRevealed) {
+                    gcashDetails.innerHTML = `
+                        <strong>Account Name:</strong> JE***D A.<br>
+                        <strong>GCash Number:</strong> 0997 801 4222
+                    `;
+                    gcashDetails.style.filter = 'none';
+                    revealBtn.textContent = 'Hide Details';
+                    detailsRevealed = true;
+                } else {
+                    gcashDetails.innerHTML = `
+                        <strong>Account Name:</strong> JE***D A.<br>
+                        <strong>GCash Number:</strong> [Hidden - Click Reveal]
+                    `;
+                    gcashDetails.style.filter = 'blur(5px)';
+                    revealBtn.textContent = 'Reveal Details';
+                    detailsRevealed = false;
+                }
+            });
+            
+            // Copy support email
+            copyEmailBtn.addEventListener('click', () => {
+                navigator.clipboard.writeText("acerojerald18@gmail.com");
+                copyEmailBtn.innerHTML = '<i class="fas fa-check"></i>';
+                setTimeout(() => {
+                    copyEmailBtn.innerHTML = '<i class="fas fa-copy"></i>';
+                }, 2000);
+            });
+            
+            // Form submissions
+            document.getElementById('deposit-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const amount = parseFloat(document.getElementById('deposit-amount').value);
+                const email = document.getElementById('user-email').value;
+                
+                if (amount < 100) {
+                    alert("Minimum investment is ₱100");
+                    return;
+                }
+                
+                // Activate investment
+                investmentActive = true;
+                investmentAmount = amount;
+                cycleDaysCompleted = 1;
+                songsCompletedToday = 0;
+                todayEarnings = 0;
+                investmentData.lastActiveDate = new Date().toISOString();
+                
+                // Show purchase confirmation with positive quote
+                const randomQuote = purchaseQuotes[Math.floor(Math.random() * purchaseQuotes.length)];
+                
+                alert(`🎉 Investment of ₱${amount.toFixed(2)} activated!\n\n${randomQuote}\n\nYour 50-day earning cycle has begun.`);
+                
+                // Update UI and save data
+                updateStats();
+                statusElement.textContent = 'READY';
+                statusElement.className = 'status idle';
+                timerDisplay.textContent = 'Select a station to start earning';
                 depositModal.style.display = 'none';
-            }
-            if (e.target === withdrawModal) {
+                this.reset();
+            });
+            
+            document.getElementById('withdraw-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const amount = parseFloat(document.getElementById('withdraw-amount').value);
+                const gcashNumber = document.getElementById('gcash-number').value;
+                const email = document.getElementById('withdraw-email').value;
+                
+                if (amount < 25) {
+                    alert("Minimum withdrawal is ₱25");
+                    return;
+                }
+                
+                if (amount > totalEarnings) {
+                    alert(`You only have ₱${totalEarnings.toFixed(2)} available to withdraw`);
+                    return;
+                }
+                
+                const tax = amount * taxRate;
+                const netAmount = amount - tax;
+                
+                // In a real app, this would send an email
+                console.log(`Withdrawal request:
+                Amount: ₱${amount.toFixed(2)}
+                Tax (10%): ₱${tax.toFixed(2)}
+                Net Amount: ₱${netAmount.toFixed(2)}
+                GCash: ${gcashNumber}
+                Email: ${email}`);
+                
+                // Deduct from total earnings
+                totalEarnings -= amount;
+                
+                // Update UI and save data
+                updateStats();
+                
+                alert(`Withdrawal request for ₱${amount.toFixed(2)} submitted!\n\nNet amount after 10% tax: ₱${netAmount.toFixed(2)}\n\nFunds will be sent to ${gcashNumber} within 24 hours.`);
                 withdrawModal.style.display = 'none';
-            }
-        });
-        
-        // Reveal GCash details
-        let detailsRevealed = false;
-        revealBtn.addEventListener('click', () => {
-            if (!detailsRevealed) {
-                gcashDetails.innerHTML = `
-                    <strong>Account Name:</strong> JE***D A.<br>
-                    <strong>GCash Number:</strong> 0997 801 4222
-                `;
-                gcashDetails.style.filter = 'none';
-                revealBtn.textContent = 'Hide Details';
-                detailsRevealed = true;
-            } else {
-                gcashDetails.innerHTML = `
-                    <strong>Account Name:</strong> JE***D A.<br>
-                    <strong>GCash Number:</strong> [Hidden - Click Reveal]
-                `;
-                gcashDetails.style.filter = 'blur(5px)';
-                revealBtn.textContent = 'Reveal Details';
-                detailsRevealed = false;
-            }
-        });
-        
-        // Copy support email
-        copyEmailBtn.addEventListener('click', () => {
-            navigator.clipboard.writeText("acerojerald18@gmail.com");
-            copyEmailBtn.innerHTML = '<i class="fas fa-check"></i>';
-            setTimeout(() => {
-                copyEmailBtn.innerHTML = '<i class="fas fa-copy"></i>';
-            }, 2000);
-        });
-        
-        // Form submissions
-        document.getElementById('deposit-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const amount = parseFloat(document.getElementById('deposit-amount').value);
-            const email = document.getElementById('user-email').value;
+                this.reset();
+            });
             
-            if (amount < 100) {
-                alert("Minimum investment is ₱100");
-                return;
-            }
-            
-            // Activate investment
-            investmentActive = true;
-            investmentAmount = amount;
-            cycleDaysCompleted = 1;
-            songsCompletedToday = 0;
-            todayEarnings = 0;
-            investmentData.lastActiveDate = new Date().toISOString();
-            
-            // Show purchase confirmation with positive quote
-            const randomQuote = purchaseQuotes[Math.floor(Math.random() * purchaseQuotes.length)];
-            
-            alert(`🎉 Investment of ₱${amount.toFixed(2)} activated!\n\n${randomQuote}\n\nYour 50-day earning cycle has begun.`);
-            
-            // Update UI and save data
+            // Initialize the app
+            loadStations();
+            checkNewDay(); // Check if it's a new day to reset counters
             updateStats();
-            statusElement.textContent = 'READY';
-            statusElement.className = 'status idle';
-            timerDisplay.textContent = 'Select a station to start earning';
-            depositModal.style.display = 'none';
-            this.reset();
-        });
-        
-        document.getElementById('withdraw-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const amount = parseFloat(document.getElementById('withdraw-amount').value);
-            const gcashNumber = document.getElementById('gcash-number').value;
-            const email = document.getElementById('withdraw-email').value;
-            
-            if (amount < 25) {
-                alert("Minimum withdrawal is ₱25");
-                return;
-            }
-            
-            if (amount > totalEarnings) {
-                alert(`You only have ₱${totalEarnings.toFixed(2)} available to withdraw`);
-                return;
-            }
-            
-            const tax = amount * taxRate;
-            const netAmount = amount - tax;
-            
-            // In a real app, this would send an email
-            console.log(`Withdrawal request:
-            Amount: ₱${amount.toFixed(2)}
-            Tax (10%): ₱${tax.toFixed(2)}
-            Net Amount: ₱${netAmount.toFixed(2)}
-            GCash: ${gcashNumber}
-            Email: ${email}`);
-            
-            // Deduct from total earnings
-            totalEarnings -= amount;
-            
-            // Update UI and save data
-            updateStats();
-            
-            alert(`Withdrawal request for ₱${amount.toFixed(2)} submitted!\n\nNet amount after 10% tax: ₱${netAmount.toFixed(2)}\n\nFunds will be sent to ${gcashNumber} within 24 hours.`);
-            withdrawModal.style.display = 'none';
-            this.reset();
-        });
-        
-        // Initialize the app
-        loadStations();
-        checkNewDay(); // Check if it's a new day to reset counters
-        updateStats();
+        }
     </script>
 </body>
 </html>
