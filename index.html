@@ -842,6 +842,141 @@
             font-weight: bold;
         }
         
+        /* Toggle switch for auto features */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+            margin-left: 15px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background: var(--gradient);
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        
+        .auto-feature {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+        }
+        
+        .auto-feature-label {
+            flex: 1;
+        }
+        
+        .auto-feature-label h4 {
+            margin: 0 0 5px 0;
+            color: var(--secondary);
+        }
+        
+        .auto-feature-label p {
+            margin: 0;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        /* Investment Plan Cards */
+        .plan-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(106, 90, 205, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .plan-card:hover {
+            border-color: var(--primary);
+            background: rgba(106, 90, 205, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        .plan-card h3 {
+            color: var(--secondary);
+            margin-top: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .plan-card .plan-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .plan-card .plan-details {
+            margin: 15px 0;
+        }
+        
+        .plan-card .plan-details p {
+            margin: 5px 0;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .plan-card .plan-details span {
+            font-weight: 500;
+        }
+        
+        .plan-card .select-plan {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .plan-card .select-plan:hover {
+            background: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(106, 90, 205, 0.3);
+        }
+        
         /* Responsive styles */
         @media (max-width: 768px) {
             .container {
@@ -962,7 +1097,7 @@
     <!-- User Dashboard (hidden by default) -->
     <div id="user-dashboard" class="container" style="display: none;">
         <header>
-            <div class="header-badge">50-Day Investment Cycle</div>
+            <div class="header-badge" id="investment-badge">Select Plan</div>
             <h1>MusicEarn PRO</h1>
             <p class="tagline">Invest in music listening and earn passive income daily</p>
             <button class="logout-btn" id="user-logout-btn" style="position: absolute; top: 20px; left: 20px;">
@@ -983,26 +1118,37 @@
                 <div class="stat-card">
                     <h3>Today's Earnings</h3>
                     <div class="stat-value earnings" id="today-earnings">₱0.00</div>
-                    <div class="stat-label" id="songs-completed">From 0/6 songs</div>
+                    <div class="stat-label" id="songs-completed">From 0/4 songs</div>
                 </div>
                 <div class="stat-card">
                     <h3>Investment Status</h3>
                     <div class="stat-value" id="investment-status">Inactive</div>
-                    <div class="stat-label" id="cycle-days">0/50 days</div>
+                    <div class="stat-label" id="cycle-days">0/30 days</div>
                 </div>
             </div>
             
             <div class="earnings-display" id="earnings-display">
-                Potential Daily Earnings: ₱3.00
+                Select an investment plan to start earning
             </div>
             
             <div class="action-buttons">
-                <button class="btn btn-success" id="deposit-btn">
+                <button class="btn btn-success" id="deposit-btn" style="display: none;">
                     <i class="fas fa-money-bill-wave"></i> Activate Investment
                 </button>
                 <button class="btn btn-warning" id="withdraw-btn" disabled>
                     <i class="fas fa-wallet"></i> Withdraw Earnings
                 </button>
+            </div>
+        </div>
+        
+        <!-- Investment Plans Section -->
+        <div class="card" id="investment-plans-card">
+            <div class="card-badge">10 Plans Available</div>
+            <h2>Investment Plans</h2>
+            <p>Choose your investment plan to start earning daily. All plans last for 30 days with 4 tasks per day.</p>
+            
+            <div id="investment-plans-container">
+                <!-- Plans will be loaded from JavaScript -->
             </div>
         </div>
         
@@ -1051,7 +1197,7 @@
                 </div>
                 
                 <div class="timer-display" id="timer-display">
-                    Investment Required to Earn
+                    Select an investment plan to earn
                 </div>
                 
                 <audio controls id="audio-player">
@@ -1069,17 +1215,17 @@
             <h2>Investment Plan Details</h2>
             
             <div class="highlight">
-                <strong>🎯 Investment Plan:</strong> 50-day cycle with daily earnings<br>
-                <strong>💰 Daily Earnings:</strong> ₱3.00 (6 songs × ₱0.50 each)<br>
-                <strong>💳 Minimum Investment:</strong> ₱100 (no maximum)<br>
+                <strong>🎯 Investment Plan:</strong> 30-day cycle with daily earnings<br>
+                <strong>💰 Daily Earnings:</strong> Varies by investment amount (4 tasks/day)<br>
+                <strong>💳 Minimum Investment:</strong> ₱50 (10 plans available)<br>
                 <strong>📤 Withdrawal:</strong> Minimum ₱25 (10% tax fee applies)<br>
-                <strong>⏳ Processing:</strong> Submit request via email (auto-processed)
+                <strong>⏳ Processing:</strong> Instant activation, withdrawals processed within 24 hours
             </div>
             
             <h3>How It Works</h3>
             <div class="steps">
                 <div class="step">
-                    <h3>Activate Your Investment</h3>
+                    <h3>Choose Your Investment Plan</h3>
                     <div class="payment-details">
                         <div class="hidden-details" id="gcash-details">
                             <strong>Account Name:</strong> JE***D A.<br>
@@ -1087,17 +1233,17 @@
                         </div>
                         <button class="reveal-btn" id="reveal-btn">Reveal Details</button>
                     </div>
-                    <p>Send your investment (minimum ₱100) to activate your 50-day earning cycle. Your account will be activated within minutes after verification.</p>
+                    <p>Select from our 10 investment plans ranging from ₱50 to ₱1,000. Your account will be activated immediately after payment.</p>
                 </div>
                 
                 <div class="step">
                     <h3>Earn Daily</h3>
-                    <p>Listen to 6 songs daily (5 minutes each) to earn ₱3.00. You can listen anytime, but earnings only count with an active investment.</p>
+                    <p>Complete 4 listening tasks daily (5 minutes each) to earn your daily profit. Earnings vary based on your investment plan.</p>
                 </div>
                 
                 <div class="step">
                     <h3>Withdraw Profits</h3>
-                    <p>Request withdrawals anytime (minimum ₱25) by email. A 10% tax fee applies to all withdrawals. Funds arrive within 24 hours.</p>
+                    <p>Request withdrawals anytime (minimum ₱25). A 10% tax fee applies to all withdrawals. Funds arrive within 24 hours.</p>
                 </div>
             </div>
         </div>
@@ -1110,7 +1256,7 @@
                 <p>Yes! You can enjoy our free music stations anytime, but earnings only accumulate with an active investment plan.</p>
                 
                 <h3>How do withdrawals work?</h3>
-                <p>Email your withdrawal request (including your GCash number) to our support address. Withdrawals are processed within 24 hours with a 10% tax fee.</p>
+                <p>Withdrawals are processed within 24 hours with a 10% tax fee. Minimum withdrawal is ₱25.</p>
                 
                 <h3>What's the 10% tax fee?</h3>
                 <p>This covers processing fees and platform maintenance to keep your investment secure and profitable.</p>
@@ -1133,27 +1279,8 @@
         </div>
         
         <div class="admin-section">
-            <h2>Pending Transactions</h2>
-            <table class="admin-table" id="pending-transactions">
-                <thead>
-                    <tr>
-                        <th>User</th>
-                        <th>Type</th>
-                        <th>Amount</th>
-                        <th>Date</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Transactions will be loaded from JavaScript -->
-                </tbody>
-            </table>
-        </div>
-        
-        <div class="admin-section">
-            <h2>Completed Transactions</h2>
-            <table class="admin-table" id="completed-transactions">
+            <h2>User Transactions</h2>
+            <table class="admin-table" id="all-transactions">
                 <thead>
                     <tr>
                         <th>User</th>
@@ -1179,7 +1306,6 @@
                         <th>Investment</th>
                         <th>Earnings</th>
                         <th>Status</th>
-                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -1193,18 +1319,28 @@
     <div id="deposit-modal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2><i class="fas fa-money-bill-wave"></i> Activate Investment</h2>
+            <h2><i class="fas fa-money-bill-wave"></i> Confirm Investment</h2>
             <form id="deposit-form">
                 <div class="form-group">
-                    <label for="deposit-amount">Investment Amount (Minimum ₱100)</label>
-                    <input type="number" id="deposit-amount" min="100" required>
+                    <label for="deposit-amount">Investment Amount</label>
+                    <input type="text" id="deposit-amount" readonly>
+                </div>
+                
+                <div class="form-group">
+                    <label for="daily-earnings">Daily Earnings</label>
+                    <input type="text" id="daily-earnings" readonly>
+                </div>
+                
+                <div class="form-group">
+                    <label for="total-earnings">Potential 30-day Earnings</label>
+                    <input type="text" id="total-earnings" readonly>
                 </div>
                 
                 <div class="payment-details">
                     <p><strong>Send payment to:</strong></p>
                     <p><strong>Account Name:</strong> JE***D A.</p>
                     <p><strong>GCash Number:</strong> 0997***222</p>
-                    <p>Your 50-day earning cycle begins immediately after verification.</p>
+                    <p>Your 30-day earning cycle begins immediately after payment.</p>
                 </div>
                 
                 <div class="form-group">
@@ -1212,13 +1348,8 @@
                     <input type="file" id="payment-proof" accept="image/*" required>
                 </div>
                 
-                <div class="form-group">
-                    <label for="deposit-email">Your Email Address</label>
-                    <input type="email" id="deposit-email" placeholder="your@email.com" required>
-                </div>
-                
                 <button type="submit" class="btn btn-success">
-                    <i class="fas fa-check"></i> Confirm Investment
+                    <i class="fas fa-check"></i> Confirm Payment
                 </button>
             </form>
         </div>
@@ -1252,8 +1383,7 @@
                 </div>
                 
                 <div class="highlight">
-                    <p><i class="fas fa-info-circle"></i> Email your request to: <span id="support-email">supp***@musicearn.ph</span> <button class="copy-btn" id="copy-email-btn"><i class="fas fa-copy"></i></button></p>
-                    <p>Withdrawals processed within 24 hours. 10% tax fee applies.</p>
+                    <p><i class="fas fa-info-circle"></i> Withdrawals processed within 24 hours. 10% tax fee applies.</p>
                 </div>
                 
                 <button type="submit" class="btn btn-warning">
@@ -1286,6 +1416,20 @@
         let users = JSON.parse(localStorage.getItem('musicEarnUsers')) || [];
         let transactions = JSON.parse(localStorage.getItem('musicEarnTransactions')) || [];
         let currentUser = null;
+        
+        // Investment plans data
+        const investmentPlans = [
+            { amount: 50, dailyEarnings: 2, tasksPerDay: 4, earningsPerTask: 0.50, days: 30 },
+            { amount: 100, dailyEarnings: 4, tasksPerDay: 4, earningsPerTask: 1.00, days: 30 },
+            { amount: 200, dailyEarnings: 8, tasksPerDay: 4, earningsPerTask: 2.00, days: 30 },
+            { amount: 300, dailyEarnings: 12, tasksPerDay: 4, earningsPerTask: 3.00, days: 30 },
+            { amount: 400, dailyEarnings: 16, tasksPerDay: 4, earningsPerTask: 4.00, days: 30 },
+            { amount: 500, dailyEarnings: 20, tasksPerDay: 4, earningsPerTask: 5.00, days: 30 },
+            { amount: 600, dailyEarnings: 24, tasksPerDay: 4, earningsPerTask: 6.00, days: 30 },
+            { amount: 700, dailyEarnings: 28, tasksPerDay: 4, earningsPerTask: 7.00, days: 30 },
+            { amount: 800, dailyEarnings: 32, tasksPerDay: 4, earningsPerTask: 8.00, days: 30 },
+            { amount: 1000, dailyEarnings: 40, tasksPerDay: 4, earningsPerTask: 10.00, days: 30 }
+        ];
         
         // DOM elements for authentication
         const loginPage = document.getElementById('login-page');
@@ -1367,11 +1511,12 @@
                 password,
                 investmentData: {
                     active: false,
+                    plan: null,
                     amount: 0,
                     cycleDays: 0,
                     totalEarnings: 0,
                     todayEarnings: 0,
-                    songsCompleted: 0,
+                    tasksCompleted: 0,
                     lastActiveDate: null,
                     lastEarningTime: 0
                 }
@@ -1511,6 +1656,54 @@
             const investmentStatusElement = document.getElementById('investment-status');
             const cycleDaysElement = document.getElementById('cycle-days');
             const songsCompletedElement = document.getElementById('songs-completed');
+            const investmentPlansContainer = document.getElementById('investment-plans-container');
+            const depositBtn = document.getElementById('deposit-btn');
+            const investmentBadge = document.getElementById('investment-badge');
+            
+            // Load investment plans
+            function loadInvestmentPlans() {
+                investmentPlansContainer.innerHTML = '';
+                
+                investmentPlans.forEach(plan => {
+                    const planCard = document.createElement('div');
+                    planCard.className = 'plan-card';
+                    planCard.innerHTML = `
+                        <h3>Plan <span class="plan-price">₱${plan.amount}</span></h3>
+                        <div class="plan-details">
+                            <p><span>Daily Earnings:</span> ₱${plan.dailyEarnings}</p>
+                            <p><span>Per Task:</span> ₱${plan.earningsPerTask}</p>
+                            <p><span>Tasks/Day:</span> ${plan.tasksPerDay}</p>
+                            <p><span>Duration:</span> ${plan.days} days</p>
+                            <p><span>Total Potential:</span> ₱${plan.dailyEarnings * plan.days}</p>
+                        </div>
+                        <button class="select-plan" data-amount="${plan.amount}" data-daily="${plan.dailyEarnings}" data-task="${plan.earningsPerTask}" data-tasks="${plan.tasksPerDay}" data-days="${plan.days}">
+                            Select Plan
+                        </button>
+                    `;
+                    
+                    investmentPlansContainer.appendChild(planCard);
+                });
+                
+                // Add event listeners to plan buttons
+                document.querySelectorAll('.select-plan').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const amount = parseFloat(button.getAttribute('data-amount'));
+                        const dailyEarnings = parseFloat(button.getAttribute('data-daily'));
+                        const earningsPerTask = parseFloat(button.getAttribute('data-task'));
+                        const tasksPerDay = parseInt(button.getAttribute('data-tasks'));
+                        const days = parseInt(button.getAttribute('data-days'));
+                        
+                        // Set modal values
+                        document.getElementById('deposit-amount').value = `₱${amount}`;
+                        document.getElementById('daily-earnings').value = `₱${dailyEarnings} (${tasksPerDay} tasks × ₱${earningsPerTask})`;
+                        document.getElementById('total-earnings').value = `₱${dailyEarnings * days}`;
+                        
+                        // Show deposit modal
+                        document.getElementById('deposit-modal').style.display = 'block';
+                    });
+                });
+            }
             
             // Investment variables with localStorage integration
             let investmentActive = investmentData.active;
@@ -1518,13 +1711,16 @@
             let cycleDaysCompleted = investmentData.cycleDays;
             let totalEarnings = investmentData.totalEarnings;
             let todayEarnings = investmentData.todayEarnings;
-            let songsCompletedToday = investmentData.songsCompleted;
+            let tasksCompletedToday = investmentData.tasksCompleted;
             let timeListened = 0;
             let earningInterval;
-            const earningTimePerSong = 5 * 60; // 5 minutes in seconds
-            const songsPerDay = 6;
-            const earningsPerSong = 0.50;
+            const earningTimePerTask = 5 * 60; // 5 minutes in seconds
             const taxRate = 0.10; // 10%
+            
+            // Current plan details
+            let currentPlan = investmentData.plan ? 
+                investmentPlans.find(p => p.amount === investmentData.plan.amount) : 
+                null;
             
             // Check if it's a new day to reset daily counters
             function checkNewDay() {
@@ -1533,7 +1729,7 @@
                 
                 if (lastActive !== today) {
                     // It's a new day, reset daily counters
-                    songsCompletedToday = 0;
+                    tasksCompletedToday = 0;
                     todayEarnings = 0;
                     
                     // If investment is active, increment cycle days
@@ -1541,9 +1737,9 @@
                         cycleDaysCompleted++;
                         
                         // Check if investment cycle is complete
-                        if (cycleDaysCompleted > 50) {
+                        if (cycleDaysCompleted > currentPlan.days) {
                             investmentActive = false;
-                            showNotification("Your 50-day investment cycle has ended. Please reinvest to continue earning.");
+                            showNotification("Your investment cycle has ended. Please select a new plan to continue earning.");
                         }
                     }
                     
@@ -1562,11 +1758,12 @@
             function saveInvestmentData() {
                 investmentData = {
                     active: investmentActive,
+                    plan: currentPlan,
                     amount: investmentAmount,
                     cycleDays: cycleDaysCompleted,
                     totalEarnings: totalEarnings,
                     todayEarnings: todayEarnings,
-                    songsCompleted: songsCompletedToday,
+                    tasksCompleted: tasksCompletedToday,
                     lastActiveDate: investmentData.lastActiveDate || new Date().toISOString(),
                     lastEarningTime: timeListened
                 };
@@ -1585,7 +1782,7 @@
             // Notification quotes
             const motivationalQuotes = [
                 "Great job! Your patience is building wealth.",
-                "Another song closer to your financial goals!",
+                "Another task closer to your financial goals!",
                 "Consistency is key - you're doing amazing!",
                 "Your discipline today is tomorrow's profit!",
                 "Smart investors listen and earn - just like you!",
@@ -1605,19 +1802,31 @@
             function updateStats() {
                 totalEarningsElement.textContent = `₱${totalEarnings.toFixed(2)}`;
                 todayEarningsElement.textContent = `₱${todayEarnings.toFixed(2)}`;
-                songsCompletedElement.textContent = `From ${songsCompletedToday}/${songsPerDay} songs`;
-                earningsDisplay.textContent = `Today's Earnings: ₱${todayEarnings.toFixed(2)} (${songsCompletedToday}/${songsPerDay} songs)`;
+                
+                if (currentPlan) {
+                    songsCompletedElement.textContent = `From ${tasksCompletedToday}/${currentPlan.tasksPerDay} tasks`;
+                    earningsDisplay.textContent = `Today's Earnings: ₱${todayEarnings.toFixed(2)} (${tasksCompletedToday}/${currentPlan.tasksPerDay} tasks)`;
+                } else {
+                    songsCompletedElement.textContent = `From 0/0 tasks`;
+                    earningsDisplay.textContent = `Select an investment plan to start earning`;
+                }
                 
                 if (investmentActive) {
                     investmentStatusElement.textContent = "Active";
                     investmentStatusElement.style.background = "linear-gradient(135deg, #00d1b2, #00b89c)";
-                    cycleDaysElement.textContent = `${cycleDaysCompleted}/50 days`;
-                    document.getElementById('withdraw-btn').disabled = false;
+                    cycleDaysElement.textContent = `${cycleDaysCompleted}/${currentPlan.days} days`;
+                    document.getElementById('withdraw-btn').disabled = totalEarnings < 25;
+                    depositBtn.style.display = 'none';
+                    document.getElementById('investment-plans-card').style.display = 'none';
+                    investmentBadge.textContent = `Active Plan: ₱${currentPlan.amount}`;
                 } else {
                     investmentStatusElement.textContent = "Inactive";
                     investmentStatusElement.style.background = "rgba(255,255,255,0.1)";
-                    cycleDaysElement.textContent = "0/50 days";
+                    cycleDaysElement.textContent = "0/0 days";
                     document.getElementById('withdraw-btn').disabled = true;
+                    depositBtn.style.display = 'none';
+                    document.getElementById('investment-plans-card').style.display = 'block';
+                    investmentBadge.textContent = `Select Plan`;
                 }
                 
                 // Save data after updating stats
@@ -1661,7 +1870,14 @@
                 if (!investmentActive) {
                     statusElement.textContent = 'INACTIVE';
                     statusElement.className = 'status inactive';
-                    timerDisplay.textContent = 'Activate investment to earn';
+                    timerDisplay.textContent = 'Select an investment plan to earn';
+                    return;
+                }
+                
+                if (tasksCompletedToday >= currentPlan.tasksPerDay) {
+                    statusElement.textContent = 'LIMIT REACHED';
+                    statusElement.className = 'status idle';
+                    timerDisplay.textContent = 'Daily task limit reached';
                     return;
                 }
                 
@@ -1689,8 +1905,8 @@
             // Start earning timer when audio plays
             audioPlayer.addEventListener('play', () => {
                 if (!investmentActive) return;
-                if (songsCompletedToday >= songsPerDay) {
-                    alert("Daily limit reached! You've completed all 6 songs for today.");
+                if (tasksCompletedToday >= currentPlan.tasksPerDay) {
+                    alert(`Daily limit reached! You've completed all ${currentPlan.tasksPerDay} tasks for today.`);
                     audioPlayer.pause();
                     return;
                 }
@@ -1712,7 +1928,7 @@
                     timerDisplay.textContent = `Time Listened: ${minutes}:${seconds.toString().padStart(2, '0')} / 5:00`;
                     
                     // Complete task after 5 minutes
-                    if (timeListened >= earningTimePerSong) {
+                    if (timeListened >= earningTimePerTask) {
                         completeEarningTask();
                     }
                 }, 1000);
@@ -1722,28 +1938,28 @@
             function completeEarningTask() {
                 clearInterval(earningInterval);
                 
-                songsCompletedToday++;
-                todayEarnings += earningsPerSong;
-                totalEarnings += earningsPerSong;
+                tasksCompletedToday++;
+                todayEarnings += currentPlan.earningsPerTask;
+                totalEarnings += currentPlan.earningsPerTask;
                 
                 // Get random motivational quote
                 const randomQuote = motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
                 
                 // Show notification
-                showNotification(`Song completed! +₱${earningsPerSong.toFixed(2)}. ${randomQuote}`);
+                showNotification(`Task completed! +₱${currentPlan.earningsPerTask.toFixed(2)}. ${randomQuote}`);
                 
                 // Update UI and save data
                 updateStats();
                 statusElement.textContent = 'COMPLETED';
                 statusElement.className = 'status idle';
-                timerDisplay.textContent = `Task ${songsCompletedToday}/${songsPerDay} completed`;
+                timerDisplay.textContent = `Task ${tasksCompletedToday}/${currentPlan.tasksPerDay} completed`;
                 
                 // Pause audio
                 audioPlayer.pause();
                 
                 // Check if daily limit reached
-                if (songsCompletedToday >= songsPerDay) {
-                    showNotification("Daily tasks completed! You've earned ₱3.00 today.");
+                if (tasksCompletedToday >= currentPlan.tasksPerDay) {
+                    showNotification(`Daily tasks completed! You've earned ₱${todayEarnings.toFixed(2)} today.`);
                 }
             }
             
@@ -1771,17 +1987,10 @@
             // Modal functionality
             const depositModal = document.getElementById('deposit-modal');
             const withdrawModal = document.getElementById('withdraw-modal');
-            const depositBtn = document.getElementById('deposit-btn');
             const withdrawBtn = document.getElementById('withdraw-btn');
             const closeBtns = document.querySelectorAll('.close');
             const revealBtn = document.getElementById('reveal-btn');
             const gcashDetails = document.getElementById('gcash-details');
-            const copyEmailBtn = document.getElementById('copy-email-btn');
-            const supportEmail = document.getElementById('support-email');
-            
-            depositBtn.addEventListener('click', () => {
-                depositModal.style.display = 'block';
-            });
             
             withdrawBtn.addEventListener('click', () => {
                 withdrawModal.style.display = 'block';
@@ -1825,23 +2034,17 @@
                 }
             });
             
-            // Copy support email
-            copyEmailBtn.addEventListener('click', () => {
-                navigator.clipboard.writeText("acerojerald18@gmail.com");
-                copyEmailBtn.innerHTML = '<i class="fas fa-check"></i>';
-                setTimeout(() => {
-                    copyEmailBtn.innerHTML = '<i class="fas fa-copy"></i>';
-                }, 2000);
-            });
-            
             // Form submissions
             document.getElementById('deposit-form').addEventListener('submit', function(e) {
                 e.preventDefault();
-                const amount = parseFloat(document.getElementById('deposit-amount').value);
-                const email = document.getElementById('deposit-email').value;
+                const amountText = document.getElementById('deposit-amount').value;
+                const amount = parseFloat(amountText.replace('₱', ''));
                 
-                if (amount < 100) {
-                    alert("Minimum investment is ₱100");
+                // Find the selected plan
+                currentPlan = investmentPlans.find(p => p.amount === amount);
+                
+                if (!currentPlan) {
+                    alert('Invalid investment amount');
                     return;
                 }
                 
@@ -1853,7 +2056,7 @@
                     userName: currentUser.name,
                     type: 'deposit',
                     amount: amount,
-                    status: 'pending',
+                    status: 'approved',
                     date: new Date().toISOString(),
                     proof: document.getElementById('payment-proof').files[0]?.name || 'No proof'
                 };
@@ -1861,14 +2064,25 @@
                 transactions.push(transaction);
                 localStorage.setItem('musicEarnTransactions', JSON.stringify(transactions));
                 
-                // Show confirmation message (in real app, this would wait for admin approval)
+                // Activate investment
+                investmentActive = true;
+                investmentAmount = amount;
+                cycleDaysCompleted = 1;
+                tasksCompletedToday = 0;
+                todayEarnings = 0;
+                
+                // Get random confirmation quote
                 const randomQuote = purchaseQuotes[Math.floor(Math.random() * purchaseQuotes.length)];
                 
-                alert(`🎉 Your deposit request of ₱${amount.toFixed(2)} has been submitted for approval!\n\n${randomQuote}\n\nPlease wait for admin approval to activate your account.`);
+                // Show confirmation message
+                alert(`🎉 Your investment of ₱${amount.toFixed(2)} has been activated!\n\n${randomQuote}\n\nYou can now start earning ₱${currentPlan.dailyEarnings} daily.`);
                 
                 // Close modal and reset form
                 depositModal.style.display = 'none';
                 this.reset();
+                
+                // Update UI and save data
+                updateStats();
             });
             
             document.getElementById('withdraw-form').addEventListener('submit', function(e) {
@@ -1907,8 +2121,13 @@
                 transactions.push(transaction);
                 localStorage.setItem('musicEarnTransactions', JSON.stringify(transactions));
                 
-                // Show confirmation message (in real app, this would wait for admin approval)
-                alert(`Withdrawal request for ₱${amount.toFixed(2)} submitted for approval!\n\nNet amount after 10% tax: ₱${netAmount.toFixed(2)}\n\nFunds will be sent to ${gcashNumber} after admin approval.`);
+                // Deduct from total earnings
+                totalEarnings -= amount;
+                saveInvestmentData();
+                updateStats();
+                
+                // Show confirmation message
+                alert(`Withdrawal request for ₱${amount.toFixed(2)} submitted!\n\nNet amount after 10% tax: ₱${netAmount.toFixed(2)}\n\nFunds will be sent to ${gcashNumber} within 24 hours.`);
                 
                 // Close modal and reset form
                 withdrawModal.style.display = 'none';
@@ -1917,6 +2136,7 @@
             
             // Initialize the user dashboard
             loadStations();
+            loadInvestmentPlans();
             checkNewDay(); // Check if it's a new day to reset counters
             updateStats();
         }
@@ -1926,48 +2146,26 @@
         // ==============================================
         
         function initializeAdminDashboard() {
-            const pendingTransactionsTable = document.getElementById('pending-transactions').querySelector('tbody');
-            const completedTransactionsTable = document.getElementById('completed-transactions').querySelector('tbody');
+            const allTransactionsTable = document.getElementById('all-transactions').querySelector('tbody');
             const userManagementTable = document.getElementById('user-management').querySelector('tbody');
             
             // Load all data
             function loadAdminData() {
-                // Load pending transactions
-                const pendingTransactions = transactions.filter(t => t.status === 'pending');
-                pendingTransactionsTable.innerHTML = '';
+                // Load all transactions
+                allTransactionsTable.innerHTML = '';
                 
-                pendingTransactions.forEach(transaction => {
+                transactions.forEach(transaction => {
                     const row = document.createElement('tr');
                     row.innerHTML = `
                         <td>${transaction.userName || transaction.userEmail}</td>
                         <td>${transaction.type}</td>
                         <td>₱${transaction.amount.toFixed(2)}</td>
                         <td>${new Date(transaction.date).toLocaleString()}</td>
-                        <td class="status-pending">Pending</td>
-                        <td>
-                            <button class="action-btn approve-btn" data-id="${transaction.id}">Approve</button>
-                            <button class="action-btn reject-btn" data-id="${transaction.id}">Reject</button>
-                        </td>
-                    `;
-                    pendingTransactionsTable.appendChild(row);
-                });
-                
-                // Load completed transactions
-                const completedTransactions = transactions.filter(t => t.status !== 'pending');
-                completedTransactionsTable.innerHTML = '';
-                
-                completedTransactions.forEach(transaction => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${transaction.userName || transaction.userEmail}</td>
-                        <td>${transaction.type}</td>
-                        <td>₱${transaction.amount.toFixed(2)}</td>
-                        <td>${new Date(transaction.date).toLocaleString()}</td>
-                        <td class="${transaction.status === 'approved' ? 'status-approved' : 'status-rejected'}">
+                        <td class="${transaction.status === 'approved' ? 'status-approved' : 'status-pending'}">
                             ${transaction.status.charAt(0).toUpperCase() + transaction.status.slice(1)}
                         </td>
                     `;
-                    completedTransactionsTable.appendChild(row);
+                    allTransactionsTable.appendChild(row);
                 });
                 
                 // Load users
@@ -1978,73 +2176,14 @@
                     row.innerHTML = `
                         <td>${user.name}</td>
                         <td>${user.email}</td>
-                        <td>₱${user.investmentData.amount.toFixed(2)}</td>
+                        <td>${user.investmentData.active ? `₱${user.investmentData.amount}` : 'None'}</td>
                         <td>₱${user.investmentData.totalEarnings.toFixed(2)}</td>
                         <td class="${user.investmentData.active ? 'status-approved' : 'status-rejected'}">
                             ${user.investmentData.active ? 'Active' : 'Inactive'}
                         </td>
-                        <td>
-                            <button class="action-btn" data-id="${user.id}">View</button>
-                        </td>
                     `;
                     userManagementTable.appendChild(row);
                 });
-            }
-            
-            // Handle transaction approval/rejection
-            pendingTransactionsTable.addEventListener('click', (e) => {
-                if (e.target.classList.contains('approve-btn')) {
-                    const transactionId = e.target.getAttribute('data-id');
-                    approveTransaction(transactionId);
-                } else if (e.target.classList.contains('reject-btn')) {
-                    const transactionId = e.target.getAttribute('data-id');
-                    rejectTransaction(transactionId);
-                }
-            });
-            
-            // Approve transaction
-            function approveTransaction(transactionId) {
-                const transactionIndex = transactions.findIndex(t => t.id === transactionId);
-                if (transactionIndex !== -1) {
-                    transactions[transactionIndex].status = 'approved';
-                    localStorage.setItem('musicEarnTransactions', JSON.stringify(transactions));
-                    
-                    // If this is a deposit, activate the user's investment
-                    if (transactions[transactionIndex].type === 'deposit') {
-                        const userIndex = users.findIndex(u => u.id === transactions[transactionIndex].userId);
-                        if (userIndex !== -1) {
-                            users[userIndex].investmentData.active = true;
-                            users[userIndex].investmentData.amount = transactions[transactionIndex].amount;
-                            users[userIndex].investmentData.cycleDays = 1;
-                            users[userIndex].investmentData.lastActiveDate = new Date().toISOString();
-                            localStorage.setItem('musicEarnUsers', JSON.stringify(users));
-                        }
-                    }
-                    
-                    // If this is a withdrawal, deduct from user's earnings
-                    if (transactions[transactionIndex].type === 'withdrawal') {
-                        const userIndex = users.findIndex(u => u.id === transactions[transactionIndex].userId);
-                        if (userIndex !== -1) {
-                            users[userIndex].investmentData.totalEarnings -= transactions[transactionIndex].amount;
-                            localStorage.setItem('musicEarnUsers', JSON.stringify(users));
-                        }
-                    }
-                    
-                    alert('Transaction approved successfully!');
-                    loadAdminData();
-                }
-            }
-            
-            // Reject transaction
-            function rejectTransaction(transactionId) {
-                const transactionIndex = transactions.findIndex(t => t.id === transactionId);
-                if (transactionIndex !== -1) {
-                    transactions[transactionIndex].status = 'rejected';
-                    localStorage.setItem('musicEarnTransactions', JSON.stringify(transactions));
-                    
-                    alert('Transaction rejected!');
-                    loadAdminData();
-                }
             }
             
             // Initialize admin dashboard
