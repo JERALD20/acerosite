@@ -977,6 +977,131 @@
             box-shadow: 0 4px 10px rgba(106, 90, 205, 0.3);
         }
         
+        /* Transaction History Styles */
+        .transaction-history {
+            margin-top: 30px;
+        }
+        
+        .transaction-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .transaction-tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .transaction-tab.active {
+            border-bottom: 2px solid var(--secondary);
+            color: var(--secondary);
+        }
+        
+        .transaction-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        
+        .transaction-table th {
+            text-align: left;
+            padding: 12px 15px;
+            background: rgba(106, 90, 205, 0.2);
+        }
+        
+        .transaction-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .transaction-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .transaction-type {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .type-deposit {
+            background-color: rgba(0, 209, 178, 0.1);
+            color: var(--success);
+        }
+        
+        .type-withdrawal {
+            background-color: rgba(255, 56, 96, 0.1);
+            color: var(--error);
+        }
+        
+        .type-earning {
+            background-color: rgba(255, 221, 87, 0.1);
+            color: var(--warning);
+        }
+        
+        .transaction-status {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .status-pending {
+            background-color: rgba(255, 221, 87, 0.1);
+            color: var(--warning);
+        }
+        
+        .status-completed {
+            background-color: rgba(0, 209, 178, 0.1);
+            color: var(--success);
+        }
+        
+        /* Donation Section Styles */
+        .donation-section {
+            background: rgba(138, 124, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid rgba(138, 124, 255, 0.3);
+        }
+        
+        .donation-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .donation-icon {
+            font-size: 1.5rem;
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        .donation-details {
+            margin-top: 15px;
+        }
+        
+        .donation-details p {
+            margin: 8px 0;
+        }
+        
+        .donation-qr {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .donation-qr img {
+            max-width: 200px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
         /* Responsive styles */
         @media (max-width: 768px) {
             .container {
@@ -1015,6 +1140,15 @@
             .login-container {
                 padding: 30px 20px;
                 margin: 50px auto;
+            }
+            
+            .transaction-tabs {
+                flex-wrap: wrap;
+            }
+            
+            .transaction-tab {
+                padding: 8px 15px;
+                font-size: 0.9rem;
             }
         }
     </style>
@@ -1138,6 +1272,61 @@
                 <button class="btn btn-warning" id="withdraw-btn" disabled>
                     <i class="fas fa-wallet"></i> Withdraw Earnings
                 </button>
+            </div>
+        </div>
+        
+        <!-- Transaction History Section -->
+        <div class="card">
+            <div class="card-badge">Transaction Records</div>
+            <h2>Transaction History</h2>
+            
+            <div class="transaction-tabs">
+                <div class="transaction-tab active" data-tab="all">All Transactions</div>
+                <div class="transaction-tab" data-tab="deposits">Deposits</div>
+                <div class="transaction-tab" data-tab="withdrawals">Withdrawals</div>
+                <div class="transaction-tab" data-tab="earnings">Earnings</div>
+            </div>
+            
+            <div class="transaction-history">
+                <table class="transaction-table" id="user-transactions">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Type</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Transactions will be loaded from JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Donation Section -->
+        <div class="card">
+            <div class="donation-section">
+                <div class="donation-header">
+                    <div class="donation-icon">
+                        <i class="fas fa-hand-holding-heart"></i>
+                    </div>
+                    <h2>Support Our Platform</h2>
+                </div>
+                
+                <p>If you find our platform valuable and would like to support its development and maintenance, consider making a donation. Your contribution helps us improve the service and add more features.</p>
+                
+                <div class="donation-details">
+                    <p><strong>GCash Account Name:</strong> JE***D A.</p>
+                    <p><strong>GCash Number:</strong> 0997 801 4222</p>
+                    <p><strong>Note:</strong> Please include your username or email in the transaction reference so we can thank you personally!</p>
+                </div>
+                
+                <div class="donation-qr">
+                    <p><strong>Scan to Donate:</strong></p>
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=09978014222" alt="GCash QR Code">
+                </div>
             </div>
         </div>
         
@@ -1288,6 +1477,7 @@
                         <th>Amount</th>
                         <th>Date</th>
                         <th>Status</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -1312,6 +1502,30 @@
                     <!-- Users will be loaded from JavaScript -->
                 </tbody>
             </table>
+        </div>
+        
+        <!-- Donation Information Section -->
+        <div class="admin-section">
+            <h2>Donation Information</h2>
+            <div class="donation-section">
+                <div class="donation-header">
+                    <div class="donation-icon">
+                        <i class="fas fa-hand-holding-heart"></i>
+                    </div>
+                    <h3>GCash Donation Details</h3>
+                </div>
+                
+                <div class="donation-details">
+                    <p><strong>Account Name:</strong> JE***D A.</p>
+                    <p><strong>GCash Number:</strong> 0997 801 4222</p>
+                    <p><strong>Total Donations Received:</strong> ₱<span id="total-donations">0.00</span></p>
+                </div>
+                
+                <div class="donation-qr">
+                    <p><strong>Donation QR Code:</strong></p>
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=09978014222" alt="GCash QR Code">
+                </div>
+            </div>
         </div>
     </div>
 
@@ -1415,6 +1629,7 @@
         // User database (in a real app, this would be server-side)
         let users = JSON.parse(localStorage.getItem('musicEarnUsers')) || [];
         let transactions = JSON.parse(localStorage.getItem('musicEarnTransactions')) || [];
+        let donations = JSON.parse(localStorage.getItem('musicEarnDonations')) || [];
         let currentUser = null;
         
         // Investment plans data
@@ -1659,6 +1874,8 @@
             const investmentPlansContainer = document.getElementById('investment-plans-container');
             const depositBtn = document.getElementById('deposit-btn');
             const investmentBadge = document.getElementById('investment-badge');
+            const transactionTabs = document.querySelectorAll('.transaction-tab');
+            const userTransactionsTable = document.getElementById('user-transactions').querySelector('tbody');
             
             // Load investment plans
             function loadInvestmentPlans() {
@@ -1704,6 +1921,71 @@
                     });
                 });
             }
+            
+            // Load user transactions
+            function loadUserTransactions(filter = 'all') {
+                userTransactionsTable.innerHTML = '';
+                
+                const userTransactions = transactions.filter(t => t.userId === currentUser.id);
+                let filteredTransactions = [];
+                
+                switch(filter) {
+                    case 'deposits':
+                        filteredTransactions = userTransactions.filter(t => t.type === 'deposit');
+                        break;
+                    case 'withdrawals':
+                        filteredTransactions = userTransactions.filter(t => t.type === 'withdrawal');
+                        break;
+                    case 'earnings':
+                        filteredTransactions = userTransactions.filter(t => t.type === 'earning');
+                        break;
+                    default:
+                        filteredTransactions = userTransactions;
+                }
+                
+                if (filteredTransactions.length === 0) {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `<td colspan="5" style="text-align: center;">No transactions found</td>`;
+                    userTransactionsTable.appendChild(row);
+                    return;
+                }
+                
+                // Sort by date (newest first)
+                filteredTransactions.sort((a, b) => new Date(b.date) - new Date(a.date));
+                
+                filteredTransactions.forEach(transaction => {
+                    const row = document.createElement('tr');
+                    
+                    // Format date
+                    const date = new Date(transaction.date);
+                    const formattedDate = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+                    
+                    // Determine type and status classes
+                    const typeClass = transaction.type === 'deposit' ? 'type-deposit' : 
+                                     transaction.type === 'withdrawal' ? 'type-withdrawal' : 'type-earning';
+                    
+                    const statusClass = transaction.status === 'pending' ? 'status-pending' : 'status-completed';
+                    
+                    row.innerHTML = `
+                        <td>${formattedDate}</td>
+                        <td><span class="transaction-type ${typeClass}">${transaction.type.charAt(0).toUpperCase() + transaction.type.slice(1)}</span></td>
+                        <td>₱${transaction.amount.toFixed(2)}</td>
+                        <td><span class="transaction-status ${statusClass}">${transaction.status.charAt(0).toUpperCase() + transaction.status.slice(1)}</span></td>
+                        <td>${transaction.message || '-'}</td>
+                    `;
+                    
+                    userTransactionsTable.appendChild(row);
+                });
+            }
+            
+            // Transaction tab switching
+            transactionTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    transactionTabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    loadUserTransactions(tab.dataset.tab);
+                });
+            });
             
             // Investment variables with localStorage integration
             let investmentActive = investmentData.active;
@@ -1831,6 +2113,9 @@
                 
                 // Save data after updating stats
                 saveInvestmentData();
+                
+                // Reload transactions to reflect any changes
+                loadUserTransactions(document.querySelector('.transaction-tab.active').dataset.tab);
             }
             
             // Show notification
@@ -1941,6 +2226,22 @@
                 tasksCompletedToday++;
                 todayEarnings += currentPlan.earningsPerTask;
                 totalEarnings += currentPlan.earningsPerTask;
+                
+                // Create earning transaction record
+                const transaction = {
+                    id: Date.now().toString(),
+                    userId: currentUser.id,
+                    userEmail: currentUser.email,
+                    userName: currentUser.name,
+                    type: 'earning',
+                    amount: currentPlan.earningsPerTask,
+                    status: 'completed',
+                    date: new Date().toISOString(),
+                    message: `Task ${tasksCompletedToday}/${currentPlan.tasksPerDay} completed`
+                };
+                
+                transactions.push(transaction);
+                localStorage.setItem('musicEarnTransactions', JSON.stringify(transactions));
                 
                 // Get random motivational quote
                 const randomQuote = motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
@@ -2056,7 +2357,7 @@
                     userName: currentUser.name,
                     type: 'deposit',
                     amount: amount,
-                    status: 'approved',
+                    status: 'completed',
                     date: new Date().toISOString(),
                     proof: document.getElementById('payment-proof').files[0]?.name || 'No proof'
                 };
@@ -2137,6 +2438,7 @@
             // Initialize the user dashboard
             loadStations();
             loadInvestmentPlans();
+            loadUserTransactions(); // Load all transactions by default
             checkNewDay(); // Check if it's a new day to reset counters
             updateStats();
         }
@@ -2148,24 +2450,65 @@
         function initializeAdminDashboard() {
             const allTransactionsTable = document.getElementById('all-transactions').querySelector('tbody');
             const userManagementTable = document.getElementById('user-management').querySelector('tbody');
+            const totalDonationsElement = document.getElementById('total-donations');
+            
+            // Calculate total donations
+            function calculateTotalDonations() {
+                const total = donations.reduce((sum, donation) => sum + donation.amount, 0);
+                totalDonationsElement.textContent = total.toFixed(2);
+            }
             
             // Load all data
             function loadAdminData() {
                 // Load all transactions
                 allTransactionsTable.innerHTML = '';
                 
+                // Sort by date (newest first)
+                transactions.sort((a, b) => new Date(b.date) - new Date(a.date));
+                
                 transactions.forEach(transaction => {
                     const row = document.createElement('tr');
+                    
+                    // Format date
+                    const date = new Date(transaction.date);
+                    const formattedDate = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+                    
+                    // Determine status class
+                    const statusClass = transaction.status === 'pending' ? 'status-pending' : 
+                                      transaction.status === 'approved' ? 'status-approved' : 'status-rejected';
+                    
                     row.innerHTML = `
                         <td>${transaction.userName || transaction.userEmail}</td>
-                        <td>${transaction.type}</td>
+                        <td>${transaction.type.charAt(0).toUpperCase() + transaction.type.slice(1)}</td>
                         <td>₱${transaction.amount.toFixed(2)}</td>
-                        <td>${new Date(transaction.date).toLocaleString()}</td>
-                        <td class="${transaction.status === 'approved' ? 'status-approved' : 'status-pending'}">
+                        <td>${formattedDate}</td>
+                        <td class="${statusClass}">
                             ${transaction.status.charAt(0).toUpperCase() + transaction.status.slice(1)}
                         </td>
+                        <td>
+                            ${transaction.status === 'pending' ? `
+                                <button class="action-btn approve-btn" data-id="${transaction.id}">Approve</button>
+                                <button class="action-btn reject-btn" data-id="${transaction.id}">Reject</button>
+                            ` : '-'}
+                        </td>
                     `;
+                    
                     allTransactionsTable.appendChild(row);
+                });
+                
+                // Add event listeners to action buttons
+                document.querySelectorAll('.approve-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const transactionId = btn.dataset.id;
+                        approveTransaction(transactionId);
+                    });
+                });
+                
+                document.querySelectorAll('.reject-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const transactionId = btn.dataset.id;
+                        rejectTransaction(transactionId);
+                    });
                 });
                 
                 // Load users
@@ -2184,6 +2527,47 @@
                     `;
                     userManagementTable.appendChild(row);
                 });
+                
+                // Calculate total donations
+                calculateTotalDonations();
+            }
+            
+            // Approve transaction
+            function approveTransaction(transactionId) {
+                const transactionIndex = transactions.findIndex(t => t.id === transactionId);
+                if (transactionIndex !== -1) {
+                    transactions[transactionIndex].status = 'approved';
+                    localStorage.setItem('musicEarnTransactions', JSON.stringify(transactions));
+                    
+                    // If this is a withdrawal, we might want to process it here
+                    if (transactions[transactionIndex].type === 'withdrawal') {
+                        // In a real app, this would trigger the actual payment processing
+                        alert(`Withdrawal of ₱${transactions[transactionIndex].amount.toFixed(2)} approved and processed.`);
+                    }
+                    
+                    // Reload data
+                    loadAdminData();
+                }
+            }
+            
+            // Reject transaction
+            function rejectTransaction(transactionId) {
+                const transactionIndex = transactions.findIndex(t => t.id === transactionId);
+                if (transactionIndex !== -1) {
+                    transactions[transactionIndex].status = 'rejected';
+                    
+                    // If this is a withdrawal, we should return the funds to the user's balance
+                    if (transactions[transactionIndex].type === 'withdrawal') {
+                        const userIndex = users.findIndex(u => u.id === transactions[transactionIndex].userId);
+                        if (userIndex !== -1) {
+                            users[userIndex].investmentData.totalEarnings += transactions[transactionIndex].amount;
+                            localStorage.setItem('musicEarnUsers', JSON.stringify(users));
+                        }
+                    }
+                    
+                    localStorage.setItem('musicEarnTransactions', JSON.stringify(transactions));
+                    loadAdminData();
+                }
             }
             
             // Initialize admin dashboard
