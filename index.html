@@ -2074,8 +2074,8 @@
                 // Get random confirmation quote
                 const randomQuote = purchaseQuotes[Math.floor(Math.random() * purchaseQuotes.length)];
                 
-                // Show confirmation message with Telegram notification
-                alert(`🎉 Your investment of ₱${amount.toFixed(2)} has been activated!\n\n${randomQuote}\n\nYou can now start earning ₱${currentPlan.dailyEarnings} daily.\n\nPlease message t.me/Music2EarnPRO on Telegram to inform the owner about your deposit.`);
+                // Show confirmation message
+                alert(`🎉 Your investment of ₱${amount.toFixed(2)} has been activated! 📌 Please don't forget to take a screenshot of this proof and contact the owner support to monitor your income. (scroll down below to find the contact support 👇) \n\n${randomQuote}\n\nYou can now start earning ₱${currentPlan.dailyEarnings} daily.`);
                 
                 // Close modal and reset form
                 depositModal.style.display = 'none';
@@ -2126,8 +2126,8 @@
                 saveInvestmentData();
                 updateStats();
                 
-                // Show confirmation message with Telegram notification
-                alert(`Withdrawal request for ₱${amount.toFixed(2)} submitted!\n\nNet amount after 10% tax: ₱${netAmount.toFixed(2)}\n\nFunds will be sent to ${gcashNumber} within 24 hours.\n\nPlease message t.me/Music2EarnPRO on Telegram to inform the owner about your withdrawal.`);
+                // Show confirmation message
+                alert(`Withdrawal request for ₱${amount.toFixed(2)} submitted!\n\nNet amount after 10% tax: ₱${netAmount.toFixed(2)}\n\nFunds will be sent to ${gcashNumber} within 24 hours.`);
                 
                 // Close modal and reset form
                 withdrawModal.style.display = 'none';
