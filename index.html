@@ -17,6 +17,7 @@
             --error: #ff3860;
             --info: #3298dc;
             --gradient: linear-gradient(135deg, #6a5acd, #8a7cff);
+            --premium-gradient: linear-gradient(135deg, #ff8a00, #ff0058);
         }
         
         body {
@@ -151,12 +152,19 @@
             padding: 20px 0;
             border-bottom: 1px solid rgba(255,255,255,0.1);
             margin-bottom: 30px;
+            background: rgba(30, 30, 30, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
         
         .admin-title {
             font-size: 1.8rem;
             color: var(--secondary);
             margin: 0;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         
         .logout-btn {
@@ -167,6 +175,9 @@
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
         .logout-btn:hover {
@@ -176,6 +187,11 @@
         
         .admin-section {
             margin-bottom: 40px;
+            background: rgba(30, 30, 30, 0.8);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.05);
         }
         
         .admin-section h2 {
@@ -183,6 +199,14 @@
             border-bottom: 2px solid var(--primary);
             padding-bottom: 10px;
             margin-bottom: 20px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .admin-section h2 i {
+            font-size: 1.2em;
         }
         
         .admin-table {
@@ -192,6 +216,7 @@
             background: rgba(30, 30, 30, 0.5);
             border-radius: 10px;
             overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
         
         .admin-table th, .admin-table td {
@@ -204,6 +229,9 @@
             background: var(--gradient);
             color: white;
             font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
         }
         
         .admin-table tr:nth-child(even) {
@@ -234,6 +262,9 @@
             margin-right: 5px;
             font-size: 0.8rem;
             transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
         }
         
         .approve-btn {
@@ -249,6 +280,7 @@
         .action-btn:hover {
             opacity: 0.8;
             transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
         
         /* Main Dashboard Styles (existing styles) */
@@ -554,6 +586,16 @@
             box-shadow: 0 8px 20px rgba(255, 221, 87, 0.4);
         }
         
+        .btn-telegram {
+            background: linear-gradient(135deg, #0088cc, #34b7f1);
+            box-shadow: 0 4px 15px rgba(0, 136, 204, 0.3);
+        }
+        
+        .btn-telegram:hover {
+            background: #0088cc;
+            box-shadow: 0 8px 20px rgba(0, 136, 204, 0.4);
+        }
+        
         .action-buttons {
             display: flex;
             gap: 20px;
@@ -789,6 +831,8 @@
             transition: all 0.3s ease;
             border: 1px solid rgba(255,255,255,0.1);
             text-align: center;
+            position: relative;
+            overflow: hidden;
         }
         
         .station-card:hover {
@@ -798,10 +842,41 @@
             border-color: var(--primary);
         }
         
+        .station-card.premium {
+            border: 1px solid rgba(255, 138, 0, 0.3);
+            background: rgba(255, 138, 0, 0.05);
+        }
+        
+        .station-card.premium:hover {
+            background: rgba(255, 138, 0, 0.1);
+            border-color: #ff8a00;
+        }
+        
         .station-card h4 {
             margin: 0;
             color: var(--light);
             font-size: 1.1rem;
+            z-index: 2;
+            position: relative;
+        }
+        
+        .station-card .station-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            z-index: 2;
+            position: relative;
+        }
+        
+        .station-card .station-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            z-index: 1;
+            background-size: cover;
+            background-position: center;
         }
         
         /* Notification styles */
@@ -840,6 +915,20 @@
             border-radius: 20px;
             font-size: 0.7rem;
             font-weight: bold;
+            z-index: 3;
+        }
+        
+        .premium-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--premium-gradient);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            z-index: 3;
         }
         
         /* Toggle switch for auto features */
@@ -1102,6 +1191,72 @@
             border: 1px solid rgba(255,255,255,0.1);
         }
         
+        /* Invite Section Styles */
+        .invite-section {
+            background: rgba(106, 90, 205, 0.1);
+            border-radius: 10px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 1px dashed rgba(106, 90, 205, 0.3);
+            text-align: center;
+        }
+        
+        .invite-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .invite-icon {
+            font-size: 2rem;
+            margin-right: 15px;
+            color: var(--secondary);
+        }
+        
+        .invite-content {
+            margin-bottom: 20px;
+        }
+        
+        .invite-content p {
+            margin-bottom: 15px;
+        }
+        
+        .invite-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .referral-code {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: monospace;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            position: relative;
+        }
+        
+        .copy-btn {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            border-radius: 4px;
+            padding: 3px 8px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+        
+        .copy-btn:hover {
+            background: var(--secondary);
+        }
+        
         /* Responsive styles */
         @media (max-width: 768px) {
             .container {
@@ -1124,7 +1279,7 @@
                 grid-template-columns: 1fr;
             }
             
-            .action-buttons {
+            .action-buttons, .invite-buttons {
                 flex-direction: column;
                 gap: 15px;
             }
@@ -1148,6 +1303,15 @@
             
             .transaction-tab {
                 padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .station-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .admin-table th, .admin-table td {
+                padding: 10px;
                 font-size: 0.9rem;
             }
         }
@@ -1275,6 +1439,44 @@
             </div>
         </div>
         
+        <!-- Invite Friends Section -->
+        <div class="card">
+            <div class="card-badge">Community</div>
+            <h2>Join Our Community</h2>
+            
+            <div class="invite-section">
+                <div class="invite-header">
+                    <div class="invite-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Invite Friends & Earn Together</h3>
+                </div>
+                
+                <div class="invite-content">
+                    <p>Help grow our community and get exclusive benefits by inviting your friends to join MusicEarn PRO!</p>
+                    <p>Stay updated with the latest announcements and connect with other investors in our Telegram groups:</p>
+                </div>
+                
+                <div class="invite-buttons">
+                    <a href="https://t.me/Music2EarnPROProofs" target="_blank" class="btn btn-telegram">
+                        <i class="fab fa-telegram"></i> Join Proof Channel
+                    </a>
+                    <a href="https://t.me/Music2EarnPRO2025" target="_blank" class="btn btn-telegram">
+                        <i class="fab fa-telegram"></i> Join Community Chat
+                    </a>
+                </div>
+                
+                <div class="referral-code">
+                    Your Referral Code: <strong id="referral-code">MUSIC${currentUser?.id.slice(0, 5).toUpperCase()}</strong>
+                    <button class="copy-btn" id="copy-referral">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </div>
+                
+                <p>Share your referral code with friends and earn bonuses when they join and invest!</p>
+            </div>
+        </div>
+        
         <!-- Transaction History Section -->
         <div class="card">
             <div class="card-badge">Transaction Records</div>
@@ -1330,17 +1532,6 @@
             </div>
         </div>
         
-        <!-- Investment Plans Section -->
-        <div class="card" id="investment-plans-card">
-            <div class="card-badge">10 Plans Available</div>
-            <h2>Investment Plans</h2>
-            <p>Choose your investment plan to start earning daily. All plans last for 30 days with 4 tasks per day.</p>
-            
-            <div id="investment-plans-container">
-                <!-- Plans will be loaded from JavaScript -->
-            </div>
-        </div>
-        
         <!-- Free Music Player Section -->
         <div class="card">
             <div class="card-badge">Free Listening</div>
@@ -1350,7 +1541,9 @@
             <div class="station-list">
                 <div class="station-card" style="position: relative;">
                     <div class="free-play-badge">FREE</div>
+                    <div class="station-icon"><i class="fas fa-headphones"></i></div>
                     <h4>Chill Vibes Radio</h4>
+                    <div class="station-bg" style="background-image: url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60')"></div>
                     <audio controls style="width: 100%; margin-top: 10px;">
                         <source src="https://stream.live.vc.bbcmedia.co.uk/bbc_radio_one" type="audio/mpeg">
                         Your browser does not support the audio element.
@@ -1358,7 +1551,9 @@
                 </div>
                 <div class="station-card" style="position: relative;">
                     <div class="free-play-badge">FREE</div>
+                    <div class="station-icon"><i class="fas fa-music"></i></div>
                     <h4>Jazz Lounge</h4>
+                    <div class="station-bg" style="background-image: url('https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60')"></div>
                     <audio controls style="width: 100%; margin-top: 10px;">
                         <source src="https://jazz-wr04.streamguys1.com/jazz-wr04.mp3" type="audio/mpeg">
                         Your browser does not support the audio element.
@@ -1366,7 +1561,9 @@
                 </div>
                 <div class="station-card" style="position: relative;">
                     <div class="free-play-badge">FREE</div>
+                    <div class="station-icon"><i class="fas fa-guitar"></i></div>
                     <h4>Classical FM</h4>
+                    <div class="station-bg" style="background-image: url('https://images.unsplash.com/photo-1501612780327-45045538702b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60')"></div>
                     <audio controls style="width: 100%; margin-top: 10px;">
                         <source src="https://stream.klassikradio.de/klassikradio.mp3" type="audio/mpeg">
                         Your browser does not support the audio element.
@@ -1379,6 +1576,8 @@
         <div class="card">
             <div class="card-badge">Earning Platform</div>
             <h2>Premium Music Player</h2>
+            <p>Access premium stations and earn money by listening with an active investment plan.</p>
+            
             <div class="player-container">
                 <div class="player-header">
                     <h3 id="current-station">Select a station to play</h3>
@@ -1397,6 +1596,17 @@
                 <div class="station-list" id="station-list">
                     <!-- Stations will be loaded from JavaScript -->
                 </div>
+            </div>
+        </div>
+        
+        <!-- Investment Plans Section -->
+        <div class="card" id="investment-plans-card">
+            <div class="card-badge">10 Plans Available</div>
+            <h2>Investment Plans</h2>
+            <p>Choose your investment plan to start earning daily. All plans last for 30 days with 4 tasks per day.</p>
+            
+            <div id="investment-plans-container">
+                <!-- Plans will be loaded from JavaScript -->
             </div>
         </div>
         
@@ -1467,8 +1677,35 @@
             </button>
         </div>
         
+        <!-- Admin Stats -->
         <div class="admin-section">
-            <h2>User Transactions</h2>
+            <h2><i class="fas fa-chart-line"></i> Platform Statistics</h2>
+            <div class="stats-container">
+                <div class="stat-card">
+                    <h3>Total Users</h3>
+                    <div class="stat-value">${users.length}</div>
+                    <div class="stat-label">Registered Accounts</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Active Investments</h3>
+                    <div class="stat-value">${users.filter(u => u.investmentData.active).length}</div>
+                    <div class="stat-label">Active Plans</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Transactions</h3>
+                    <div class="stat-value">${transactions.length}</div>
+                    <div class="stat-label">All Activities</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Volume</h3>
+                    <div class="stat-value">₱${transactions.reduce((sum, t) => sum + t.amount, 0).toFixed(2)}</div>
+                    <div class="stat-label">All Transactions</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="admin-section">
+            <h2><i class="fas fa-exchange-alt"></i> User Transactions</h2>
             <table class="admin-table" id="all-transactions">
                 <thead>
                     <tr>
@@ -1487,7 +1724,7 @@
         </div>
         
         <div class="admin-section">
-            <h2>User Management</h2>
+            <h2><i class="fas fa-users"></i> User Management</h2>
             <table class="admin-table" id="user-management">
                 <thead>
                     <tr>
@@ -1506,7 +1743,7 @@
         
         <!-- Donation Information Section -->
         <div class="admin-section">
-            <h2>Donation Information</h2>
+            <h2><i class="fas fa-donate"></i> Donation Information</h2>
             <div class="donation-section">
                 <div class="donation-header">
                     <div class="donation-icon">
@@ -1524,6 +1761,36 @@
                 <div class="donation-qr">
                     <p><strong>Donation QR Code:</strong></p>
                     <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=09978014222" alt="GCash QR Code">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Community Management Section -->
+        <div class="admin-section">
+            <h2><i class="fas fa-users"></i> Community Management</h2>
+            <div class="invite-section">
+                <div class="invite-header">
+                    <div class="invite-icon">
+                        <i class="fas fa-link"></i>
+                    </div>
+                    <h3>Community Links</h3>
+                </div>
+                
+                <div class="invite-content">
+                    <p>Manage your community engagement through these official channels:</p>
+                </div>
+                
+                <div class="invite-buttons">
+                    <a href="https://t.me/Music2EarnPROProofs" target="_blank" class="btn btn-telegram">
+                        <i class="fab fa-telegram"></i> Proof Channel
+                    </a>
+                    <a href="https://t.me/Music2EarnPRO2025" target="_blank" class="btn btn-telegram">
+                        <i class="fab fa-telegram"></i> Community Chat
+                    </a>
+                </div>
+                
+                <div class="highlight">
+                    <p><i class="fas fa-info-circle"></i> Use these channels to share updates, announcements, and success stories with your community.</p>
                 </div>
             </div>
         </div>
@@ -1819,43 +2086,63 @@
             const stations = [
                 {
                     "name": "Love Radio",
-                    "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/LOVERADIO_MNL_SC"
+                    "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/LOVERADIO_MNL_SC",
+                    "icon": "fas fa-heart",
+                    "bg": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
                 },
                 {
                     "name": "Win Radio",
-                    "url": "https://stream.zeno.fm/2ss1hgnu6hhvv"
+                    "url": "https://stream.zeno.fm/2ss1hgnu6hhvv",
+                    "icon": "fas fa-trophy",
+                    "bg": "https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
                 },
                 {
                     "name": "Barangay LS",
-                    "url": "https://stream.zeno.fm/dphe9050afhvv"
+                    "url": "https://stream.zeno.fm/dphe9050afhvv",
+                    "icon": "fas fa-microphone-alt",
+                    "bg": "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
                 },
                 {
                     "name": "DZRH News Radio",
-                    "url": "https://a3.asurahosting.com:6910/stream/1/"
+                    "url": "https://a3.asurahosting.com:6910/stream/1/",
+                    "icon": "fas fa-newspaper",
+                    "bg": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
                 },
                 {
                     "name": "Bombo Radio Davao City",
-                    "url": "https://stream.zeno.fm/n6uph8kyd0quv"
+                    "url": "https://stream.zeno.fm/n6uph8kyd0quv",
+                    "icon": "fas fa-broadcast-tower",
+                    "bg": "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
                 },
                 {
                     "name": "iFM Cebu City",
-                    "url": "https://magic.radioca.st/stream/1/"
+                    "url": "https://magic.radioca.st/stream/1/",
+                    "icon": "fas fa-city",
+                    "bg": "https://images.unsplash.com/photo-1535463731090-e34f4b5098c5?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
                 },
                 {
                     "name": "Eazy Rock Radio Baguio",
-                    "url": "https://easyrockbaguio.radioca.st/;"
+                    "url": "https://easyrockbaguio.radioca.st/;",
+                    "icon": "fas fa-mountain",
+                    "bg": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
                 },
                 {
                     "name": "Yes! FM",
-                    "url": "https://yesfmzamboanga.radioca.st/;"
+                    "url": "https://yesfmzamboanga.radioca.st/;",
+                    "icon": "fas fa-thumbs-up",
+                    "bg": "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
                 },
                 {
                     "name": "Eagle FM",
-                    "url": "https://stream.radiojar.com/yus0r2bghd3vv"
+                    "url": "https://stream.radiojar.com/yus0r2bghd3vv",
+                    "icon": "fas fa-dove",
+                    "bg": "https://images.unsplash.com/photo-1551085254-e96b210db58a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
                 },
                 {
                     "name": "Magic 89.9",
-                    "url": "https://stream-36.zeno.fm/sh37pvfd938uv"
+                    "url": "https://stream-36.zeno.fm/sh37pvfd938uv",
+                    "icon": "fas fa-magic",
+                    "bg": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
                 }
             ];
 
@@ -1876,6 +2163,17 @@
             const investmentBadge = document.getElementById('investment-badge');
             const transactionTabs = document.querySelectorAll('.transaction-tab');
             const userTransactionsTable = document.getElementById('user-transactions').querySelector('tbody');
+            const referralCodeElement = document.getElementById('referral-code');
+            const copyReferralBtn = document.getElementById('copy-referral');
+            
+            // Set referral code
+            referralCodeElement.textContent = `MUSIC${currentUser.id.slice(0, 5).toUpperCase()}`;
+            
+            // Copy referral code
+            copyReferralBtn.addEventListener('click', () => {
+                navigator.clipboard.writeText(referralCodeElement.textContent);
+                showNotification('Referral code copied to clipboard!');
+            });
             
             // Load investment plans
             function loadInvestmentPlans() {
@@ -2137,8 +2435,13 @@
                 
                 stations.forEach(station => {
                     const stationCard = document.createElement('div');
-                    stationCard.className = 'station-card';
-                    stationCard.innerHTML = `<h4>${station.name}</h4>`;
+                    stationCard.className = 'station-card premium';
+                    stationCard.innerHTML = `
+                        <div class="premium-badge">PREMIUM</div>
+                        <div class="station-icon"><i class="${station.icon}"></i></div>
+                        <h4>${station.name}</h4>
+                        <div class="station-bg" style="background-image: url('${station.bg}')"></div>
+                    `;
                     
                     stationCard.addEventListener('click', () => {
                         playStation(station);
@@ -2487,8 +2790,12 @@
                         </td>
                         <td>
                             ${transaction.status === 'pending' ? `
-                                <button class="action-btn approve-btn" data-id="${transaction.id}">Approve</button>
-                                <button class="action-btn reject-btn" data-id="${transaction.id}">Reject</button>
+                                <button class="action-btn approve-btn" data-id="${transaction.id}">
+                                    <i class="fas fa-check"></i> Approve
+                                </button>
+                                <button class="action-btn reject-btn" data-id="${transaction.id}">
+                                    <i class="fas fa-times"></i> Reject
+                                </button>
                             ` : '-'}
                         </td>
                     `;
