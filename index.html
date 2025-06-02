@@ -18,6 +18,7 @@
             --info: #3298dc;
             --gradient: linear-gradient(135deg, #6a5acd, #8a7cff);
             --premium-gradient: linear-gradient(135deg, #ff8a00, #ff0058);
+            --risk-gradient: linear-gradient(135deg, #ff3860, #ff0058);
         }
         
         body {
@@ -596,6 +597,16 @@
             box-shadow: 0 8px 20px rgba(0, 136, 204, 0.4);
         }
         
+        .btn-risk {
+            background: var(--risk-gradient);
+            box-shadow: 0 4px 15px rgba(255, 56, 96, 0.3);
+        }
+        
+        .btn-risk:hover {
+            background: #ff3860;
+            box-shadow: 0 8px 20px rgba(255, 56, 96, 0.4);
+        }
+        
         .action-buttons {
             display: flex;
             gap: 20px;
@@ -1133,6 +1144,16 @@
             color: var(--warning);
         }
         
+        .type-risk {
+            background-color: rgba(255, 56, 96, 0.1);
+            color: var(--error);
+        }
+        
+        .type-bonus {
+            background-color: rgba(50, 152, 220, 0.1);
+            color: var(--info);
+        }
+        
         .transaction-status {
             display: inline-block;
             padding: 3px 8px;
@@ -1257,6 +1278,166 @@
             background: var(--secondary);
         }
         
+        /* Risk Wheel Styles */
+        .risk-wheel-container {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(255,56,96,0.1);
+            border-radius: 15px;
+            border: 1px solid rgba(255,56,96,0.3);
+        }
+        
+        .wheel-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 0 auto 20px;
+        }
+        
+        .wheel {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            border: 10px solid rgba(255,255,255,0.1);
+            transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+            transform: rotate(0deg);
+            box-shadow: 0 0 20px rgba(255,56,96,0.5);
+        }
+        
+        .wheel-section {
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            transform-origin: bottom right;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            padding-left: 30px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+        
+        .wheel-arrow {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 30px solid var(--error);
+            z-index: 10;
+            filter: drop-shadow(0 0 5px rgba(255,56,96,0.8));
+        }
+        
+        .spin-btn {
+            background: var(--risk-gradient);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+            box-shadow: 0 4px 15px rgba(255,56,96,0.3);
+        }
+        
+        .spin-btn:hover {
+            background: #ff3860;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255,56,96,0.4);
+        }
+        
+        .spin-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        
+        .wheel-result {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            min-height: 30px;
+        }
+        
+        .wheel-multiplier {
+            font-size: 2rem;
+            font-weight: bold;
+            background: var(--risk-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 10px 0;
+        }
+        
+        .risk-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .risk-amount {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            padding: 10px 15px;
+            color: white;
+            font-size: 1rem;
+            width: 100px;
+            text-align: center;
+        }
+        
+        .risk-amount:focus {
+            outline: none;
+            border-color: var(--error);
+            box-shadow: 0 0 0 3px rgba(255,56,96,0.2);
+        }
+        
+        /* VIP Badge */
+        .vip-badge {
+            background: var(--premium-gradient);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-left: 10px;
+        }
+        
+        /* VIP Plan Styles */
+        .vip-plan {
+            border: 2px solid rgba(255, 138, 0, 0.5);
+            background: rgba(255, 138, 0, 0.05);
+            position: relative;
+        }
+        
+        .vip-plan::before {
+            content: 'VIP';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--premium-gradient);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .vip-plan:hover {
+            background: rgba(255, 138, 0, 0.1);
+            border-color: #ff8a00;
+        }
+        
         /* Responsive styles */
         @media (max-width: 768px) {
             .container {
@@ -1313,6 +1494,11 @@
             .admin-table th, .admin-table td {
                 padding: 10px;
                 font-size: 0.9rem;
+            }
+            
+            .wheel-container {
+                width: 250px;
+                height: 250px;
             }
         }
     </style>
@@ -1423,6 +1609,11 @@
                     <div class="stat-value" id="investment-status">Inactive</div>
                     <div class="stat-label" id="cycle-days">0/30 days</div>
                 </div>
+                <div class="stat-card">
+                    <h3>Risk Wins</h3>
+                    <div class="stat-value" id="risk-wins">0</div>
+                    <div class="stat-label">Total bonus earned</div>
+                </div>
             </div>
             
             <div class="earnings-display" id="earnings-display">
@@ -1436,6 +1627,46 @@
                 <button class="btn btn-warning" id="withdraw-btn" disabled>
                     <i class="fas fa-wallet"></i> Withdraw Earnings
                 </button>
+                <button class="btn btn-risk" id="risk-wheel-btn" disabled>
+                    <i class="fas fa-dice"></i> Risk Wheel
+                </button>
+            </div>
+        </div>
+        
+        <!-- Risk Wheel Section -->
+        <div class="card" id="risk-wheel-card" style="display: none;">
+            <div class="card-badge">High Risk</div>
+            <h2>Risk Wheel <span class="vip-badge">VIP</span></h2>
+            <p>Spin the wheel to multiply your earnings or lose them! Only available for active investors.</p>
+            
+            <div class="risk-wheel-container">
+                <div class="wheel-container">
+                    <div class="wheel" id="wheel">
+                        <!-- Wheel sections will be added via JavaScript -->
+                    </div>
+                    <div class="wheel-arrow"></div>
+                </div>
+                
+                <div class="wheel-result" id="wheel-result"></div>
+                
+                <div class="risk-controls">
+                    <input type="number" id="risk-amount" class="risk-amount" min="5" max="100" value="10" placeholder="Amount">
+                    <button class="spin-btn" id="spin-btn" disabled>
+                        <i class="fas fa-redo"></i> Spin (₱<span id="spin-amount">10</span>)
+                    </button>
+                </div>
+                
+                <div class="highlight">
+                    <h3>How It Works</h3>
+                    <p>Risk a portion of your earnings for a chance to multiply them:</p>
+                    <ul style="text-align: left; padding-left: 20px;">
+                        <li><strong>2x:</strong> 40% chance - Double your bet</li>
+                        <li><strong>3x:</strong> 30% chance - Triple your bet</li>
+                        <li><strong>5x:</strong> 20% chance - Quintuple your bet</li>
+                        <li><strong>Lose:</strong> 10% chance - Lose your bet</li>
+                    </ul>
+                    <p><strong>Minimum bet:</strong> ₱5 | <strong>Maximum bet:</strong> ₱100 or 20% of your balance</p>
+                </div>
             </div>
         </div>
         
@@ -1487,6 +1718,7 @@
                 <div class="transaction-tab" data-tab="deposits">Deposits</div>
                 <div class="transaction-tab" data-tab="withdrawals">Withdrawals</div>
                 <div class="transaction-tab" data-tab="earnings">Earnings</div>
+                <div class="transaction-tab" data-tab="risks">Risk Wheel</div>
             </div>
             
             <div class="transaction-history">
@@ -1601,7 +1833,7 @@
         
         <!-- Investment Plans Section -->
         <div class="card" id="investment-plans-card">
-            <div class="card-badge">10 Plans Available</div>
+            <div class="card-badge">12 Plans Available</div>
             <h2>Investment Plans</h2>
             <p>Choose your investment plan to start earning daily. All plans last for 30 days with 4 tasks per day.</p>
             
@@ -1616,8 +1848,9 @@
             <div class="highlight">
                 <strong>🎯 Investment Plan:</strong> 30-day cycle with daily earnings<br>
                 <strong>💰 Daily Earnings:</strong> Varies by investment amount (4 tasks/day)<br>
-                <strong>💳 Minimum Investment:</strong> ₱50 (10 plans available)<br>
+                <strong>💳 Minimum Investment:</strong> ₱50 (12 plans available)<br>
                 <strong>📤 Withdrawal:</strong> Minimum ₱25 (10% tax fee applies)<br>
+                <strong>🎲 Risk Wheel:</strong> Gamble earnings for multipliers (VIP feature)<br>
                 <strong>⏳ Processing:</strong> Instant activation, withdrawals processed within 24 hours
             </div>
             
@@ -1632,7 +1865,7 @@
                         </div>
                         <button class="reveal-btn" id="reveal-btn">Reveal Details</button>
                     </div>
-                    <p>Select from our 10 investment plans ranging from ₱50 to ₱1,000. Your account will be activated immediately after payment.</p>
+                    <p>Select from our 12 investment plans ranging from ₱50 to ₱2,000. Your account will be activated immediately after payment.</p>
                 </div>
                 
                 <div class="step">
@@ -1641,8 +1874,8 @@
                 </div>
                 
                 <div class="step">
-                    <h3>Withdraw Profits</h3>
-                    <p>Request withdrawals anytime (minimum ₱25). A 10% tax fee applies to all withdrawals. Funds arrive within 24 hours.</p>
+                    <h3>Withdraw Profits or Take Risks</h3>
+                    <p>Request withdrawals anytime (minimum ₱25) or use the Risk Wheel to multiply your earnings (VIP feature).</p>
                 </div>
             </div>
         </div>
@@ -1656,6 +1889,9 @@
                 
                 <h3>How do withdrawals work?</h3>
                 <p>Withdrawals are processed within 24 hours with a 10% tax fee. Minimum withdrawal is ₱25.</p>
+                
+                <h3>What's the Risk Wheel?</h3>
+                <p>A VIP feature that lets you gamble a portion of your earnings for a chance to multiply them. Only available for active investors.</p>
                 
                 <h3>What's the 10% tax fee?</h3>
                 <p>This covers processing fees and platform maintenance to keep your investment secure and profitable.</p>
@@ -1899,18 +2135,20 @@
         let donations = JSON.parse(localStorage.getItem('musicEarnDonations')) || [];
         let currentUser = null;
         
-        // Investment plans data
+        // Investment plans data - Enhanced with VIP plans
         const investmentPlans = [
-            { amount: 50, dailyEarnings: 2, tasksPerDay: 4, earningsPerTask: 0.50, days: 30 },
-            { amount: 100, dailyEarnings: 4, tasksPerDay: 4, earningsPerTask: 1.00, days: 30 },
-            { amount: 200, dailyEarnings: 8, tasksPerDay: 4, earningsPerTask: 2.00, days: 30 },
-            { amount: 300, dailyEarnings: 12, tasksPerDay: 4, earningsPerTask: 3.00, days: 30 },
-            { amount: 400, dailyEarnings: 16, tasksPerDay: 4, earningsPerTask: 4.00, days: 30 },
-            { amount: 500, dailyEarnings: 20, tasksPerDay: 4, earningsPerTask: 5.00, days: 30 },
-            { amount: 600, dailyEarnings: 24, tasksPerDay: 4, earningsPerTask: 6.00, days: 30 },
-            { amount: 700, dailyEarnings: 28, tasksPerDay: 4, earningsPerTask: 7.00, days: 30 },
-            { amount: 800, dailyEarnings: 32, tasksPerDay: 4, earningsPerTask: 8.00, days: 30 },
-            { amount: 1000, dailyEarnings: 40, tasksPerDay: 4, earningsPerTask: 10.00, days: 30 }
+            { amount: 50, dailyEarnings: 2, tasksPerDay: 4, earningsPerTask: 0.50, days: 30, isVip: false },
+            { amount: 100, dailyEarnings: 4, tasksPerDay: 4, earningsPerTask: 1.00, days: 30, isVip: false },
+            { amount: 200, dailyEarnings: 8, tasksPerDay: 4, earningsPerTask: 2.00, days: 30, isVip: false },
+            { amount: 300, dailyEarnings: 12, tasksPerDay: 4, earningsPerTask: 3.00, days: 30, isVip: false },
+            { amount: 400, dailyEarnings: 16, tasksPerDay: 4, earningsPerTask: 4.00, days: 30, isVip: false },
+            { amount: 500, dailyEarnings: 20, tasksPerDay: 4, earningsPerTask: 5.00, days: 30, isVip: false },
+            { amount: 600, dailyEarnings: 24, tasksPerDay: 4, earningsPerTask: 6.00, days: 30, isVip: false },
+            { amount: 700, dailyEarnings: 28, tasksPerDay: 4, earningsPerTask: 7.00, days: 30, isVip: false },
+            { amount: 800, dailyEarnings: 32, tasksPerDay: 4, earningsPerTask: 8.00, days: 30, isVip: false },
+            { amount: 1000, dailyEarnings: 40, tasksPerDay: 4, earningsPerTask: 10.00, days: 30, isVip: true },
+            { amount: 1500, dailyEarnings: 60, tasksPerDay: 4, earningsPerTask: 15.00, days: 30, isVip: true },
+            { amount: 2000, dailyEarnings: 80, tasksPerDay: 4, earningsPerTask: 20.00, days: 30, isVip: true }
         ];
         
         // DOM elements for authentication
@@ -2000,7 +2238,10 @@
                     todayEarnings: 0,
                     tasksCompleted: 0,
                     lastActiveDate: null,
-                    lastEarningTime: 0
+                    lastEarningTime: 0,
+                    riskWins: 0,
+                    riskLosses: 0,
+                    riskEarnings: 0
                 }
             };
             
@@ -2165,6 +2406,14 @@
             const userTransactionsTable = document.getElementById('user-transactions').querySelector('tbody');
             const referralCodeElement = document.getElementById('referral-code');
             const copyReferralBtn = document.getElementById('copy-referral');
+            const riskWheelBtn = document.getElementById('risk-wheel-btn');
+            const riskWheelCard = document.getElementById('risk-wheel-card');
+            const wheel = document.getElementById('wheel');
+            const spinBtn = document.getElementById('spin-btn');
+            const wheelResult = document.getElementById('wheel-result');
+            const riskAmountInput = document.getElementById('risk-amount');
+            const spinAmountDisplay = document.getElementById('spin-amount');
+            const riskWinsElement = document.getElementById('risk-wins');
             
             // Set referral code
             referralCodeElement.textContent = `MUSIC${currentUser.id.slice(0, 5).toUpperCase()}`;
@@ -2181,17 +2430,18 @@
                 
                 investmentPlans.forEach(plan => {
                     const planCard = document.createElement('div');
-                    planCard.className = 'plan-card';
+                    planCard.className = `plan-card ${plan.isVip ? 'vip-plan' : ''}`;
                     planCard.innerHTML = `
-                        <h3>Plan <span class="plan-price">₱${plan.amount}</span></h3>
+                        <h3>${plan.isVip ? 'VIP ' : ''}Plan <span class="plan-price">₱${plan.amount}</span></h3>
                         <div class="plan-details">
                             <p><span>Daily Earnings:</span> ₱${plan.dailyEarnings}</p>
                             <p><span>Per Task:</span> ₱${plan.earningsPerTask}</p>
                             <p><span>Tasks/Day:</span> ${plan.tasksPerDay}</p>
                             <p><span>Duration:</span> ${plan.days} days</p>
                             <p><span>Total Potential:</span> ₱${plan.dailyEarnings * plan.days}</p>
+                            ${plan.isVip ? '<p><span>VIP Features:</span> Risk Wheel Access</p>' : ''}
                         </div>
-                        <button class="select-plan" data-amount="${plan.amount}" data-daily="${plan.dailyEarnings}" data-task="${plan.earningsPerTask}" data-tasks="${plan.tasksPerDay}" data-days="${plan.days}">
+                        <button class="select-plan" data-amount="${plan.amount}" data-daily="${plan.dailyEarnings}" data-task="${plan.earningsPerTask}" data-tasks="${plan.tasksPerDay}" data-days="${plan.days}" data-vip="${plan.isVip}">
                             Select Plan
                         </button>
                     `;
@@ -2208,6 +2458,7 @@
                         const earningsPerTask = parseFloat(button.getAttribute('data-task'));
                         const tasksPerDay = parseInt(button.getAttribute('data-tasks'));
                         const days = parseInt(button.getAttribute('data-days'));
+                        const isVip = button.getAttribute('data-vip') === 'true';
                         
                         // Set modal values
                         document.getElementById('deposit-amount').value = `₱${amount}`;
@@ -2237,6 +2488,9 @@
                     case 'earnings':
                         filteredTransactions = userTransactions.filter(t => t.type === 'earning');
                         break;
+                    case 'risks':
+                        filteredTransactions = userTransactions.filter(t => t.type === 'risk' || t.type === 'bonus');
+                        break;
                     default:
                         filteredTransactions = userTransactions;
                 }
@@ -2259,15 +2513,19 @@
                     const formattedDate = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
                     
                     // Determine type and status classes
-                    const typeClass = transaction.type === 'deposit' ? 'type-deposit' : 
-                                     transaction.type === 'withdrawal' ? 'type-withdrawal' : 'type-earning';
+                    let typeClass = '';
+                    if (transaction.type === 'deposit') typeClass = 'type-deposit';
+                    else if (transaction.type === 'withdrawal') typeClass = 'type-withdrawal';
+                    else if (transaction.type === 'earning') typeClass = 'type-earning';
+                    else if (transaction.type === 'risk') typeClass = 'type-risk';
+                    else if (transaction.type === 'bonus') typeClass = 'type-bonus';
                     
                     const statusClass = transaction.status === 'pending' ? 'status-pending' : 'status-completed';
                     
                     row.innerHTML = `
                         <td>${formattedDate}</td>
                         <td><span class="transaction-type ${typeClass}">${transaction.type.charAt(0).toUpperCase() + transaction.type.slice(1)}</span></td>
-                        <td>₱${transaction.amount.toFixed(2)}</td>
+                        <td>${transaction.type === 'risk' ? '-' : ''}₱${transaction.amount.toFixed(2)}</td>
                         <td><span class="transaction-status ${statusClass}">${transaction.status.charAt(0).toUpperCase() + transaction.status.slice(1)}</span></td>
                         <td>${transaction.message || '-'}</td>
                     `;
@@ -2345,7 +2603,10 @@
                     todayEarnings: todayEarnings,
                     tasksCompleted: tasksCompletedToday,
                     lastActiveDate: investmentData.lastActiveDate || new Date().toISOString(),
-                    lastEarningTime: timeListened
+                    lastEarningTime: timeListened,
+                    riskWins: investmentData.riskWins || 0,
+                    riskLosses: investmentData.riskLosses || 0,
+                    riskEarnings: investmentData.riskEarnings || 0
                 };
                 
                 // Update current user data
@@ -2382,6 +2643,7 @@
             function updateStats() {
                 totalEarningsElement.textContent = `₱${totalEarnings.toFixed(2)}`;
                 todayEarningsElement.textContent = `₱${todayEarnings.toFixed(2)}`;
+                riskWinsElement.textContent = investmentData.riskWins || 0;
                 
                 if (currentPlan) {
                     songsCompletedElement.textContent = `From ${tasksCompletedToday}/${currentPlan.tasksPerDay} tasks`;
@@ -2396,18 +2658,25 @@
                     investmentStatusElement.style.background = "linear-gradient(135deg, #00d1b2, #00b89c)";
                     cycleDaysElement.textContent = `${cycleDaysCompleted}/${currentPlan.days} days`;
                     document.getElementById('withdraw-btn').disabled = totalEarnings < 25;
+                    riskWheelBtn.disabled = totalEarnings < 5 || !currentPlan.isVip;
                     depositBtn.style.display = 'none';
                     document.getElementById('investment-plans-card').style.display = 'none';
-                    investmentBadge.textContent = `Active Plan: ₱${currentPlan.amount}`;
+                    riskWheelCard.style.display = currentPlan.isVip ? 'block' : 'none';
+                    investmentBadge.textContent = `Active Plan: ₱${currentPlan.amount}${currentPlan.isVip ? ' (VIP)' : ''}`;
                 } else {
                     investmentStatusElement.textContent = "Inactive";
                     investmentStatusElement.style.background = "rgba(255,255,255,0.1)";
                     cycleDaysElement.textContent = "0/0 days";
                     document.getElementById('withdraw-btn').disabled = true;
+                    riskWheelBtn.disabled = true;
                     depositBtn.style.display = 'none';
                     document.getElementById('investment-plans-card').style.display = 'block';
+                    riskWheelCard.style.display = 'none';
                     investmentBadge.textContent = `Select Plan`;
                 }
+                
+                // Update spin button amount
+                updateRiskAmount();
                 
                 // Save data after updating stats
                 saveInvestmentData();
@@ -2736,6 +3005,211 @@
                 // Close modal and reset form
                 withdrawModal.style.display = 'none';
                 this.reset();
+            });
+            
+            // ==============================================
+            // Risk Wheel Functionality
+            // ==============================================
+            
+            // Wheel sections data
+            const wheelSections = [
+                { multiplier: 2, color: '#ff3860', text: '2x', probability: 0.4 }, // 40% chance
+                { multiplier: 3, color: '#ff8a00', text: '3x', probability: 0.3 }, // 30% chance
+                { multiplier: 5, color: '#00d1b2', text: '5x', probability: 0.2 }, // 20% chance
+                { multiplier: 0, color: '#8a7cff', text: 'Lose', probability: 0.1 } // 10% chance
+            ];
+            
+            // Create wheel sections
+            function createWheelSections() {
+                wheel.innerHTML = '';
+                let cumulativeProbability = 0;
+                
+                wheelSections.forEach((section, index) => {
+                    const sectionElement = document.createElement('div');
+                    sectionElement.className = 'wheel-section';
+                    
+                    // Calculate angle based on probability
+                    const angle = 360 * section.probability;
+                    const startAngle = cumulativeProbability * 360;
+                    cumulativeProbability += section.probability;
+                    
+                    // Set transform and background
+                    sectionElement.style.transform = `rotate(${startAngle}deg)`;
+                    sectionElement.style.background = section.color;
+                    sectionElement.style.width = '50%';
+                    sectionElement.style.height = '50%';
+                    sectionElement.style.transformOrigin = 'bottom right';
+                    sectionElement.style.clipPath = `polygon(0 0, 100% 0, 100% 100%)`;
+                    
+                    // Add text
+                    sectionElement.innerHTML = `<span>${section.text}</span>`;
+                    
+                    wheel.appendChild(sectionElement);
+                });
+            }
+            
+            // Initialize wheel
+            createWheelSections();
+            
+            // Update risk amount display
+            function updateRiskAmount() {
+                const amount = parseFloat(riskAmountInput.value) || 0;
+                const maxAmount = Math.min(100, totalEarnings * 0.2); // Max 100 or 20% of balance
+                
+                // Validate amount
+                if (amount < 5) {
+                    riskAmountInput.value = 5;
+                } else if (amount > maxAmount) {
+                    riskAmountInput.value = maxAmount;
+                }
+                
+                spinAmountDisplay.textContent = riskAmountInput.value;
+                spinBtn.disabled = totalEarnings < 5 || !investmentActive || !currentPlan.isVip;
+            }
+            
+            // Handle risk amount changes
+            riskAmountInput.addEventListener('input', updateRiskAmount);
+            
+            // Spin the wheel
+            spinBtn.addEventListener('click', () => {
+                const betAmount = parseFloat(riskAmountInput.value);
+                
+                if (betAmount < 5) {
+                    alert('Minimum bet is ₱5');
+                    return;
+                }
+                
+                if (betAmount > totalEarnings) {
+                    alert(`You don't have enough earnings to bet ₱${betAmount.toFixed(2)}`);
+                    return;
+                }
+                
+                if (betAmount > 100) {
+                    alert('Maximum bet is ₱100');
+                    return;
+                }
+                
+                if (betAmount > totalEarnings * 0.2) {
+                    alert('Maximum bet is 20% of your total earnings');
+                    return;
+                }
+                
+                // Disable button during spin
+                spinBtn.disabled = true;
+                riskAmountInput.disabled = true;
+                
+                // Deduct bet amount immediately
+                totalEarnings -= betAmount;
+                
+                // Create risk transaction record
+                const riskTransaction = {
+                    id: Date.now().toString(),
+                    userId: currentUser.id,
+                    userEmail: currentUser.email,
+                    userName: currentUser.name,
+                    type: 'risk',
+                    amount: betAmount,
+                    status: 'completed',
+                    date: new Date().toISOString(),
+                    message: 'Risk wheel bet'
+                };
+                
+                transactions.push(riskTransaction);
+                localStorage.setItem('musicEarnTransactions', JSON.stringify(transactions));
+                
+                // Update stats
+                updateStats();
+                
+                // Determine result based on probability
+                const random = Math.random();
+                let cumulativeProb = 0;
+                let result = null;
+                
+                for (const section of wheelSections) {
+                    cumulativeProb += section.probability;
+                    if (random <= cumulativeProb) {
+                        result = section;
+                        break;
+                    }
+                }
+                
+                // Calculate spin animation (multiple rotations plus final position)
+                const spinDuration = 4000; // 4 seconds
+                const minRotations = 5;
+                const maxRotations = 8;
+                const rotations = minRotations + Math.random() * (maxRotations - minRotations);
+                const finalAngle = 360 - (result.probability * 360 * Math.random() + cumulativeProb * 360 - result.probability * 360);
+                const totalRotation = rotations * 360 + finalAngle;
+                
+                // Apply spin animation
+                wheel.style.transition = `transform ${spinDuration}ms cubic-bezier(0.17, 0.67, 0.12, 0.99)`;
+                wheel.style.transform = `rotate(${totalRotation}deg)`;
+                
+                // Show spinning state
+                wheelResult.textContent = 'Spinning...';
+                
+                // Process result after spin completes
+                setTimeout(() => {
+                    let winAmount = 0;
+                    let message = '';
+                    
+                    if (result.multiplier > 0) {
+                        winAmount = betAmount * result.multiplier;
+                        totalEarnings += winAmount;
+                        message = `You won ${result.multiplier}x! +₱${winAmount.toFixed(2)}`;
+                        
+                        // Update risk stats
+                        investmentData.riskWins = (investmentData.riskWins || 0) + 1;
+                        investmentData.riskEarnings = (investmentData.riskEarnings || 0) + winAmount;
+                        
+                        // Create bonus transaction record
+                        const bonusTransaction = {
+                            id: Date.now().toString() + '-win',
+                            userId: currentUser.id,
+                            userEmail: currentUser.email,
+                            userName: currentUser.name,
+                            type: 'bonus',
+                            amount: winAmount,
+                            status: 'completed',
+                            date: new Date().toISOString(),
+                            message: `Risk wheel win (${result.multiplier}x)`
+                        };
+                        
+                        transactions.push(bonusTransaction);
+                        localStorage.setItem('musicEarnTransactions', JSON.stringify(transactions));
+                    } else {
+                        message = `You lost your bet of ₱${betAmount.toFixed(2)}`;
+                        
+                        // Update risk stats
+                        investmentData.riskLosses = (investmentData.riskLosses || 0) + 1;
+                    }
+                    
+                    // Show result
+                    wheelResult.innerHTML = `
+                        <div>${message}</div>
+                        ${result.multiplier > 0 ? `<div class="wheel-multiplier">+${result.multiplier}X</div>` : ''}
+                    `;
+                    
+                    // Show notification
+                    showNotification(message);
+                    
+                    // Re-enable controls
+                    spinBtn.disabled = false;
+                    riskAmountInput.disabled = false;
+                    
+                    // Update stats
+                    updateStats();
+                    
+                    // Reset wheel transition for next spin
+                    setTimeout(() => {
+                        wheel.style.transition = 'none';
+                        wheel.style.transform = 'rotate(0deg)';
+                        setTimeout(() => {
+                            wheel.style.transition = 'transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99)';
+                        }, 10);
+                    }, 1000);
+                    
+                }, spinDuration);
             });
             
             // Initialize the user dashboard
