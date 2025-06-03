@@ -19,6 +19,7 @@
             --gradient: linear-gradient(135deg, #6a5acd, #8a7cff);
             --premium-gradient: linear-gradient(135deg, #ff8a00, #ff0058);
             --risk-gradient: linear-gradient(135deg, #ff3860, #ff0058);
+            --glamping-gradient: linear-gradient(135deg, #ff0058, #ff8a00);
         }
         
         body {
@@ -607,6 +608,16 @@
             box-shadow: 0 8px 20px rgba(255, 56, 96, 0.4);
         }
         
+        .btn-glamping {
+            background: var(--glamping-gradient);
+            box-shadow: 0 4px 15px rgba(255, 0, 88, 0.3);
+        }
+        
+        .btn-glamping:hover {
+            background: #ff0058;
+            box-shadow: 0 8px 20px rgba(255, 0, 88, 0.4);
+        }
+        
         .action-buttons {
             display: flex;
             gap: 20px;
@@ -1154,6 +1165,11 @@
             color: var(--info);
         }
         
+        .type-glamping {
+            background-color: rgba(255, 0, 88, 0.1);
+            color: #ff0058;
+        }
+        
         .transaction-status {
             display: inline-block;
             padding: 3px 8px;
@@ -1438,6 +1454,90 @@
             border-color: #ff8a00;
         }
         
+        /* Glamping Plan Styles */
+        .glamping-plan {
+            border: 2px solid rgba(255, 0, 88, 0.5);
+            background: rgba(255, 0, 88, 0.05);
+            position: relative;
+        }
+        
+        .glamping-plan::before {
+            content: 'GLAMPING';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--glamping-gradient);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .glamping-plan:hover {
+            background: rgba(255, 0, 88, 0.1);
+            border-color: #ff0058;
+        }
+        
+        /* Glamping Section Styles */
+        .glamping-section {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(255, 0, 88, 0.1);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 0, 88, 0.3);
+        }
+        
+        .glamping-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .glamping-card {
+            width: 150px;
+            padding: 15px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 0, 88, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .glamping-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(255, 0, 88, 0.2);
+            border-color: #ff0058;
+        }
+        
+        .glamping-card.selected {
+            background: rgba(255, 0, 88, 0.2);
+            border-color: #ff0058;
+            box-shadow: 0 0 15px rgba(255, 0, 88, 0.3);
+        }
+        
+        .glamping-card h4 {
+            margin: 0 0 10px 0;
+            color: var(--light);
+        }
+        
+        .glamping-card .multiplier {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: var(--glamping-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 5px 0;
+        }
+        
+        .glamping-card .probability {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
         /* Responsive styles */
         @media (max-width: 768px) {
             .container {
@@ -1499,6 +1599,15 @@
             .wheel-container {
                 width: 250px;
                 height: 250px;
+            }
+            
+            .glamping-cards {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .glamping-card {
+                width: 80%;
             }
         }
     </style>
@@ -1630,6 +1739,9 @@
                 <button class="btn btn-risk" id="risk-wheel-btn" disabled>
                     <i class="fas fa-dice"></i> Risk Wheel
                 </button>
+                <button class="btn btn-glamping" id="glamping-btn" disabled>
+                    <i class="fas fa-coins"></i> Glamping
+                </button>
             </div>
         </div>
         
@@ -1666,6 +1778,41 @@
                         <li><strong>Lose:</strong> 10% chance - Lose your bet</li>
                     </ul>
                     <p><strong>Minimum bet:</strong> ₱5 | <strong>Maximum bet:</strong> ₱100 or 20% of your balance</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Glamping Section -->
+        <div class="card" id="glamping-card" style="display: none;">
+            <div class="card-badge">Ultra High Risk</div>
+            <h2>Glamping <span class="vip-badge">VIP</span></h2>
+            <p>High-risk, high-reward game with bigger multipliers but lower win probabilities.</p>
+            
+            <div class="glamping-section">
+                <div class="glamping-cards" id="glamping-cards">
+                    <!-- Glamping cards will be added via JavaScript -->
+                </div>
+                
+                <div class="risk-controls" style="margin-top: 30px;">
+                    <input type="number" id="glamping-amount" class="risk-amount" min="10" max="500" value="50" placeholder="Amount">
+                    <button class="btn btn-glamping" id="glamping-spin-btn" disabled>
+                        <i class="fas fa-gem"></i> Play (₱<span id="glamping-spin-amount">50</span>)
+                    </button>
+                </div>
+                
+                <div class="wheel-result" id="glamping-result"></div>
+                
+                <div class="highlight">
+                    <h3>Glamping Rules</h3>
+                    <p>Choose a multiplier and bet your earnings for a chance to win big:</p>
+                    <ul style="text-align: left; padding-left: 20px;">
+                        <li><strong>10x:</strong> 15% chance - 10x your bet</li>
+                        <li><strong>20x:</strong> 10% chance - 20x your bet</li>
+                        <li><strong>50x:</strong> 5% chance - 50x your bet</li>
+                        <li><strong>100x:</strong> 2% chance - 100x your bet</li>
+                        <li><strong>Lose:</strong> 68% chance - Lose your bet</li>
+                    </ul>
+                    <p><strong>Minimum bet:</strong> ₱10 | <strong>Maximum bet:</strong> ₱500 or 30% of your balance</p>
                 </div>
             </div>
         </div>
@@ -1719,6 +1866,7 @@
                 <div class="transaction-tab" data-tab="withdrawals">Withdrawals</div>
                 <div class="transaction-tab" data-tab="earnings">Earnings</div>
                 <div class="transaction-tab" data-tab="risks">Risk Wheel</div>
+                <div class="transaction-tab" data-tab="glamping">Glamping</div>
             </div>
             
             <div class="transaction-history">
@@ -1833,7 +1981,7 @@
         
         <!-- Investment Plans Section -->
         <div class="card" id="investment-plans-card">
-            <div class="card-badge">12 Plans Available</div>
+            <div class="card-badge">16 Plans Available</div>
             <h2>Investment Plans</h2>
             <p>Choose your investment plan to start earning daily. All plans last for 30 days with 4 tasks per day.</p>
             
@@ -1848,9 +1996,10 @@
             <div class="highlight">
                 <strong>🎯 Investment Plan:</strong> 30-day cycle with daily earnings<br>
                 <strong>💰 Daily Earnings:</strong> Varies by investment amount (4 tasks/day)<br>
-                <strong>💳 Minimum Investment:</strong> ₱50 (12 plans available)<br>
+                <strong>💳 Minimum Investment:</strong> ₱50 (16 plans available)<br>
                 <strong>📤 Withdrawal:</strong> Minimum ₱25 (10% tax fee applies)<br>
                 <strong>🎲 Risk Wheel:</strong> Gamble earnings for multipliers (VIP feature)<br>
+                <strong>💎 Glamping:</strong> High-risk, high-reward game (VIP feature)<br>
                 <strong>⏳ Processing:</strong> Instant activation, withdrawals processed within 24 hours
             </div>
             
@@ -1865,7 +2014,7 @@
                         </div>
                         <button class="reveal-btn" id="reveal-btn">Reveal Details</button>
                     </div>
-                    <p>Select from our 12 investment plans ranging from ₱50 to ₱2,000. Your account will be activated immediately after payment.</p>
+                    <p>Select from our 16 investment plans ranging from ₱50 to ₱5,000. Your account will be activated immediately after payment.</p>
                 </div>
                 
                 <div class="step">
@@ -1875,7 +2024,7 @@
                 
                 <div class="step">
                     <h3>Withdraw Profits or Take Risks</h3>
-                    <p>Request withdrawals anytime (minimum ₱25) or use the Risk Wheel to multiply your earnings (VIP feature).</p>
+                    <p>Request withdrawals anytime (minimum ₱25) or use the Risk Wheel and Glamping to multiply your earnings (VIP features).</p>
                 </div>
             </div>
         </div>
@@ -1891,7 +2040,10 @@
                 <p>Withdrawals are processed within 24 hours with a 10% tax fee. Minimum withdrawal is ₱25.</p>
                 
                 <h3>What's the Risk Wheel?</h3>
-                <p>A VIP feature that lets you gamble a portion of your earnings for a chance to multiply them. Only available for active investors.</p>
+                <p>A VIP feature that lets you gamble a portion of your earnings for a chance to multiply them (2x-5x). Only available for active investors.</p>
+                
+                <h3>What's Glamping?</h3>
+                <p>A high-risk, high-reward VIP game with bigger multipliers (10x-100x) but lower win probabilities.</p>
                 
                 <h3>What's the 10% tax fee?</h3>
                 <p>This covers processing fees and platform maintenance to keep your investment secure and profitable.</p>
@@ -2135,20 +2287,29 @@
         let donations = JSON.parse(localStorage.getItem('musicEarnDonations')) || [];
         let currentUser = null;
         
-        // Investment plans data - Enhanced with VIP plans
+        // Investment plans data - Enhanced with more plans and VIP/Glamping plans
         const investmentPlans = [
-            { amount: 50, dailyEarnings: 2, tasksPerDay: 4, earningsPerTask: 0.50, days: 30, isVip: false },
-            { amount: 100, dailyEarnings: 4, tasksPerDay: 4, earningsPerTask: 1.00, days: 30, isVip: false },
-            { amount: 200, dailyEarnings: 8, tasksPerDay: 4, earningsPerTask: 2.00, days: 30, isVip: false },
-            { amount: 300, dailyEarnings: 12, tasksPerDay: 4, earningsPerTask: 3.00, days: 30, isVip: false },
-            { amount: 400, dailyEarnings: 16, tasksPerDay: 4, earningsPerTask: 4.00, days: 30, isVip: false },
-            { amount: 500, dailyEarnings: 20, tasksPerDay: 4, earningsPerTask: 5.00, days: 30, isVip: false },
-            { amount: 600, dailyEarnings: 24, tasksPerDay: 4, earningsPerTask: 6.00, days: 30, isVip: false },
-            { amount: 700, dailyEarnings: 28, tasksPerDay: 4, earningsPerTask: 7.00, days: 30, isVip: false },
-            { amount: 800, dailyEarnings: 32, tasksPerDay: 4, earningsPerTask: 8.00, days: 30, isVip: false },
-            { amount: 1000, dailyEarnings: 40, tasksPerDay: 4, earningsPerTask: 10.00, days: 30, isVip: true },
-            { amount: 1500, dailyEarnings: 60, tasksPerDay: 4, earningsPerTask: 15.00, days: 30, isVip: true },
-            { amount: 2000, dailyEarnings: 80, tasksPerDay: 4, earningsPerTask: 20.00, days: 30, isVip: true }
+            // Basic Plans
+            { amount: 50, dailyEarnings: 2, tasksPerDay: 4, earningsPerTask: 0.50, days: 30, isVip: false, isGlamping: false },
+            { amount: 100, dailyEarnings: 4, tasksPerDay: 4, earningsPerTask: 1.00, days: 30, isVip: false, isGlamping: false },
+            { amount: 200, dailyEarnings: 8, tasksPerDay: 4, earningsPerTask: 2.00, days: 30, isVip: false, isGlamping: false },
+            { amount: 300, dailyEarnings: 12, tasksPerDay: 4, earningsPerTask: 3.00, days: 30, isVip: false, isGlamping: false },
+            { amount: 400, dailyEarnings: 16, tasksPerDay: 4, earningsPerTask: 4.00, days: 30, isVip: false, isGlamping: false },
+            { amount: 500, dailyEarnings: 20, tasksPerDay: 4, earningsPerTask: 5.00, days: 30, isVip: false, isGlamping: false },
+            { amount: 600, dailyEarnings: 24, tasksPerDay: 4, earningsPerTask: 6.00, days: 30, isVip: false, isGlamping: false },
+            { amount: 700, dailyEarnings: 28, tasksPerDay: 4, earningsPerTask: 7.00, days: 30, isVip: false, isGlamping: false },
+            { amount: 800, dailyEarnings: 32, tasksPerDay: 4, earningsPerTask: 8.00, days: 30, isVip: false, isGlamping: false },
+            { amount: 1000, dailyEarnings: 40, tasksPerDay: 4, earningsPerTask: 10.00, days: 30, isVip: true, isGlamping: false },
+            
+            // VIP Plans
+            { amount: 1500, dailyEarnings: 60, tasksPerDay: 4, earningsPerTask: 15.00, days: 30, isVip: true, isGlamping: false },
+            { amount: 2000, dailyEarnings: 80, tasksPerDay: 4, earningsPerTask: 20.00, days: 30, isVip: true, isGlamping: false },
+            { amount: 2500, dailyEarnings: 100, tasksPerDay: 4, earningsPerTask: 25.00, days: 30, isVip: true, isGlamping: false },
+            { amount: 3000, dailyEarnings: 120, tasksPerDay: 4, earningsPerTask: 30.00, days: 30, isVip: true, isGlamping: false },
+            
+            // Glamping Plans (Ultra High Investment)
+            { amount: 4000, dailyEarnings: 160, tasksPerDay: 4, earningsPerTask: 40.00, days: 30, isVip: true, isGlamping: true },
+            { amount: 5000, dailyEarnings: 200, tasksPerDay: 4, earningsPerTask: 50.00, days: 30, isVip: true, isGlamping: true }
         ];
         
         // DOM elements for authentication
@@ -2241,7 +2402,10 @@
                     lastEarningTime: 0,
                     riskWins: 0,
                     riskLosses: 0,
-                    riskEarnings: 0
+                    riskEarnings: 0,
+                    glampingWins: 0,
+                    glampingLosses: 0,
+                    glampingEarnings: 0
                 }
             };
             
@@ -2414,6 +2578,13 @@
             const riskAmountInput = document.getElementById('risk-amount');
             const spinAmountDisplay = document.getElementById('spin-amount');
             const riskWinsElement = document.getElementById('risk-wins');
+            const glampingBtn = document.getElementById('glamping-btn');
+            const glampingCard = document.getElementById('glamping-card');
+            const glampingCardsContainer = document.getElementById('glamping-cards');
+            const glampingSpinBtn = document.getElementById('glamping-spin-btn');
+            const glampingAmountInput = document.getElementById('glamping-amount');
+            const glampingSpinAmountDisplay = document.getElementById('glamping-spin-amount');
+            const glampingResult = document.getElementById('glamping-result');
             
             // Set referral code
             referralCodeElement.textContent = `MUSIC${currentUser.id.slice(0, 5).toUpperCase()}`;
@@ -2430,9 +2601,9 @@
                 
                 investmentPlans.forEach(plan => {
                     const planCard = document.createElement('div');
-                    planCard.className = `plan-card ${plan.isVip ? 'vip-plan' : ''}`;
+                    planCard.className = `plan-card ${plan.isVip ? (plan.isGlamping ? 'glamping-plan' : 'vip-plan') : ''}`;
                     planCard.innerHTML = `
-                        <h3>${plan.isVip ? 'VIP ' : ''}Plan <span class="plan-price">₱${plan.amount}</span></h3>
+                        <h3>${plan.isGlamping ? 'GLAMPING ' : (plan.isVip ? 'VIP ' : '')}Plan <span class="plan-price">₱${plan.amount}</span></h3>
                         <div class="plan-details">
                             <p><span>Daily Earnings:</span> ₱${plan.dailyEarnings}</p>
                             <p><span>Per Task:</span> ₱${plan.earningsPerTask}</p>
@@ -2440,8 +2611,9 @@
                             <p><span>Duration:</span> ${plan.days} days</p>
                             <p><span>Total Potential:</span> ₱${plan.dailyEarnings * plan.days}</p>
                             ${plan.isVip ? '<p><span>VIP Features:</span> Risk Wheel Access</p>' : ''}
+                            ${plan.isGlamping ? '<p><span>Glamping:</span> High-risk, high-reward game</p>' : ''}
                         </div>
-                        <button class="select-plan" data-amount="${plan.amount}" data-daily="${plan.dailyEarnings}" data-task="${plan.earningsPerTask}" data-tasks="${plan.tasksPerDay}" data-days="${plan.days}" data-vip="${plan.isVip}">
+                        <button class="select-plan" data-amount="${plan.amount}" data-daily="${plan.dailyEarnings}" data-task="${plan.earningsPerTask}" data-tasks="${plan.tasksPerDay}" data-days="${plan.days}" data-vip="${plan.isVip}" data-glamping="${plan.isGlamping}">
                             Select Plan
                         </button>
                     `;
@@ -2459,6 +2631,7 @@
                         const tasksPerDay = parseInt(button.getAttribute('data-tasks'));
                         const days = parseInt(button.getAttribute('data-days'));
                         const isVip = button.getAttribute('data-vip') === 'true';
+                        const isGlamping = button.getAttribute('data-glamping') === 'true';
                         
                         // Set modal values
                         document.getElementById('deposit-amount').value = `₱${amount}`;
@@ -2491,6 +2664,9 @@
                     case 'risks':
                         filteredTransactions = userTransactions.filter(t => t.type === 'risk' || t.type === 'bonus');
                         break;
+                    case 'glamping':
+                        filteredTransactions = userTransactions.filter(t => t.type === 'glamping' || t.type === 'glamping-bonus');
+                        break;
                     default:
                         filteredTransactions = userTransactions;
                 }
@@ -2519,13 +2695,15 @@
                     else if (transaction.type === 'earning') typeClass = 'type-earning';
                     else if (transaction.type === 'risk') typeClass = 'type-risk';
                     else if (transaction.type === 'bonus') typeClass = 'type-bonus';
+                    else if (transaction.type === 'glamping') typeClass = 'type-glamping';
+                    else if (transaction.type === 'glamping-bonus') typeClass = 'type-glamping';
                     
                     const statusClass = transaction.status === 'pending' ? 'status-pending' : 'status-completed';
                     
                     row.innerHTML = `
                         <td>${formattedDate}</td>
                         <td><span class="transaction-type ${typeClass}">${transaction.type.charAt(0).toUpperCase() + transaction.type.slice(1)}</span></td>
-                        <td>${transaction.type === 'risk' ? '-' : ''}₱${transaction.amount.toFixed(2)}</td>
+                        <td>${transaction.type === 'risk' || transaction.type === 'glamping' ? '-' : ''}₱${transaction.amount.toFixed(2)}</td>
                         <td><span class="transaction-status ${statusClass}">${transaction.status.charAt(0).toUpperCase() + transaction.status.slice(1)}</span></td>
                         <td>${transaction.message || '-'}</td>
                     `;
@@ -2606,7 +2784,10 @@
                     lastEarningTime: timeListened,
                     riskWins: investmentData.riskWins || 0,
                     riskLosses: investmentData.riskLosses || 0,
-                    riskEarnings: investmentData.riskEarnings || 0
+                    riskEarnings: investmentData.riskEarnings || 0,
+                    glampingWins: investmentData.glampingWins || 0,
+                    glampingLosses: investmentData.glampingLosses || 0,
+                    glampingEarnings: investmentData.glampingEarnings || 0
                 };
                 
                 // Update current user data
@@ -2659,24 +2840,29 @@
                     cycleDaysElement.textContent = `${cycleDaysCompleted}/${currentPlan.days} days`;
                     document.getElementById('withdraw-btn').disabled = totalEarnings < 25;
                     riskWheelBtn.disabled = totalEarnings < 5 || !currentPlan.isVip;
+                    glampingBtn.disabled = totalEarnings < 10 || !currentPlan.isGlamping;
                     depositBtn.style.display = 'none';
                     document.getElementById('investment-plans-card').style.display = 'none';
                     riskWheelCard.style.display = currentPlan.isVip ? 'block' : 'none';
-                    investmentBadge.textContent = `Active Plan: ₱${currentPlan.amount}${currentPlan.isVip ? ' (VIP)' : ''}`;
+                    glampingCard.style.display = currentPlan.isGlamping ? 'block' : 'none';
+                    investmentBadge.textContent = `Active Plan: ₱${currentPlan.amount}${currentPlan.isGlamping ? ' (GLAMPING)' : (currentPlan.isVip ? ' (VIP)' : '')}`;
                 } else {
                     investmentStatusElement.textContent = "Inactive";
                     investmentStatusElement.style.background = "rgba(255,255,255,0.1)";
                     cycleDaysElement.textContent = "0/0 days";
                     document.getElementById('withdraw-btn').disabled = true;
                     riskWheelBtn.disabled = true;
+                    glampingBtn.disabled = true;
                     depositBtn.style.display = 'none';
                     document.getElementById('investment-plans-card').style.display = 'block';
                     riskWheelCard.style.display = 'none';
+                    glampingCard.style.display = 'none';
                     investmentBadge.textContent = `Select Plan`;
                 }
                 
-                // Update spin button amount
+                // Update spin button amounts
                 updateRiskAmount();
+                updateGlampingAmount();
                 
                 // Save data after updating stats
                 saveInvestmentData();
@@ -3210,6 +3396,190 @@
                     }, 1000);
                     
                 }, spinDuration);
+            });
+            
+            // ==============================================
+            // Glamping Functionality (High-Risk, High-Reward)
+            // ==============================================
+            
+            // Glamping options
+            const glampingOptions = [
+                { multiplier: 10, probability: 0.15, color: '#ff3860' },
+                { multiplier: 20, probability: 0.10, color: '#ff8a00' },
+                { multiplier: 50, probability: 0.05, color: '#00d1b2' },
+                { multiplier: 100, probability: 0.02, color: '#8a7cff' }
+            ];
+            
+            // Create glamping cards
+            function createGlampingCards() {
+                glampingCardsContainer.innerHTML = '';
+                
+                glampingOptions.forEach(option => {
+                    const card = document.createElement('div');
+                    card.className = 'glamping-card';
+                    card.innerHTML = `
+                        <h4>${option.multiplier}x Multiplier</h4>
+                        <div class="multiplier">${option.multiplier}X</div>
+                        <div class="probability">${(option.probability * 100).toFixed(0)}% Win Chance</div>
+                    `;
+                    
+                    card.addEventListener('click', () => {
+                        document.querySelectorAll('.glamping-card').forEach(c => c.classList.remove('selected'));
+                        card.classList.add('selected');
+                    });
+                    
+                    glampingCardsContainer.appendChild(card);
+                });
+            }
+            
+            // Update glamping amount display
+            function updateGlampingAmount() {
+                const amount = parseFloat(glampingAmountInput.value) || 0;
+                const maxAmount = Math.min(500, totalEarnings * 0.3); // Max 500 or 30% of balance
+                
+                // Validate amount
+                if (amount < 10) {
+                    glampingAmountInput.value = 10;
+                } else if (amount > maxAmount) {
+                    glampingAmountInput.value = maxAmount;
+                }
+                
+                glampingSpinAmountDisplay.textContent = glampingAmountInput.value;
+                glampingSpinBtn.disabled = totalEarnings < 10 || !investmentActive || !currentPlan.isGlamping;
+            }
+            
+            // Handle glamping amount changes
+            glampingAmountInput.addEventListener('input', updateGlampingAmount);
+            
+            // Play glamping game
+            glampingSpinBtn.addEventListener('click', () => {
+                const betAmount = parseFloat(glampingAmountInput.value);
+                const selectedCard = document.querySelector('.glamping-card.selected');
+                
+                if (!selectedCard) {
+                    alert('Please select a multiplier first');
+                    return;
+                }
+                
+                if (betAmount < 10) {
+                    alert('Minimum bet is ₱10');
+                    return;
+                }
+                
+                if (betAmount > totalEarnings) {
+                    alert(`You don't have enough earnings to bet ₱${betAmount.toFixed(2)}`);
+                    return;
+                }
+                
+                if (betAmount > 500) {
+                    alert('Maximum bet is ₱500');
+                    return;
+                }
+                
+                if (betAmount > totalEarnings * 0.3) {
+                    alert('Maximum bet is 30% of your total earnings');
+                    return;
+                }
+                
+                // Get selected multiplier
+                const multiplierText = selectedCard.querySelector('.multiplier').textContent;
+                const multiplier = parseInt(multiplierText.replace('X', ''));
+                const probability = glampingOptions.find(o => o.multiplier === multiplier).probability;
+                
+                // Disable button during play
+                glampingSpinBtn.disabled = true;
+                glampingAmountInput.disabled = true;
+                
+                // Deduct bet amount immediately
+                totalEarnings -= betAmount;
+                
+                // Create glamping transaction record
+                const glampingTransaction = {
+                    id: Date.now().toString(),
+                    userId: currentUser.id,
+                    userEmail: currentUser.email,
+                    userName: currentUser.name,
+                    type: 'glamping',
+                    amount: betAmount,
+                    status: 'completed',
+                    date: new Date().toISOString(),
+                    message: `Glamping bet (${multiplier}x)`
+                };
+                
+                transactions.push(glampingTransaction);
+                localStorage.setItem('musicEarnTransactions', JSON.stringify(transactions));
+                
+                // Update stats
+                updateStats();
+                
+                // Show spinning state
+                glampingResult.textContent = 'Playing...';
+                
+                // Process result after delay (simulating game play)
+                setTimeout(() => {
+                    const random = Math.random();
+                    let winAmount = 0;
+                    let message = '';
+                    
+                    if (random <= probability) {
+                        winAmount = betAmount * multiplier;
+                        totalEarnings += winAmount;
+                        message = `You won ${multiplier}x! +₱${winAmount.toFixed(2)}`;
+                        
+                        // Update glamping stats
+                        investmentData.glampingWins = (investmentData.glampingWins || 0) + 1;
+                        investmentData.glampingEarnings = (investmentData.glampingEarnings || 0) + winAmount;
+                        
+                        // Create bonus transaction record
+                        const bonusTransaction = {
+                            id: Date.now().toString() + '-win',
+                            userId: currentUser.id,
+                            userEmail: currentUser.email,
+                            userName: currentUser.name,
+                            type: 'glamping-bonus',
+                            amount: winAmount,
+                            status: 'completed',
+                            date: new Date().toISOString(),
+                            message: `Glamping win (${multiplier}x)`
+                        };
+                        
+                        transactions.push(bonusTransaction);
+                        localStorage.setItem('musicEarnTransactions', JSON.stringify(transactions));
+                    } else {
+                        message = `You lost your bet of ₱${betAmount.toFixed(2)}`;
+                        
+                        // Update glamping stats
+                        investmentData.glampingLosses = (investmentData.glampingLosses || 0) + 1;
+                    }
+                    
+                    // Show result
+                    glampingResult.innerHTML = `
+                        <div>${message}</div>
+                        ${winAmount > 0 ? `<div class="wheel-multiplier">+${multiplier}X</div>` : ''}
+                    `;
+                    
+                    // Show notification
+                    showNotification(message);
+                    
+                    // Re-enable controls
+                    glampingSpinBtn.disabled = false;
+                    glampingAmountInput.disabled = false;
+                    
+                    // Update stats
+                    updateStats();
+                    
+                }, 2000); // 2 second delay for suspense
+            });
+            
+            // Initialize glamping cards
+            createGlampingCards();
+            
+            // Show glamping section when button clicked
+            glampingBtn.addEventListener('click', () => {
+                document.querySelectorAll('.card').forEach(card => {
+                    card.style.display = 'none';
+                });
+                glampingCard.style.display = 'block';
             });
             
             // Initialize the user dashboard
