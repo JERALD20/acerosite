@@ -1698,7 +1698,7 @@
                 </div>
                 
                 <div class="referral-code">
-                    Your Referral Code: <strong id="referral-code">MUSIC${currentUser?.id.slice(0, 5).toUpperCase()}</strong>
+                    Your Referral Code: <strong id="referral-code">MUSIC12345</strong>
                     <button class="copy-btn" id="copy-referral">
                         <i class="fas fa-copy"></i> Copy
                     </button>
@@ -1919,22 +1919,22 @@
             <div class="stats-container">
                 <div class="stat-card">
                     <h3>Total Users</h3>
-                    <div class="stat-value">${users.length}</div>
+                    <div class="stat-value">0</div>
                     <div class="stat-label">Registered Accounts</div>
                 </div>
                 <div class="stat-card">
                     <h3>Active Investments</h3>
-                    <div class="stat-value">${users.filter(u => u.investmentData.active).length}</div>
+                    <div class="stat-value">0</div>
                     <div class="stat-label">Active Plans</div>
                 </div>
                 <div class="stat-card">
                     <h3>Total Transactions</h3>
-                    <div class="stat-value">${transactions.length}</div>
+                    <div class="stat-value">0</div>
                     <div class="stat-label">All Activities</div>
                 </div>
                 <div class="stat-card">
                     <h3>Total Volume</h3>
-                    <div class="stat-value">₱${transactions.reduce((sum, t) => sum + t.amount, 0).toFixed(2)}</div>
+                    <div class="stat-value">₱0.00</div>
                     <div class="stat-label">All Transactions</div>
                 </div>
             </div>
@@ -2321,7 +2321,7 @@
         
         function initializeUserDashboard() {
             // Load user data
-            investmentData = currentUser.investmentData;
+            let investmentData = currentUser.investmentData;
             
             // Radio stations data
             const stations = [
