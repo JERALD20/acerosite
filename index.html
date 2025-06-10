@@ -1228,72 +1228,6 @@
             border: 1px solid rgba(255,255,255,0.1);
         }
         
-        /* Invite Section Styles */
-        .invite-section {
-            background: rgba(106, 90, 205, 0.1);
-            border-radius: 10px;
-            padding: 25px;
-            margin: 25px 0;
-            border: 1px dashed rgba(106, 90, 205, 0.3);
-            text-align: center;
-        }
-        
-        .invite-header {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-        
-        .invite-icon {
-            font-size: 2rem;
-            margin-right: 15px;
-            color: var(--secondary);
-        }
-        
-        .invite-content {
-            margin-bottom: 20px;
-        }
-        
-        .invite-content p {
-            margin-bottom: 15px;
-        }
-        
-        .invite-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-        
-        .referral-code {
-            background: rgba(255,255,255,0.1);
-            padding: 15px;
-            border-radius: 8px;
-            margin: 20px 0;
-            font-family: monospace;
-            font-size: 1.2rem;
-            letter-spacing: 2px;
-            position: relative;
-        }
-        
-        .copy-btn {
-            position: absolute;
-            right: 10px;
-            top: 10px;
-            background: rgba(255,255,255,0.2);
-            border: none;
-            border-radius: 4px;
-            padding: 3px 8px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            transition: all 0.3s ease;
-        }
-        
-        .copy-btn:hover {
-            background: var(--secondary);
-        }
-        
         /* VIP Badge */
         .vip-badge {
             background: var(--premium-gradient);
@@ -1568,7 +1502,7 @@
                 grid-template-columns: 1fr;
             }
             
-            .action-buttons, .invite-buttons, .profile-actions {
+            .action-buttons, .profile-actions {
                 flex-direction: column;
                 gap: 15px;
             }
@@ -1863,25 +1797,24 @@
             </div>
         </div>
         
-        <!-- Invite Friends Section -->
+        <!-- Community Section -->
         <div class="card">
             <div class="card-badge">Community</div>
             <h2>Join Our Community</h2>
             
-            <div class="invite-section">
-                <div class="invite-header">
-                    <div class="invite-icon">
+            <div class="donation-section">
+                <div class="donation-header">
+                    <div class="donation-icon">
                         <i class="fas fa-users"></i>
                     </div>
-                    <h3>Invite Friends & Earn Together</h3>
+                    <h3>Connect With Other Investors</h3>
                 </div>
                 
-                <div class="invite-content">
-                    <p>Help grow our community and get exclusive benefits by inviting your friends to join MusicEarn PRO!</p>
+                <div class="donation-content">
                     <p>Stay updated with the latest announcements and connect with other investors in our Telegram groups:</p>
                 </div>
                 
-                <div class="invite-buttons">
+                <div class="action-buttons">
                     <a href="https://t.me/Music2EarnPROProofs" target="_blank" class="btn btn-telegram">
                         <i class="fab fa-telegram"></i> Join Proof Channel
                     </a>
@@ -1889,15 +1822,6 @@
                         <i class="fab fa-telegram"></i> Join Community Chat
                     </a>
                 </div>
-                
-                <div class="referral-code">
-                    Your Referral Code: <strong id="referral-code">MUSIC12345</strong>
-                    <button class="copy-btn" id="copy-referral">
-                        <i class="fas fa-copy"></i> Copy
-                    </button>
-                </div>
-                
-                <p>Share your referral code with friends and earn bonuses when they join and invest!</p>
             </div>
         </div>
         
@@ -1968,7 +1892,7 @@
                     <div class="free-play-badge">FREE</div>
                     <div class="station-icon"><i class="fas fa-headphones"></i></div>
                     <h4>Chill Vibes Radio</h4>
-                    <div class="station-bg" style="background-image: url(https://stream.zeno.fm/2ss1hgnu6hhvv')"></div>
+                    <div class="station-bg" style="background-image: url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60')"></div>
                     <audio controls style="width: 100%; margin-top: 10px;">
                         <source src="https://stream.live.vc.bbcmedia.co.uk/bbc_radio_one" type="audio/mpeg">
                         Your browser does not support the audio element.
@@ -1978,7 +1902,7 @@
                     <div class="free-play-badge">FREE</div>
                     <div class="station-icon"><i class="fas fa-music"></i></div>
                     <h4>Jazz Lounge</h4>
-                    <div class="station-bg" style="background-image: url('https://stream.zeno.fm/n6uph8kyd0quv')"></div>
+                    <div class="station-bg" style="background-image: url('https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60')"></div>
                     <audio controls style="width: 100%; margin-top: 10px;">
                         <source src="https://jazz-wr04.streamguys1.com/jazz-wr04.mp3" type="audio/mpeg">
                         Your browser does not support the audio element.
@@ -1988,7 +1912,7 @@
                     <div class="free-play-badge">FREE</div>
                     <div class="station-icon"><i class="fas fa-guitar"></i></div>
                     <h4>Classical FM</h4>
-                    <div class="station-bg" style="background-image: url('https://yesfmzamboanga.radioca.st/')"></div>
+                    <div class="station-bg" style="background-image: url('https://images.unsplash.com/photo-1501612780327-45045538702b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60')"></div>
                     <audio controls style="width: 100%; margin-top: 10px;">
                         <source src="https://stream.klassikradio.de/klassikradio.mp3" type="audio/mpeg">
                         Your browser does not support the audio element.
@@ -2197,19 +2121,19 @@
         <!-- Community Management Section -->
         <div class="admin-section">
             <h2><i class="fas fa-users"></i> Community Management</h2>
-            <div class="invite-section">
-                <div class="invite-header">
-                    <div class="invite-icon">
+            <div class="donation-section">
+                <div class="donation-header">
+                    <div class="donation-icon">
                         <i class="fas fa-link"></i>
                     </div>
                     <h3>Community Links</h3>
                 </div>
                 
-                <div class="invite-content">
+                <div class="donation-content">
                     <p>Manage your community engagement through these official channels:</p>
                 </div>
                 
-                <div class="invite-buttons">
+                <div class="action-buttons">
                     <a href="https://t.me/Music2EarnPROProofs" target="_blank" class="btn btn-telegram">
                         <i class="fab fa-telegram"></i> Proof Channel
                     </a>
@@ -2678,8 +2602,6 @@
             const investmentBadge = document.getElementById('investment-badge');
             const transactionTabs = document.querySelectorAll('.transaction-tab');
             const userTransactionsTable = document.getElementById('user-transactions').querySelector('tbody');
-            const referralCodeElement = document.getElementById('referral-code');
-            const copyReferralBtn = document.getElementById('copy-referral');
             const glampingBtn = document.getElementById('glamping-btn');
             const glampingCard = document.getElementById('glamping-card');
             const glampingCardsContainer = document.getElementById('glamping-cards');
@@ -2706,187 +2628,6 @@
             const profileTasks = document.getElementById('profile-tasks');
             const profileRiskWins = document.getElementById('profile-risk-wins');
             const profileGlampingWins = document.getElementById('profile-glamping-wins');
-            
-            // Set referral code
-            referralCodeElement.textContent = `MUSIC${currentUser.id.slice(0, 5).toUpperCase()}`;
-            
-            // Copy referral code
-            copyReferralBtn.addEventListener('click', () => {
-                navigator.clipboard.writeText(referralCodeElement.textContent);
-                showNotification('Referral code copied to clipboard!');
-            });
-            
-            // Toggle profile section
-            profileBtn.addEventListener('click', () => {
-                if (profileSection.style.display === 'none') {
-                    // Show profile
-                    profileSection.style.display = 'block';
-                    dashboardCard.style.display = 'none';
-                    updateProfileInfo();
-                } else {
-                    // Hide profile
-                    profileSection.style.display = 'none';
-                    dashboardCard.style.display = 'block';
-                }
-            });
-            
-            // Update profile information
-            function updateProfileInfo() {
-                // Basic info
-                profileName.textContent = currentUser.name;
-                profileEmail.textContent = currentUser.email;
-                
-                // Generate initials for avatar
-                const initials = currentUser.name.split(' ').map(n => n[0]).join('').toUpperCase();
-                avatarInitials.textContent = initials;
-                
-                // Investment stats
-                profileInvestment.textContent = currentUser.investmentData.active ? `₱${currentUser.investmentData.amount}` : '₱0';
-                profileEarnings.textContent = `₱${currentUser.investmentData.totalEarnings.toFixed(2)}`;
-                profileDays.textContent = currentUser.investmentData.cycleDays;
-                profileStatus.textContent = currentUser.investmentData.active ? 'Active' : 'Inactive';
-                profileStatus.style.color = currentUser.investmentData.active ? 'var(--success)' : 'var(--error)';
-                
-                // Dates
-                const joinDate = new Date(currentUser.joinDate || new Date().toISOString());
-                profileJoinDate.textContent = joinDate.toLocaleDateString();
-                
-                const lastActive = new Date(currentUser.investmentData.lastActiveDate || currentUser.joinDate || new Date().toISOString());
-                profileLastActive.textContent = lastActive.toLocaleDateString();
-                
-                // Plan info
-                if (currentUser.investmentData.active && currentUser.investmentData.plan) {
-                    profilePlan.textContent = `₱${currentUser.investmentData.plan.amount}${currentUser.investmentData.plan.isGlamping ? ' (GLAMPING)' : (currentUser.investmentData.plan.isVip ? ' (VIP)' : '')}`;
-                } else {
-                    profilePlan.textContent = 'None';
-                }
-                
-                // Task and risk stats
-                profileTasks.textContent = currentUser.investmentData.tasksCompleted || 0;
-                profileRiskWins.textContent = currentUser.investmentData.riskWins || 0;
-                profileGlampingWins.textContent = currentUser.investmentData.glampingWins || 0;
-            }
-            
-            // Load investment plans
-            function loadInvestmentPlans() {
-                investmentPlansContainer.innerHTML = '';
-                
-                investmentPlans.forEach(plan => {
-                    const planCard = document.createElement('div');
-                    planCard.className = `plan-card ${plan.isVip ? (plan.isGlamping ? 'glamping-plan' : 'vip-plan') : ''}`;
-                    planCard.innerHTML = `
-                        <h3>${plan.isGlamping ? 'GLAMPING ' : (plan.isVip ? 'VIP ' : '')}Plan <span class="plan-price">₱${plan.amount}</span></h3>
-                        <div class="plan-details">
-                            <p><span>Daily Earnings:</span> ₱${plan.dailyEarnings}</p>
-                            <p><span>Per Task:</span> ₱${plan.earningsPerTask}</p>
-                            <p><span>Tasks/Day:</span> ${plan.tasksPerDay}</p>
-                            <p><span>Duration:</span> ${plan.days} days</p>
-                            <p><span>Total Potential:</span> ₱${plan.dailyEarnings * plan.days}</p>
-                            ${plan.isVip ? '<p><span>VIP Features:</span> Glamping Access</p>' : ''}
-                            ${plan.isGlamping ? '<p><span>Glamping:</span> High-risk, high-reward game</p>' : ''}
-                        </div>
-                        <button class="select-plan" data-amount="${plan.amount}" data-daily="${plan.dailyEarnings}" data-task="${plan.earningsPerTask}" data-tasks="${plan.tasksPerDay}" data-days="${plan.days}" data-vip="${plan.isVip}" data-glamping="${plan.isGlamping}">
-                            Select Plan
-                        </button>
-                    `;
-                    
-                    investmentPlansContainer.appendChild(planCard);
-                });
-                
-                // Add event listeners to plan buttons
-                document.querySelectorAll('.select-plan').forEach(button => {
-                    button.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        const amount = parseFloat(button.getAttribute('data-amount'));
-                        const dailyEarnings = parseFloat(button.getAttribute('data-daily'));
-                        const earningsPerTask = parseFloat(button.getAttribute('data-task'));
-                        const tasksPerDay = parseInt(button.getAttribute('data-tasks'));
-                        const days = parseInt(button.getAttribute('data-days'));
-                        const isVip = button.getAttribute('data-vip') === 'true';
-                        const isGlamping = button.getAttribute('data-glamping') === 'true';
-                        
-                        // Set modal values
-                        document.getElementById('deposit-amount').value = `₱${amount}`;
-                        document.getElementById('daily-earnings').value = `₱${dailyEarnings} (${tasksPerDay} tasks × ₱${earningsPerTask})`;
-                        document.getElementById('total-earnings').value = `₱${dailyEarnings * days}`;
-                        
-                        // Show deposit modal
-                        document.getElementById('deposit-modal').style.display = 'block';
-                    });
-                });
-            }
-            
-            // Load user transactions
-            function loadUserTransactions(filter = 'all') {
-                userTransactionsTable.innerHTML = '';
-                
-                const userTransactions = transactions.filter(t => t.userId === currentUser.id);
-                let filteredTransactions = [];
-                
-                switch(filter) {
-                    case 'deposits':
-                        filteredTransactions = userTransactions.filter(t => t.type === 'deposit');
-                        break;
-                    case 'withdrawals':
-                        filteredTransactions = userTransactions.filter(t => t.type === 'withdrawal');
-                        break;
-                    case 'earnings':
-                        filteredTransactions = userTransactions.filter(t => t.type === 'earning');
-                        break;
-                    case 'glamping':
-                        filteredTransactions = userTransactions.filter(t => t.type === 'glamping' || t.type === 'glamping-bonus');
-                        break;
-                    default:
-                        filteredTransactions = userTransactions;
-                }
-                
-                if (filteredTransactions.length === 0) {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `<td colspan="5" style="text-align: center;">No transactions found</td>`;
-                    userTransactionsTable.appendChild(row);
-                    return;
-                }
-                
-                // Sort by date (newest first)
-                filteredTransactions.sort((a, b) => new Date(b.date) - new Date(a.date));
-                
-                filteredTransactions.forEach(transaction => {
-                    const row = document.createElement('tr');
-                    
-                    // Format date
-                    const date = new Date(transaction.date);
-                    const formattedDate = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
-                    
-                    // Determine type and status classes
-                    let typeClass = '';
-                    if (transaction.type === 'deposit') typeClass = 'type-deposit';
-                    else if (transaction.type === 'withdrawal') typeClass = 'type-withdrawal';
-                    else if (transaction.type === 'earning') typeClass = 'type-earning';
-                    else if (transaction.type === 'glamping') typeClass = 'type-glamping';
-                    else if (transaction.type === 'glamping-bonus') typeClass = 'type-glamping';
-                    
-                    const statusClass = transaction.status === 'pending' ? 'status-pending' : 'status-completed';
-                    
-                    row.innerHTML = `
-                        <td>${formattedDate}</td>
-                        <td><span class="transaction-type ${typeClass}">${transaction.type.charAt(0).toUpperCase() + transaction.type.slice(1)}</span></td>
-                        <td>${transaction.type === 'glamping' ? '-' : ''}₱${transaction.amount.toFixed(2)}</td>
-                        <td><span class="transaction-status ${statusClass}">${transaction.status.charAt(0).toUpperCase() + transaction.status.slice(1)}</span></td>
-                        <td>${transaction.message || '-'}</td>
-                    `;
-                    
-                    userTransactionsTable.appendChild(row);
-                });
-            }
-            
-            // Transaction tab switching
-            transactionTabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    transactionTabs.forEach(t => t.classList.remove('active'));
-                    tab.classList.add('active');
-                    loadUserTransactions(tab.dataset.tab);
-                });
-            });
             
             // Investment variables with localStorage integration
             let investmentActive = investmentData.active;
@@ -3666,6 +3407,178 @@
                 });
                 glampingCard.style.display = 'block';
             });
+            
+            // Load investment plans
+            function loadInvestmentPlans() {
+                investmentPlansContainer.innerHTML = '';
+                
+                investmentPlans.forEach(plan => {
+                    const planCard = document.createElement('div');
+                    planCard.className = `plan-card ${plan.isVip ? (plan.isGlamping ? 'glamping-plan' : 'vip-plan') : ''}`;
+                    planCard.innerHTML = `
+                        <h3>${plan.isGlamping ? 'GLAMPING ' : (plan.isVip ? 'VIP ' : '')}Plan <span class="plan-price">₱${plan.amount}</span></h3>
+                        <div class="plan-details">
+                            <p><span>Daily Earnings:</span> ₱${plan.dailyEarnings}</p>
+                            <p><span>Per Task:</span> ₱${plan.earningsPerTask}</p>
+                            <p><span>Tasks/Day:</span> ${plan.tasksPerDay}</p>
+                            <p><span>Duration:</span> ${plan.days} days</p>
+                            <p><span>Total Potential:</span> ₱${plan.dailyEarnings * plan.days}</p>
+                            ${plan.isVip ? '<p><span>VIP Features:</span> Glamping Access</p>' : ''}
+                            ${plan.isGlamping ? '<p><span>Glamping:</span> High-risk, high-reward game</p>' : ''}
+                        </div>
+                        <button class="select-plan" data-amount="${plan.amount}" data-daily="${plan.dailyEarnings}" data-task="${plan.earningsPerTask}" data-tasks="${plan.tasksPerDay}" data-days="${plan.days}" data-vip="${plan.isVip}" data-glamping="${plan.isGlamping}">
+                            Select Plan
+                        </button>
+                    `;
+                    
+                    investmentPlansContainer.appendChild(planCard);
+                });
+                
+                // Add event listeners to plan buttons
+                document.querySelectorAll('.select-plan').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const amount = parseFloat(button.getAttribute('data-amount'));
+                        const dailyEarnings = parseFloat(button.getAttribute('data-daily'));
+                        const earningsPerTask = parseFloat(button.getAttribute('data-task'));
+                        const tasksPerDay = parseInt(button.getAttribute('data-tasks'));
+                        const days = parseInt(button.getAttribute('data-days'));
+                        const isVip = button.getAttribute('data-vip') === 'true';
+                        const isGlamping = button.getAttribute('data-glamping') === 'true';
+                        
+                        // Set modal values
+                        document.getElementById('deposit-amount').value = `₱${amount}`;
+                        document.getElementById('daily-earnings').value = `₱${dailyEarnings} (${tasksPerDay} tasks × ₱${earningsPerTask})`;
+                        document.getElementById('total-earnings').value = `₱${dailyEarnings * days}`;
+                        
+                        // Show deposit modal
+                        document.getElementById('deposit-modal').style.display = 'block';
+                    });
+                });
+            }
+            
+            // Load user transactions
+            function loadUserTransactions(filter = 'all') {
+                userTransactionsTable.innerHTML = '';
+                
+                const userTransactions = transactions.filter(t => t.userId === currentUser.id);
+                let filteredTransactions = [];
+                
+                switch(filter) {
+                    case 'deposits':
+                        filteredTransactions = userTransactions.filter(t => t.type === 'deposit');
+                        break;
+                    case 'withdrawals':
+                        filteredTransactions = userTransactions.filter(t => t.type === 'withdrawal');
+                        break;
+                    case 'earnings':
+                        filteredTransactions = userTransactions.filter(t => t.type === 'earning');
+                        break;
+                    case 'glamping':
+                        filteredTransactions = userTransactions.filter(t => t.type === 'glamping' || t.type === 'glamping-bonus');
+                        break;
+                    default:
+                        filteredTransactions = userTransactions;
+                }
+                
+                if (filteredTransactions.length === 0) {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `<td colspan="5" style="text-align: center;">No transactions found</td>`;
+                    userTransactionsTable.appendChild(row);
+                    return;
+                }
+                
+                // Sort by date (newest first)
+                filteredTransactions.sort((a, b) => new Date(b.date) - new Date(a.date));
+                
+                filteredTransactions.forEach(transaction => {
+                    const row = document.createElement('tr');
+                    
+                    // Format date
+                    const date = new Date(transaction.date);
+                    const formattedDate = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+                    
+                    // Determine type and status classes
+                    let typeClass = '';
+                    if (transaction.type === 'deposit') typeClass = 'type-deposit';
+                    else if (transaction.type === 'withdrawal') typeClass = 'type-withdrawal';
+                    else if (transaction.type === 'earning') typeClass = 'type-earning';
+                    else if (transaction.type === 'glamping') typeClass = 'type-glamping';
+                    else if (transaction.type === 'glamping-bonus') typeClass = 'type-glamping';
+                    
+                    const statusClass = transaction.status === 'pending' ? 'status-pending' : 'status-completed';
+                    
+                    row.innerHTML = `
+                        <td>${formattedDate}</td>
+                        <td><span class="transaction-type ${typeClass}">${transaction.type.charAt(0).toUpperCase() + transaction.type.slice(1)}</span></td>
+                        <td>${transaction.type === 'glamping' ? '-' : ''}₱${transaction.amount.toFixed(2)}</td>
+                        <td><span class="transaction-status ${statusClass}">${transaction.status.charAt(0).toUpperCase() + transaction.status.slice(1)}</span></td>
+                        <td>${transaction.message || '-'}</td>
+                    `;
+                    
+                    userTransactionsTable.appendChild(row);
+                });
+            }
+            
+            // Transaction tab switching
+            transactionTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    transactionTabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    loadUserTransactions(tab.dataset.tab);
+                });
+            });
+            
+            // Toggle profile section
+            profileBtn.addEventListener('click', () => {
+                if (profileSection.style.display === 'none') {
+                    // Show profile
+                    profileSection.style.display = 'block';
+                    dashboardCard.style.display = 'none';
+                    updateProfileInfo();
+                } else {
+                    // Hide profile
+                    profileSection.style.display = 'none';
+                    dashboardCard.style.display = 'block';
+                }
+            });
+            
+            // Update profile information
+            function updateProfileInfo() {
+                // Basic info
+                profileName.textContent = currentUser.name;
+                profileEmail.textContent = currentUser.email;
+                
+                // Generate initials for avatar
+                const initials = currentUser.name.split(' ').map(n => n[0]).join('').toUpperCase();
+                avatarInitials.textContent = initials;
+                
+                // Investment stats
+                profileInvestment.textContent = currentUser.investmentData.active ? `₱${currentUser.investmentData.amount}` : '₱0';
+                profileEarnings.textContent = `₱${currentUser.investmentData.totalEarnings.toFixed(2)}`;
+                profileDays.textContent = currentUser.investmentData.cycleDays;
+                profileStatus.textContent = currentUser.investmentData.active ? 'Active' : 'Inactive';
+                profileStatus.style.color = currentUser.investmentData.active ? 'var(--success)' : 'var(--error)';
+                
+                // Dates
+                const joinDate = new Date(currentUser.joinDate || new Date().toISOString());
+                profileJoinDate.textContent = joinDate.toLocaleDateString();
+                
+                const lastActive = new Date(currentUser.investmentData.lastActiveDate || currentUser.joinDate || new Date().toISOString());
+                profileLastActive.textContent = lastActive.toLocaleDateString();
+                
+                // Plan info
+                if (currentUser.investmentData.active && currentUser.investmentData.plan) {
+                    profilePlan.textContent = `₱${currentUser.investmentData.plan.amount}${currentUser.investmentData.plan.isGlamping ? ' (GLAMPING)' : (currentUser.investmentData.plan.isVip ? ' (VIP)' : '')}`;
+                } else {
+                    profilePlan.textContent = 'None';
+                }
+                
+                // Task and risk stats
+                profileTasks.textContent = currentUser.investmentData.tasksCompleted || 0;
+                profileRiskWins.textContent = currentUser.investmentData.riskWins || 0;
+                profileGlampingWins.textContent = currentUser.investmentData.glampingWins || 0;
+            }
             
             // Initialize the user dashboard
             loadStations();
