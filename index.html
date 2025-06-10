@@ -1480,6 +1480,50 @@
             object-fit: cover;
         }
         
+        /* Copy Button Styles */
+        .copy-btn {
+            background: rgba(255,255,255,0.1);
+            color: var(--light);
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-left: 10px;
+        }
+        
+        .copy-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .copy-btn.copied {
+            background: var(--success);
+            color: white;
+        }
+        
+        /* Editable Button Styles */
+        .editable-btn {
+            background: rgba(255,255,255,0.1);
+            color: var(--light);
+            border: 1px dashed rgba(255,255,255,0.3);
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+        
+        .editable-btn:hover {
+            background: rgba(106, 90, 205, 0.2);
+            border-color: var(--primary);
+        }
+        
         /* Responsive styles */
         @media (max-width: 768px) {
             .container {
@@ -1611,6 +1655,14 @@
                 <input type="password" id="reg-confirm-password" placeholder="••••••••" required>
             </div>
             
+            <!-- Editable buttons for registration -->
+            <div style="margin: 15px 0; text-align: center;">
+                <h4>Select Your Role:</h4>
+                <button class="editable-btn" data-role="investor">Investor</button>
+                <button class="editable-btn" data-role="listener">Listener</button>
+                <button class="editable-btn" data-role="both">Both</button>
+            </div>
+            
             <button class="login-btn" id="register-btn">Register</button>
             
             <div class="switch-form">
@@ -1713,6 +1765,33 @@
                     <div class="profile-detail-row">
                         <span class="profile-detail-label">Glamping Wins:</span>
                         <span class="profile-detail-value" id="profile-glamping-wins">0</span>
+                    </div>
+                    
+                    <!-- Copy Profile Section -->
+                    <div style="margin-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
+                        <h3>Share Profile</h3>
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px;">
+                            <button class="copy-btn" data-copy="profile-name">
+                                <i class="fas fa-copy"></i> Copy Name
+                            </button>
+                            <button class="copy-btn" data-copy="profile-email">
+                                <i class="fas fa-copy"></i> Copy Email
+                            </button>
+                            <button class="copy-btn" data-copy="profile-investment">
+                                <i class="fas fa-copy"></i> Copy Investment
+                            </button>
+                            <button class="copy-btn" data-copy="profile-earnings">
+                                <i class="fas fa-copy"></i> Copy Earnings
+                            </button>
+                            <button class="copy-btn" data-copy="profile-plan">
+                                <i class="fas fa-copy"></i> Copy Plan
+                            </button>
+                        </div>
+                        <div style="margin-top: 15px;">
+                            <button class="btn" id="copy-profile-link">
+                                <i class="fas fa-link"></i> Copy Profile Link
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2415,6 +2494,13 @@
                 return;
             }
             
+            // Get selected role from editable buttons
+            let selectedRole = 'investor';
+            const activeRoleBtn = document.querySelector('.editable-btn.active');
+            if (activeRoleBtn) {
+                selectedRole = activeRoleBtn.dataset.role;
+            }
+            
             // Create new user with profile data
             const newUser = {
                 id: Date.now().toString(),
@@ -2422,6 +2508,7 @@
                 email,
                 password,
                 phone: '',
+                role: selectedRole,
                 avatar: null,
                 joinDate: new Date().toISOString(),
                 investmentData: {
@@ -2628,6 +2715,7 @@
             const profileTasks = document.getElementById('profile-tasks');
             const profileRiskWins = document.getElementById('profile-risk-wins');
             const profileGlampingWins = document.getElementById('profile-glamping-wins');
+            const copyProfileLinkBtn = document.getElementById('copy-profile-link');
             
             // Investment variables with localStorage integration
             let investmentActive = investmentData.active;
@@ -3580,12 +3668,65 @@
                 profileGlampingWins.textContent = currentUser.investmentData.glampingWins || 0;
             }
             
+            // Copy profile elements
+            document.querySelectorAll('.copy-btn[data-copy]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const elementId = this.getAttribute('data-copy');
+                    const element = document.getElementById(elementId);
+                    const textToCopy = element.textContent;
+                    
+                    navigator.clipboard.writeText(textToCopy).then(() => {
+                        // Show copied state
+                        this.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                        this.classList.add('copied');
+                        
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            this.innerHTML = `<i class="fas fa-copy"></i> Copy ${elementId.replace('profile-', '')}`;
+                            this.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy text: ', err);
+                    });
+                });
+            });
+            
+            // Copy profile link
+            copyProfileLinkBtn.addEventListener('click', function() {
+                const profileLink = `${window.location.origin}${window.location.pathname}?profile=${currentUser.id}`;
+                
+                navigator.clipboard.writeText(profileLink).then(() => {
+                    // Show copied state
+                    this.innerHTML = '<i class="fas fa-check"></i> Link Copied!';
+                    this.classList.add('copied');
+                    
+                    // Reset after 2 seconds
+                    setTimeout(() => {
+                        this.innerHTML = '<i class="fas fa-link"></i> Copy Profile Link';
+                        this.classList.remove('copied');
+                    }, 2000);
+                    
+                    showNotification('Profile link copied to clipboard!');
+                }).catch(err => {
+                    console.error('Failed to copy profile link: ', err);
+                });
+            });
+            
             // Initialize the user dashboard
             loadStations();
             loadInvestmentPlans();
             loadUserTransactions(); // Load all transactions by default
             checkNewDay(); // Check if it's a new day to reset counters
             updateStats();
+            
+            // Handle role selection in registration form
+            document.querySelectorAll('.editable-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelectorAll('.editable-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
         }
         
         // ==============================================
