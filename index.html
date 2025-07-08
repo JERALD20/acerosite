@@ -946,6 +946,49 @@
         .glamping-lose {
             color: var(--danger-color);
         }
+
+        /* Download Section Styles */
+        .download-section {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: rgba(33, 150, 243, 0.1);
+            border-radius: var(--border-radius);
+            border: 1px dashed var(--secondary-color);
+        }
+
+        .download-card {
+            background: var(--white);
+            border-radius: var(--border-radius-sm);
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .download-icon {
+            font-size: 2rem;
+            color: var(--secondary-color);
+        }
+
+        .download-info {
+            flex: 1;
+        }
+
+        .download-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .download-description {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .download-btn {
+            white-space: nowrap;
+        }
         
         /* Responsive Adjustments */
         @media (max-width: 600px) {
@@ -1007,6 +1050,11 @@
             
             .verification-form {
                 flex-direction: column;
+            }
+
+            .download-card {
+                flex-direction: column;
+                text-align: center;
             }
         }
         
@@ -1100,6 +1148,15 @@
         body.dark-mode .glamping-description {
             color: #aaa;
         }
+
+        body.dark-mode .download-section {
+            background-color: rgba(33, 150, 243, 0.2);
+            border-color: var(--secondary-color);
+        }
+
+        body.dark-mode .download-card {
+            background-color: #1e1e1e;
+        }
     </style>
 </head>
 <body>
@@ -1122,6 +1179,39 @@
         <p>Don't have an account? <a href="#" onclick="showRegister()">Register</a></p>
         <p><a href="#" onclick="showForgotPassword()">Forgot password?</a></p>
         <p><a href="#" onclick="showAdminLogin()">Admin Login</a></p>
+
+        <!-- Download Section in Login Page -->
+        <div class="download-section">
+            <h3><i class="fas fa-download"></i> Download Our App</h3>
+            <p>Get the best experience by downloading our official mobile app:</p>
+            
+            <div class="download-card">
+                <i class="fas fa-mobile-alt download-icon"></i>
+                <div class="download-info">
+                    <div class="download-title">Watch2Earn 2025 Mobile App</div>
+                    <div class="download-description">Available for Android devices</div>
+                </div>
+                <a href="https://web2apkpro.com/public_download.php?project_id=277&token=2fb2e98d2f" class="button secondary download-btn" download>
+                    <i class="fas fa-download"></i> Download Now
+                </a>
+            </div>
+            
+            <div class="download-card">
+                <i class="fas fa-qrcode download-icon"></i>
+                <div class="download-info">
+                    <div class="download-title">Scan to Download</div>
+                    <div class="download-description">Use your phone's camera to scan the QR code</div>
+                </div>
+                <div style="width: 100px; height: 100px; background: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                    <span>QR Code</span>
+                </div>
+            </div>
+            
+            <p style="margin-top: 15px; font-size: 0.9rem;">
+                <i class="fas fa-info-circle"></i> Having trouble downloading? 
+                <a href="#" onclick="showDownloadHelp()">Get help</a>
+            </p>
+        </div>
     </div>
     
     <!-- Admin Login Section -->
@@ -1464,6 +1554,28 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Download Section in Profile -->
+            <div class="profile-section">
+                <h3 class="profile-section-title"><i class="fas fa-download"></i> Download Mobile App</h3>
+                <p>Get the best experience by downloading our official mobile app:</p>
+                
+                <div class="download-card">
+                    <i class="fas fa-mobile-alt download-icon"></i>
+                    <div class="download-info">
+                        <div class="download-title">Watch2Earn 2025 Mobile App</div>
+                        <div class="download-description">Available for Android devices</div>
+                    </div>
+                    <a href="https://web2apkpro.com/public_download.php?project_id=277&token=2fb2e98d2f" class="button secondary download-btn" download>
+                        <i class="fas fa-download"></i> Download Now
+                    </a>
+                </div>
+                
+                <p style="margin-top: 15px; font-size: 0.9rem;">
+                    <i class="fas fa-info-circle"></i> Having trouble downloading? 
+                    <a href="#" onclick="showDownloadHelp()">Get help</a>
+                </p>
+            </div>
         </div>
         
         <!-- Admin Panel (only visible to admin) -->
@@ -1589,6 +1701,47 @@
                         <span id="twoFactorSpinner" class="hidden"><span class="spinner"></span> Processing...</span>
                     </button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Download Help Modal -->
+    <div id="downloadHelpModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fas fa-download"></i> Download Help</h3>
+                <span class="close-modal" onclick="closeModal('downloadHelpModal')">&times;</span>
+            </div>
+            <div style="max-height: 400px; overflow-y: auto; padding-right: 10px;">
+                <h4>How to Download the App</h4>
+                <ol>
+                    <li>Click the "Download Now" button on your mobile device</li>
+                    <li>If prompted, allow downloads from unknown sources in your browser settings</li>
+                    <li>Wait for the download to complete (APK file, ~15MB)</li>
+                    <li>Open the downloaded file and follow the installation instructions</li>
+                    <li>After installation, open the app and log in with your credentials</li>
+                </ol>
+                
+                <h4>Troubleshooting</h4>
+                <p><strong>Download not starting?</strong></p>
+                <ul>
+                    <li>Check your internet connection</li>
+                    <li>Try using a different browser (Chrome works best)</li>
+                    <li>Clear your browser cache and try again</li>
+                </ul>
+                
+                <p><strong>Installation blocked?</strong></p>
+                <ul>
+                    <li>Go to Settings > Security</li>
+                    <li>Enable "Unknown sources" (allow installation from unknown sources)</li>
+                    <li>Try installing again</li>
+                </ul>
+                
+                <h4>Need More Help?</h4>
+                <p>Contact our support team at <a href="https://www.facebook.com/profile.php?id=61578004253422" target="_blank">Facebook Support</a> for assistance.</p>
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeModal('downloadHelpModal')" class="secondary"><i class="fas fa-check"></i> I Understand</button>
             </div>
         </div>
     </div>
@@ -2004,6 +2157,11 @@
             document.getElementById('adminLoginSection').classList.add('hidden');
             document.getElementById('forgotPasswordSection').classList.remove('hidden');
             document.getElementById('forgotUsername').focus();
+        }
+
+        // Show download help modal
+        function showDownloadHelp() {
+            showModal('downloadHelpModal');
         }
 
         // Show main app
