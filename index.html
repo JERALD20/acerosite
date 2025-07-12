@@ -1399,6 +1399,162 @@
                 font-size: 16px !important;
             }
         }
+
+        /* Gambling Section Styles */
+        .gambling-section {
+            margin-top: var(--space-xl);
+            padding-top: var(--space-lg);
+            border-top: 1px solid var(--gray);
+        }
+
+        .gambling-game {
+            background-color: var(--dark);
+            border-radius: var(--radius-md);
+            padding: var(--space-lg);
+            margin-top: var(--space-md);
+            border: 1px solid var(--gray);
+            position: relative;
+        }
+
+        .gambling-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-md);
+        }
+
+        .gambling-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary);
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        .gambling-icon {
+            font-size: 1.5rem;
+            color: var(--accent);
+        }
+
+        .gambling-description {
+            font-size: 0.9rem;
+            color: var(--primary-light);
+            margin-bottom: var(--space-md);
+        }
+
+        .gambling-controls {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-md);
+        }
+
+        @media (min-width: 576px) {
+            .gambling-controls {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .gambling-bet-amount {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+
+        .gambling-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-sm);
+        }
+
+        .gambling-btn {
+            padding: var(--space-md);
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 1rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gambling-btn.win {
+            background-color: var(--success);
+            color: var(--darker);
+        }
+
+        .gambling-btn.lose {
+            background-color: var(--danger);
+            color: white;
+        }
+
+        .gambling-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .gambling-result {
+            margin-top: var(--space-md);
+            padding: var(--space-md);
+            border-radius: var(--radius-sm);
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: none;
+        }
+
+        .gambling-result.win {
+            background-color: rgba(0, 255, 157, 0.1);
+            color: var(--success);
+            border: 1px solid var(--success);
+            display: block;
+        }
+
+        .gambling-result.lose {
+            background-color: rgba(255, 56, 96, 0.1);
+            color: var(--danger);
+            border: 1px solid var(--danger);
+            display: block;
+        }
+
+        .gambling-history {
+            margin-top: var(--space-md);
+        }
+
+        .gambling-history-title {
+            font-size: 0.9rem;
+            color: var(--primary-light);
+            margin-bottom: var(--space-sm);
+        }
+
+        .gambling-history-items {
+            display: flex;
+            gap: var(--space-sm);
+            overflow-x: auto;
+            padding-bottom: var(--space-sm);
+        }
+
+        .gambling-history-item {
+            min-width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .gambling-history-item.win {
+            background-color: var(--success);
+            color: var(--darker);
+        }
+
+        .gambling-history-item.lose {
+            background-color: var(--danger);
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -1422,6 +1578,7 @@
                 <li><a href="#"><i class="fas fa-chart-line"></i> Investments</a></li>
                 <li><a href="#"><i class="fas fa-history"></i> Transactions</a></li>
                 <li><a href="#"><i class="fas fa-headphones"></i> Radio Stations</a></li>
+                <li><a href="#"><i class="fas fa-dice"></i> Lucky Game</a></li>
                 <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
             </ul>
         </nav>
@@ -1466,6 +1623,7 @@
                         <li><a href="#"><i class="fas fa-chart-line"></i> Investments</a></li>
                         <li><a href="#"><i class="fas fa-history"></i> Transactions</a></li>
                         <li><a href="#"><i class="fas fa-headphones"></i> Radio Stations</a></li>
+                        <li><a href="#"><i class="fas fa-dice"></i> Lucky Game</a></li>
                         <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
                     </ul>
                 </nav>
@@ -1623,6 +1781,58 @@
                                     <div class="plan-feature"><i class="fas fa-check"></i> VIP support</div>
                                 </div>
                                 <button class="btn btn-primary invest-btn" data-min="5000" data-max="50000">Invest Now</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Lucky Game Card -->
+                    <div class="card">
+                        <div class="cyber-corner cyber-corner-tl"></div>
+                        <div class="cyber-corner cyber-corner-tr"></div>
+                        <div class="cyber-corner cyber-corner-bl"></div>
+                        <div class="cyber-corner cyber-corner-br"></div>
+                        <div class="card-header">
+                            <h3 class="card-title">Lucky Game</h3>
+                            <i class="fas fa-dice card-icon"></i>
+                        </div>
+                        <div class="gambling-section">
+                            <p class="gambling-description">
+                                Try your luck with our exciting game! Bet a small amount for a chance to win big rewards.
+                            </p>
+                            
+                            <div class="gambling-game">
+                                <div class="gambling-header">
+                                    <h3 class="gambling-title">Double or Nothing</h3>
+                                    <i class="fas fa-coins gambling-icon"></i>
+                                </div>
+                                
+                                <div class="gambling-controls">
+                                    <div class="gambling-bet-amount">
+                                        <label class="form-label" for="gambling-bet">Bet Amount (₱10 - ₱500)</label>
+                                        <input type="number" class="form-control" id="gambling-bet" min="10" max="500" value="10">
+                                        <small style="color: var(--primary-light);">Minimum: ₱10, Maximum: ₱500</small>
+                                    </div>
+                                    
+                                    <div class="gambling-buttons">
+                                        <button class="gambling-btn win" id="gambling-win-btn">
+                                            <i class="fas fa-trophy"></i> Win (2x)
+                                        </button>
+                                        <button class="gambling-btn lose" id="gambling-lose-btn">
+                                            <i class="fas fa-skull"></i> Lose (0x)
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="gambling-result" id="gambling-result"></div>
+                                
+                                <div class="gambling-history">
+                                    <div class="gambling-history-title">Recent Results:</div>
+                                    <div class="gambling-history-items" id="gambling-history"></div>
+                                </div>
+                            </div>
+                            
+                            <div style="font-size: 0.8rem; color: var(--primary-light); margin-top: var(--space-md);">
+                                <i class="fas fa-info-circle"></i> Note: This game is for entertainment purposes only. Play responsibly.
                             </div>
                         </div>
                     </div>
@@ -2085,6 +2295,7 @@
         let taskTimer = null;
         let withdrawalTimers = {};
         let activeStation = null;
+        let gamblingHistory = JSON.parse(localStorage.getItem('music2earn_gambling_history')) || [];
         
         // DOM Elements
         const loginBtn = document.getElementById('login-btn');
@@ -2117,6 +2328,13 @@
         const mobileResetConfirm = document.getElementById('mobile-reset-confirm');
         const mobileCancelReset = document.getElementById('mobile-cancel-reset');
         const mobileConfirmReset = document.getElementById('mobile-confirm-reset');
+        
+        // Gambling Elements
+        const gamblingBetInput = document.getElementById('gambling-bet');
+        const gamblingWinBtn = document.getElementById('gambling-win-btn');
+        const gamblingLoseBtn = document.getElementById('gambling-lose-btn');
+        const gamblingResult = document.getElementById('gambling-result');
+        const gamblingHistoryContainer = document.getElementById('gambling-history');
         
         // Modal Elements
         const loginModal = document.getElementById('login-modal');
@@ -2177,6 +2395,9 @@
             
             // Process pending withdrawals
             processPendingWithdrawals();
+            
+            // Load gambling history
+            updateGamblingHistory();
             
             // Set up event listeners
             setupEventListeners();
@@ -2291,6 +2512,125 @@
             totalWithdrawals.textContent = userWithdrawals;
         }
         
+        // Update gambling history display
+        function updateGamblingHistory() {
+            gamblingHistoryContainer.innerHTML = '';
+            
+            // Show only last 10 results
+            const recentHistory = gamblingHistory.slice(-10);
+            
+            recentHistory.forEach(result => {
+                const historyItem = document.createElement('div');
+                historyItem.className = `gambling-history-item ${result.outcome}`;
+                historyItem.innerHTML = result.outcome === 'win' ? 'W' : 'L';
+                gamblingHistoryContainer.appendChild(historyItem);
+            });
+        }
+        
+        // Handle gambling bet
+        function handleGamblingBet(outcome) {
+            if (!currentUser) {
+                showToast('Please login first', 'error');
+                loginModal.style.display = 'flex';
+                return;
+            }
+            
+            const betAmount = parseFloat(gamblingBetInput.value);
+            
+            // Validate bet amount
+            if (isNaN(betAmount)) {
+                showToast('Please enter a valid bet amount', 'error');
+                return;
+            }
+            
+            if (betAmount < 10 || betAmount > 500) {
+                showToast('Bet amount must be between ₱10 and ₱500', 'error');
+                return;
+            }
+            
+            if (betAmount > currentUser.balance) {
+                showToast('Insufficient balance for this bet', 'error');
+                return;
+            }
+            
+            // Find user
+            const userIndex = users.findIndex(u => u.id === currentUser.id);
+            if (userIndex === -1) {
+                showToast('User not found', 'error');
+                return;
+            }
+            
+            // Determine outcome - always lose (0% win chance)
+            const actualOutcome = 'lose';
+            const multiplier = actualOutcome === 'win' ? 2 : 0;
+            const winAmount = actualOutcome === 'win' ? betAmount * multiplier : 0;
+            const netChange = winAmount - betAmount;
+            
+            // Update user balance
+            users[userIndex].balance += netChange;
+            
+            if (actualOutcome === 'win') {
+                users[userIndex].totalIncome = (users[userIndex].totalIncome || 0) + winAmount;
+            } else {
+                users[userIndex].totalIncome = (users[userIndex].totalIncome || 0) - betAmount;
+            }
+            
+            localStorage.setItem('music2earn_users', JSON.stringify(users));
+            
+            // Update current user
+            currentUser = users[userIndex];
+            localStorage.setItem('music2earn_current_user', JSON.stringify(currentUser));
+            
+            // Add transaction
+            const transaction = {
+                id: Date.now(),
+                userId: currentUser.id,
+                type: 'gambling',
+                amount: netChange,
+                date: new Date().toISOString(),
+                status: 'completed',
+                description: `Gambling ${actualOutcome} (${multiplier}x)`
+            };
+            
+            transactions.push(transaction);
+            localStorage.setItem('music2earn_transactions', JSON.stringify(transactions));
+            
+            // Add to gambling history
+            gamblingHistory.push({
+                date: new Date().toISOString(),
+                amount: betAmount,
+                outcome: actualOutcome,
+                multiplier: multiplier
+            });
+            
+            // Keep only last 50 results
+            if (gamblingHistory.length > 50) {
+                gamblingHistory.shift();
+            }
+            
+            localStorage.setItem('music2earn_gambling_history', JSON.stringify(gamblingHistory));
+            
+            // Update UI
+            updateWallet();
+            updateTransactions();
+            updateQuickStats();
+            updateGamblingHistory();
+            
+            // Show result
+            gamblingResult.textContent = actualOutcome === 'win' 
+                ? `You won ₱${winAmount.toFixed(2)}!` 
+                : `You lost ₱${betAmount.toFixed(2)}. Try again!`;
+            gamblingResult.className = `gambling-result ${actualOutcome}`;
+            
+            // Show toast
+            showToast(
+                actualOutcome === 'win' 
+                    ? `Congratulations! You won ₱${winAmount.toFixed(2)}` 
+                    : `You lost ₱${betAmount.toFixed(2)}. Better luck next time!`,
+                actualOutcome
+            );
+        }
+        
         // Set up event listeners
         function setupEventListeners() {
             // Auth buttons
@@ -2373,6 +2713,17 @@
                     
                     investModal.style.display = 'flex';
                 });
+            });
+            
+            // Gambling buttons
+            gamblingWinBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                handleGamblingBet('win');
+            });
+            
+            gamblingLoseBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                handleGamblingBet('lose');
             });
             
             // Close modals
@@ -2618,6 +2969,7 @@
             
             // Update UI
             tasksCompleted.textContent = tasks.completed;
+            taskProgressBar.style.width = `${(tasks.completed / 1) * 100}%`;
             taskStatus.textContent = tasks.completed >= 1 ? 'Completed' : 'Incomplete';
             taskStatus.className = tasks.completed >= 1 ? 'badge badge-success' : 'badge badge-primary';
             
@@ -3125,6 +3477,7 @@
                 lastCompletedDate: null,
                 totalCompleted: 0
             };
+            gamblingHistory = [];
             
             // Clear all withdrawal timers
             Object.values(withdrawalTimers).forEach(timer => clearTimeout(timer));
@@ -3134,6 +3487,7 @@
             localStorage.setItem('music2earn_transactions', JSON.stringify(transactions));
             localStorage.setItem('music2earn_investments', JSON.stringify(investments));
             localStorage.setItem('music2earn_tasks', JSON.stringify(tasks));
+            localStorage.setItem('music2earn_gambling_history', JSON.stringify(gamblingHistory));
             
             if (currentUser) {
                 currentUser.balance = 0;
@@ -3151,6 +3505,9 @@
                 taskProgressBar.style.width = '0%';
                 taskStatus.textContent = 'Incomplete';
                 taskStatus.className = 'badge badge-primary';
+                
+                // Update gambling history
+                updateGamblingHistory();
             }
             
             showToast('All data has been reset', 'warning');
